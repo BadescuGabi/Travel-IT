@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.bgabi.travelit">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,14 +11,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TravelIT">
-<!--        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>-->
-<!--        <meta-data android:name="com.facebook.sdk.ClientToken" android:value="@string/facebook_client_token"/>-->
-<!--        <activity-->
-<!--            android:name=".auth.SignInActivity"-->
-<!--            android:exported="false" />-->
-<!--        <activity-->
-<!--            android:name=".auth.SignUpActivity"-->
-<!--            android:exported="true" />-->
+        <activity
+            android:name=".auth.SignInActivity"
+            android:exported="false" />
+        <!-- <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/> -->
+        <!-- <meta-data android:name="com.facebook.sdk.ClientToken" android:value="@string/facebook_client_token"/> -->
+        <!-- <activity -->
+        <!-- android:name=".auth.SignInActivity" -->
+        <!-- android:exported="false" /> -->
+        <!-- <activity -->
+        <!-- android:name=".auth.SignUpActivity" -->
+        <!-- android:exported="true" /> -->
         <activity
             android:name=".SplashScreenActivity"
             android:exported="true"
@@ -31,7 +36,5 @@
             android:name=".MainActivity"
             android:exported="true" />
     </application>
-
-    <uses-permission android:name="android.permission.INTERNET"/>
 
 </manifest>
