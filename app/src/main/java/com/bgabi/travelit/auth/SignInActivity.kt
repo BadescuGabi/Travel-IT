@@ -48,12 +48,12 @@ class  SignInActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
 
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
+//        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//            .requestIdToken(getString(R.string.default_web_client_id))
+//            .requestEmail()
+//            .build()
 
-        googleSignInClient = GoogleSignIn.getClient(this, gso)
+//        googleSignInClient = GoogleSignIn.getClient(this, gso)
 
         btn_google = findViewById<ImageView>(R.id.sign_in_gmail_button)
         btn_google.setOnClickListener{ view: View? ->
@@ -112,7 +112,7 @@ class  SignInActivity : AppCompatActivity() {
             }
 
             override fun onError(exception: FacebookException) {
-                Toast.makeText(this@SignInActivity, exception.message, Toast.LENGTH_LONG).show()
+                Toast.makeText(this@SignInActivity, "bla bla fb fail", Toast.LENGTH_LONG).show()
             }
         })
     }
@@ -127,10 +127,10 @@ class  SignInActivity : AppCompatActivity() {
 
         callbackManager.onActivityResult(requestCode, resultCode, data)
 
-        if(requestCode==Req_Code){
-            val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
-            handleResult(task)
-        }
+//        if(requestCode==Req_Code){
+//            val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
+//            handleResult(task)
+//        }
     }
 
     private fun handleResult(completedTask: Task<GoogleSignInAccount>){
@@ -214,7 +214,7 @@ class  SignInActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     val user = firebaseAuth.currentUser
                 } else {
-                    Toast.makeText(baseContext, "Authentication failed.",
+                    Toast.makeText(baseContext, "Authentication failed---------.",
                         Toast.LENGTH_SHORT).show()
                 }
             }

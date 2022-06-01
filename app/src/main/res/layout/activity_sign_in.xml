@@ -109,13 +109,13 @@
             android:id="@+id/sign_in_facebook_button"
             android:layout_width="50dp"
             android:layout_height="50dp"
-       />
+            android:background="@drawable/fb_button"/>
 
         <ImageView
             android:id="@+id/sign_in_gmail_button"
             android:layout_width="45dp"
             android:layout_height="45dp"
-  />
+            android:background="@drawable/gmail_button"/>
     </LinearLayout>
 
 

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Smart Planner</string>
+    <string name="app_name">Travel-IT</string>
 
     <string name="facebook_app_id">1158516084944942</string>
     <string name="fb_login_protocol_scheme">fb1234</string>
