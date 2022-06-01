@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "126177152911",
+    "project_id": "travel-it-d162e",
+    "storage_bucket": "travel-it-d162e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:126177152911:android:f439166ba085ef1446c5fa",
+        "android_client_info": {
+          "package_name": "com.bgabi.travelit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "126177152911-613las49pq5fm99lhe5eqg9m0dt8rs0b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bgabi.travelit",
+            "certificate_hash": "e93f4233434c746745fef771be9272805d00bccf"
+          }
+        },
+        {
+          "client_id": "126177152911-bdsue9ifbrt5g42ok8v4kpus8jdtpqpa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSsi7oDPhmCovyk_7Geo8wE2dGMtfxgpo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "126177152911-bdsue9ifbrt5g42ok8v4kpus8jdtpqpa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
