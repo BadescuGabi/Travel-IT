@@ -28,7 +28,7 @@ class SignUpActivity : AppCompatActivity() {
 
         auth = Firebase.auth
 
-        val btn_to_sign_in = findViewById<Button>(R.id.tv_to_sign_in)
+        val btn_to_sign_in = findViewById<Button>(R.id.btn_register)
         btn_to_sign_in.setOnClickListener {
             val intent : Intent = Intent(this@SignUpActivity, SignInActivity::class.java)
             startActivity(intent)
