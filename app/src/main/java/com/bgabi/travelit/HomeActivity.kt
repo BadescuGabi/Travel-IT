@@ -5,20 +5,42 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ImageView
 import com.bgabi.travelit.auth.SignInActivity
 import com.facebook.login.LoginManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import androidx.fragment.app.Fragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        val profileFragment = ProfileFragment()
+        val homeFragment = HomeFragment()
+        setCurrentFragment(profileFragment)
+        val bottomNavigationView :BottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        bottomNavigationView.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.profile -> setCurrentFragment(profileFragment)
+                R.id.home -> setCurrentFragment(homeFragment)
+
+            }
+            true
+        }
+
     }
 
+    private fun setCurrentFragment(fragment: Fragment) =
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.flFragment, fragment)
+            commit()
+        }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.profile_menu,menu)
+        menuInflater.inflate(R.menu.profile_menu, menu)
         if (menu != null) {
             checkCurrentUser(menu)
         }
@@ -28,11 +50,10 @@ class HomeActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id: Int = item.itemId
 
-        if ( id == R.id.redirect_sign_in) {
-            val intent : Intent = Intent(this, SignInActivity::class.java)
+        if (id == R.id.redirect_sign_in) {
+            val intent: Intent = Intent(this, SignInActivity::class.java)
             startActivity(intent)
-        }
-        else if (id == R.id.log_out_button) {
+        } else if (id == R.id.log_out_button) {
             Firebase.auth.signOut()
             LoginManager.getInstance().logOut();
             val refresh = Intent(this, MainActivity::class.java)
