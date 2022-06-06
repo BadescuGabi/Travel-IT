@@ -13,6 +13,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.bgabi.travelit.HomeActivity
 import com.bgabi.travelit .R
 import com.facebook.*
 import com.facebook.login.LoginManager
@@ -104,7 +105,7 @@ class  SignInActivity : AppCompatActivity() {
                     waitForCondition(1000, 100)
                 }
 
-                goToMainActivity()
+                goToHomeActivity()
             }
 
             override fun onCancel() {
@@ -150,7 +151,7 @@ class  SignInActivity : AppCompatActivity() {
             if(task.isSuccessful) {
                 SavedPreference.setEmail(this,account.email.toString())
                 SavedPreference.setUsername(this,account.displayName.toString())
-                val intent = Intent(this, MainActivity::class.java)
+                val intent = Intent(this, HomeActivity::class.java)
                 startActivity(intent)
                 finish()
             }
@@ -192,7 +193,7 @@ class  SignInActivity : AppCompatActivity() {
                         "You successfully signed in!",
                         Toast.LENGTH_SHORT
                     ).show()
-                    goToMainActivity()
+                    goToHomeActivity()
                 } else {
                     Toast.makeText(baseContext, "Authentication failed.",
                         Toast.LENGTH_SHORT).show()
@@ -200,8 +201,8 @@ class  SignInActivity : AppCompatActivity() {
             }
     }
 
-    private fun goToMainActivity() {
-        val intent = Intent(this, MainActivity::class.java)
+    private fun goToHomeActivity() {
+        val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
     }
 

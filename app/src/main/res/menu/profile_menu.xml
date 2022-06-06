@@ -10,4 +10,9 @@
         android:id="@+id/log_out_button"
         android:title="@string/log_out"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/settings_button"
+        android:title="@string/settings"
+        app:showAsAction="never" />
 </menu>
