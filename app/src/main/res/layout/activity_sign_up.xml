@@ -10,7 +10,7 @@
         android:id="@+id/sign_up_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="80dp"
         android:fontFamily="sans-serif-black"
         android:text="@string/create_new_account"
         android:textSize="24sp"
@@ -20,11 +20,10 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_register_email"
-        style="@style/LoginTextInputOuterFieldStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="80dp"
         android:layout_marginStart="16dp"
         app:boxStrokeColor="@color/yellow"
         app:hintTextColor="@color/yellow"
@@ -32,12 +31,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/sign_up_text">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_register_email"
             style="@style/LoginTextInputInnerFieldStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/type_email_hint"
+            android:hint="@string/email"
             android:inputType="textEmailAddress"
             android:importantForAutofill="no" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -90,11 +89,10 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_register_password"
-        style="@style/LoginTextInputOuterFieldStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="16dp"
         app:boxStrokeColor="@color/yellow"
         app:hintTextColor="@color/yellow"
@@ -103,22 +101,21 @@
         app:layout_constraintTop_toBottomOf="@id/til_register_email"
         app:passwordToggleEnabled="true">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_register_password"
             style="@style/LoginTextInputInnerFieldStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/type_password"
+            android:hint="@string/password"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_confirm_password"
-        style="@style/LoginTextInputOuterFieldStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="16dp"
         app:boxStrokeColor="@color/yellow"
         app:hintTextColor="@color/yellow"
@@ -127,12 +124,12 @@
         app:layout_constraintTop_toBottomOf="@id/til_register_password"
         app:passwordToggleEnabled="true">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_confirm_password"
             style="@style/LoginTextInputInnerFieldStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/retype_password_hint"
+            android:hint="@string/confirm_password"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -141,7 +138,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="16dp"
         android:gravity="center"
 
