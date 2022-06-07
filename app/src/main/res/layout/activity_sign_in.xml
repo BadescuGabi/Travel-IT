@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/icicle"
     tools:context=".auth.SignInActivity">
 
     <TextView
@@ -26,8 +27,8 @@
         android:layout_marginTop="80dp"
         android:hint="@string/email"
         android:layout_marginStart="16dp"
-        app:boxStrokeColor="@color/yellow"
-        app:hintTextColor="@color/yellow"
+        app:boxStrokeColor="@color/cerulean"
+        app:hintTextColor="@color/cerulean"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/sign_in_text">
@@ -48,8 +49,8 @@
         android:layout_marginTop="40dp"
         android:layout_marginEnd="16dp"
         android:hint="@string/password"
-        app:boxStrokeColor="@color/yellow"
-        app:hintTextColor="@color/yellow"
+        app:boxStrokeColor="@color/cerulean"
+        app:hintTextColor="@color/cerulean"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/til_login_email"
@@ -65,15 +66,17 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_login"
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginStart="16dp"
         android:layout_marginTop="70dp"
         android:layout_marginEnd="16dp"
         android:gravity="center"
+        android:background="@drawable/button"
+        android:backgroundTint="@color/blue_topaz"
         android:text="@string/sign_in"
-        android:textColor="@color/black"
+        android:textColor="@color/icicle"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
