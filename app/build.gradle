@@ -56,8 +56,8 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.4.2")
     implementation("androidx.navigation:navigation-ui-ktx:2.4.2")
     implementation("androidx.cardview:cardview:1.0.0")
-
-    // Feature module Support
+    implementation("de.hdodenhof:circleimageview:1.2.1")
+            // Feature module Support
     implementation("androidx.navigation:navigation-dynamic-features-fragment:2.4.2")
 
     // Testing Navigation
