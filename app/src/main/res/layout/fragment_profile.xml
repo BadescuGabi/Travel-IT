@@ -21,7 +21,7 @@
             android:layout_height="350dp"
             android:orientation="vertical">
             <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_marginTop="45dp"
+                android:layout_marginTop="40dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
@@ -35,6 +35,26 @@
                 android:textColor="#fff"
                 android:textStyle="bold"
                 android:textSize="21sp"/>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_marginRight="115dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/ic_email"/>
+                <TextView
+                    android:layout_marginTop="-30dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Wiliam@gmail.com"
+                    android:textColor="#fff"
+                    android:textStyle="bold"
+                    android:textSize="21sp"/>
+            </LinearLayout>
         </LinearLayout>
 
         <androidx.cardview.widget.CardView
@@ -127,7 +147,7 @@
             <ImageView
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:src="@drawable/ic_email"/>
+                android:src="@drawable/ic_email_blue"/>
             <TextView
                 android:textStyle="bold"
                 android:layout_gravity="center_vertical"
@@ -143,17 +163,17 @@
             android:paddingLeft="25dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-<!--            <ImageView-->
-<!--                android:layout_width="36dp"-->
-<!--                android:layout_height="36dp"-->
-<!--                android:src="@drawable/ic_phone_android_black_24dp"/>-->
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_favorite"/>
             <TextView
                 android:textStyle="bold"
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingStart="20dp"
-                android:text="+266 225 225"/>
+                android:text="@string/favorites"/>
         </LinearLayout>
 
         <LinearLayout
@@ -162,17 +182,17 @@
             android:paddingStart="25dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-<!--            <ImageView-->
-<!--                android:layout_width="36dp"-->
-<!--                android:layout_height="36dp"-->
-<!--                android:src="@drawable/ic_group_add_black_24dp"/>-->
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_history"/>
             <TextView
                 android:textStyle="bold"
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingStart="20dp"
-                android:text="Add to group"/>
+                android:text="@string/travel_history"/>
         </LinearLayout>
 
         <LinearLayout
@@ -181,17 +201,17 @@
             android:paddingStart="25dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-<!--            <ImageView-->
-<!--                android:layout_width="36dp"-->
-<!--                android:layout_height="36dp"-->
-<!--                android:src="@drawable/ic_forum_black_24dp"/>-->
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_travel"/>
             <TextView
                 android:textStyle="bold"
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingStart="20dp"
-                android:text="Show all comments"/>
+                android:text="@string/future_travels"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -203,6 +223,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="25dp"
-        android:text="Follow Me"/>
+        android:drawableLeft="@drawable/ic_edit"
+        android:text="Edit Profile"/>
     </LinearLayout>
 </ScrollView>

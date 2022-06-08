@@ -29,4 +29,7 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="posts">Posts</string>
     <string name="following">Following</string>
+    <string name="favorites">Favorites</string>
+    <string name="travel_history">Travel History</string>
+    <string name="future_travels">Future Travels</string>
 </resources>
