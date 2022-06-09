@@ -35,30 +35,10 @@
                 android:textColor="#fff"
                 android:textStyle="bold"
                 android:textSize="21sp"/>
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:layout_width="26dp"
-                    android:layout_height="26dp"
-                    android:layout_marginRight="115dp"
-                    android:layout_gravity="center_horizontal"
-                    android:src="@drawable/ic_email"/>
-                <TextView
-                    android:layout_marginTop="-30dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Wiliam@gmail.com"
-                    android:textColor="#fff"
-                    android:textStyle="bold"
-                    android:textSize="21sp"/>
-            </LinearLayout>
         </LinearLayout>
 
         <androidx.cardview.widget.CardView
-            android:layout_width="400dp"
+            android:layout_width="match_parent"
             android:layout_height="120dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="275dp">
@@ -147,7 +127,7 @@
             <ImageView
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:src="@drawable/ic_email_blue"/>
+                android:src="@drawable/ic_email_grey"/>
             <TextView
                 android:textStyle="bold"
                 android:layout_gravity="center_vertical"
@@ -160,57 +140,48 @@
         <LinearLayout
             android:layout_marginTop="25dp"
             android:orientation="horizontal"
-            android:paddingLeft="25dp"
+            android:paddingLeft="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <ImageView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:src="@drawable/ic_favorite"/>
-            <TextView
-                android:textStyle="bold"
+            <Button
+                android:drawableLeft="@drawable/ic_favorite"
+                android:textColor="@color/black"
+                android:background="@android:color/transparent"
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingStart="20dp"
                 android:text="@string/favorites"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_marginTop="25dp"
             android:orientation="horizontal"
-            android:paddingStart="25dp"
+            android:paddingLeft="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <ImageView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:src="@drawable/ic_history"/>
-            <TextView
-                android:textStyle="bold"
+            <Button
+                android:drawableLeft="@drawable/ic_history"
+                android:textColor="@color/black"
+                android:background="@android:color/transparent"
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingStart="20dp"
                 android:text="@string/travel_history"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_marginTop="25dp"
             android:orientation="horizontal"
-            android:paddingStart="25dp"
+            android:paddingLeft="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <ImageView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:src="@drawable/ic_travel"/>
-            <TextView
-                android:textStyle="bold"
+            <Button
+                android:drawableLeft="@drawable/ic_travel"
+                android:textColor="@color/black"
+                android:background="@android:color/transparent"
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingStart="20dp"
                 android:text="@string/future_travels"/>
         </LinearLayout>
     </LinearLayout>

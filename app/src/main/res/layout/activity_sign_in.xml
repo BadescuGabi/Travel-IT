@@ -26,16 +26,15 @@
         android:layout_marginEnd="16dp"
         android:layout_marginTop="80dp"
         android:hint="@string/email"
-        android:layout_marginStart="16dp"
         app:boxStrokeColor="@color/cerulean"
         app:hintTextColor="@color/cerulean"
+        app:boxBackgroundColor="@color/icicle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/sign_in_text">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_login_email"
-            style="@style/LoginTextInputInnerFieldStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress" />
@@ -45,11 +44,11 @@
         android:id="@+id/til_login_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="16dp"
         android:hint="@string/password"
         app:boxStrokeColor="@color/cerulean"
+        app:boxBackgroundColor="@color/icicle"
         app:hintTextColor="@color/cerulean"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,7 +57,6 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_login_password"
-            style="@style/LoginTextInputInnerFieldStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword" />
