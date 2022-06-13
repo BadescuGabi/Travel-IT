@@ -1,111 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:background="@drawable/main_bg">
+    xmlns:tools="http://schemas.android.com/tools">
 
-<!--    <ImageView-->
-<!--        android:id="@+id/rootRL"-->
-<!--        android:layout_width="fill_parent"-->
-<!--        android:layout_height="fill_parent"-->
-<!--        -->
-<!--        android:orientation="vertical"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent" />-->
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:fontFamily="cursive"
-        android:text="@string/app_name"
-        android:textColor="#FFFFFF"
-        android:textSize="54sp"
-        android:layout_marginTop="100dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <Button
-        android:id="@+id/button_sign_up"
-        style="@style/Widget.AppCompat.Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:backgroundTint="@color/grey"
-        android:background="@drawable/button"
-        android:text="@string/sign_up"
-        android:textColor="@color/white"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-    <Button
-        android:id="@+id/button_sign_in"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:backgroundTint="@color/grey"
-        android:background="@drawable/button"
-        android:text="@string/sign_in"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_sign_up" />
-
-    <TextView
-        android:id="@+id/sign_message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:gravity="center_horizontal"
-        android:text="@string/external_sign_in_message"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_sign_in"/>
-
-    <LinearLayout
-        android:id="@+id/social_login_buttons"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sign_message">
+        android:layout_height="match_parent"
+        android:background="@drawable/main_bg"
+        tools:context=".MainActivity">
 
-        <ImageView
-            android:id="@+id/sign_in_facebook_button"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginEnd="10dp"
-            android:background="@drawable/fb_button"/>
+        <!--    <ImageView-->
+        <!--        android:id="@+id/rootRL"-->
+        <!--        android:layout_width="fill_parent"-->
+        <!--        android:layout_height="fill_parent"-->
+        <!--        -->
+        <!--        android:orientation="vertical"-->
+        <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--        app:layout_constraintStart_toStartOf="parent" />-->
 
         <TextView
-            android:id="@+id/or"
-            android:layout_width="60dp"
-            android:layout_height="30dp"
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:fontFamily="cursive"
             android:gravity="center_horizontal"
-            android:text="@string/or"
+            android:text="@string/app_name"
             android:textColor="#FFFFFF"
-            android:textSize="22sp" />
+            android:textSize="54sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/sign_in_gmail_button"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:background="@drawable/gmail_button"/>
-    </LinearLayout>
+        <Button
+            android:id="@+id/button_sign_up"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:background="@drawable/button"
+            android:backgroundTint="@color/grey"
+            android:text="@string/sign_up"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+        <Button
+            android:id="@+id/button_sign_in"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:background="@drawable/button"
+            android:backgroundTint="@color/grey"
+            android:text="@string/sign_in"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_sign_up" />
+
+        <TextView
+            android:id="@+id/sign_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:gravity="center_horizontal"
+            android:text="@string/external_sign_in_message"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_sign_in" />
+
+        <LinearLayout
+            android:id="@+id/social_login_buttons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sign_message">
+
+            <ImageView
+                android:id="@+id/sign_in_facebook_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/fb_button" />
+
+            <TextView
+                android:id="@+id/or"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:gravity="center_horizontal"
+                android:text="@string/or"
+                android:textColor="#FFFFFF"
+                android:textSize="22sp" />
+
+            <ImageView
+                android:id="@+id/sign_in_gmail_button"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:background="@drawable/gmail_button" />
+        </LinearLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

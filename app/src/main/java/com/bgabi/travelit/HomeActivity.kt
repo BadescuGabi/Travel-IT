@@ -6,22 +6,26 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
+import androidx.databinding.DataBindingUtil
 import com.bgabi.travelit.auth.SignInActivity
 import com.facebook.login.LoginManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import androidx.fragment.app.Fragment
+import com.bgabi.travelit.databinding.ActivityHomeBinding
+import com.bgabi.travelit.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class HomeActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityHomeBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
         val profileFragment = ProfileFragment()
         val homeFragment = HomeFragment()
         setCurrentFragment(profileFragment)
-        val bottomNavigationView :BottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        val bottomNavigationView :BottomNavigationView = binding.bottomNavigationView
         bottomNavigationView.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.profile -> setCurrentFragment(profileFragment)

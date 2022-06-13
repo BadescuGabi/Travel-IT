@@ -12,9 +12,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import com.bgabi.travelit.auth.SavedPreference
 import com.bgabi.travelit.auth.SignInActivity
 import com.bgabi.travelit.auth.SignUpActivity
+import com.bgabi.travelit.databinding.ActivityMainBinding
 import com.facebook.*
 import com.facebook.appevents.AppEventsLogger
 import com.facebook.login.LoginManager
@@ -47,6 +49,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btn_google: ImageView
     var condition = false
     val Req_Code: Int = 123
+    private lateinit var binding: ActivityMainBinding
 
 //    private val firebaseAuthListener = FirebaseAuth.AuthStateListener {
 //        val user = firebaseAuth.currentUser?.uid
@@ -60,7 +63,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         firebaseAuth = Firebase.auth
         firebaseUser = firebaseAuth.currentUser
@@ -68,12 +71,12 @@ class MainActivity : AppCompatActivity() {
         FacebookSdk.fullyInitialize()
         AppEventsLogger.activateApp(application)
 
-        val button_sign_in: Button = findViewById(R.id.button_sign_up)
+        val button_sign_in: Button = binding.buttonSignUp
         button_sign_in.setOnClickListener {
             startActivity(Intent(this@MainActivity, SignUpActivity::class.java))
         }
 
-        val button_sign_up: Button = findViewById(R.id.button_sign_in)
+        val button_sign_up: Button = binding.buttonSignIn
         button_sign_up.setOnClickListener {
             startActivity(Intent(this@MainActivity, SignInActivity::class.java))
         }
@@ -84,14 +87,14 @@ class MainActivity : AppCompatActivity() {
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
-        btn_google = findViewById<ImageView>(R.id.sign_in_gmail_button)
+        btn_google = binding.signInGmailButton
         btn_google.setOnClickListener { view: View? ->
             signInGoogle()
         }
 
         callbackManager = CallbackManager.Factory.create()
 
-        btn_facebook = findViewById<ImageView>(R.id.sign_in_facebook_button)
+        btn_facebook = binding.signInFacebookButton
         btn_facebook.setOnClickListener {
             LoginManager.getInstance()
                 .logInWithReadPermissions(this, listOf("public_profile", "email"))
