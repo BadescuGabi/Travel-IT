@@ -1,11 +1,18 @@
 package com.bgabi.travelit
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.LinearLayout
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
+import com.bgabi.travelit.auth.SignUpActivity
+import com.bgabi.travelit.databinding.FragmentEditProfileBinding
 import com.bgabi.travelit.databinding.FragmentProfileBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -22,11 +29,48 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private lateinit var binding: FragmentEditProfileBinding
+    lateinit var homeActivity: HomeActivity
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            param1 = it.getString(ARG_PARAM1)
+            param2 = it.getString(ARG_PARAM2)
+        }
+    }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        val binding = DataBindingUtil.inflate<FragmentProfileBinding>(inflater,
-            R.layout.fragment_profile,container,false)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val binding = DataBindingUtil.inflate<FragmentProfileBinding>(
+            inflater,
+            R.layout.fragment_profile, container, false
+        )
+        val edit_profile: Button = binding.editProfile
+        edit_profile.setOnClickListener {
+            val fragment: Fragment = EditProfileFragment()
+            val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
+            val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.flFragment, fragment)
+            fragmentTransaction.commit()
+        }
+        val followersFragment: LinearLayout = binding.followers
+        followersFragment.setOnClickListener {
+            val fragment: Fragment = FollowersFragment()
+            val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
+            val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.flFragment, fragment)
+            fragmentTransaction.commit()
+        }
+        val followingFragment: LinearLayout = binding.following
+        followingFragment.setOnClickListener {
+            val fragment: Fragment = FollowingFragment()
+            val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
+            val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.flFragment, fragment)
+            fragmentTransaction.commit()
+        }
         return binding.root
     }
 

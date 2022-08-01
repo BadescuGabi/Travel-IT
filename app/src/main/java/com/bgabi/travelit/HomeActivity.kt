@@ -43,6 +43,7 @@ class HomeActivity : AppCompatActivity() {
             commit()
         }
 
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.profile_menu, menu)
         if (menu != null) {

@@ -32,4 +32,8 @@
     <string name="favorites">Favorites</string>
     <string name="travel_history">Travel History</string>
     <string name="future_travels">Future Travels</string>
+    <string name="name">Name</string>
+    <string name="phone">Phone</string>
+    <string name="description">Description</string>
+    <string name="update_profile_information">Update Profile Information</string>
 </resources>
