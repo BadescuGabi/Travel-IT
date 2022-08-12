@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.bgabi.travelit.databinding.FragmentFollowersBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -16,10 +18,11 @@ private const val ARG_PARAM2 = "param2"
  * Use the [FollowersFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class FollowersFragment : Fragment() {
+class FollowersFragment : Fragment(R.layout.fragment_followers) {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private lateinit var binding: FragmentFollowersBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,8 +36,30 @@ class FollowersFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_followers, container, false)
+        binding = FragmentFollowersBinding.inflate(layoutInflater)
+
+        // getting the recyclerview by its id
+        val recyclerview = binding.recyclerviewFollowers
+
+        // this creates a vertical layout Manager
+        recyclerview.layoutManager = LinearLayoutManager(context)
+
+        // ArrayList of class ItemsViewModel
+        val data = ArrayList<UserCardVIewModel>()
+
+        // This loop will create 20 Views containing
+        // the image with the count of view
+        for (i in 1..2) {
+            data.add(UserCardVIewModel(R.drawable.me, "Item " + i))
+        }
+
+        // This will pass the ArrayList to our Adapter
+        val adapter = FollowersAdapter(data)
+
+        // Setting the Adapter with the recyclerview
+        recyclerview.adapter = adapter
+
+        return binding.root
     }
 
     companion object {

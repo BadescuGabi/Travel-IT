@@ -1,17 +1,15 @@
 package com.bgabi.travelit
 
-import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import com.bgabi.travelit.auth.SignUpActivity
 import com.bgabi.travelit.databinding.FragmentEditProfileBinding
 import com.bgabi.travelit.databinding.FragmentProfileBinding
 
@@ -29,7 +27,9 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private lateinit var binding: FragmentEditProfileBinding
+    private lateinit var binding: FragmentProfileBinding
+    private lateinit var followersFragment: LinearLayout
+    private lateinit var followingFragment: LinearLayout
     lateinit var homeActivity: HomeActivity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +43,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = DataBindingUtil.inflate<FragmentProfileBinding>(
+        binding = DataBindingUtil.inflate<FragmentProfileBinding>(
             inflater,
             R.layout.fragment_profile, container, false
         )
@@ -53,22 +53,25 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
             val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
             fragmentTransaction.replace(R.id.flFragment, fragment)
+                .addToBackStack(null)
             fragmentTransaction.commit()
         }
-        val followersFragment: LinearLayout = binding.followers
+        followersFragment = binding.followers
         followersFragment.setOnClickListener {
             val fragment: Fragment = FollowersFragment()
             val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
             val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
             fragmentTransaction.replace(R.id.flFragment, fragment)
+                .addToBackStack(null)
             fragmentTransaction.commit()
         }
-        val followingFragment: LinearLayout = binding.following
+        followingFragment = binding.following
         followingFragment.setOnClickListener {
             val fragment: Fragment = FollowingFragment()
             val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
             val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
             fragmentTransaction.replace(R.id.flFragment, fragment)
+                .addToBackStack(null)
             fragmentTransaction.commit()
         }
         return binding.root
@@ -92,5 +95,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                     putString(ARG_PARAM2, param2)
                 }
             }
+
     }
-}
+    }

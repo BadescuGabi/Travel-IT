@@ -5,6 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.bgabi.travelit.databinding.FragmentProfileBinding
+import com.bgabi.travelit.databinding.FragmentFollowingBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -16,11 +21,12 @@ private const val ARG_PARAM2 = "param2"
  * Use the [FollowingFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class FollowingFragment : Fragment() {
+class FollowingFragment : Fragment(R.layout.fragment_following) {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
+    private lateinit var binding: FragmentFollowingBinding
+    lateinit var homeActivity: HomeActivity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -33,8 +39,31 @@ class FollowingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_following, container, false)
+
+        binding = FragmentFollowingBinding.inflate(layoutInflater)
+
+        // getting the recyclerview by its id
+        val recyclerview = binding.recyclerviewFollowing
+
+        // this creates a vertical layout Manager
+        recyclerview.layoutManager = LinearLayoutManager(context)
+
+        // ArrayList of class ItemsViewModel
+        val data = ArrayList<UserCardVIewModel>()
+
+        // This loop will create 20 Views containing
+        // the image with the count of view
+        for (i in 1..20) {
+            data.add(UserCardVIewModel(R.drawable.me, "Item " + i))
+        }
+
+        // This will pass the ArrayList to our Adapter
+        val adapter = FollowingAdapter(data)
+
+        // Setting the Adapter with the recyclerview
+        recyclerview.adapter = adapter
+
+        return binding.root
     }
 
     companion object {
