@@ -36,4 +36,5 @@
     <string name="phone">Phone</string>
     <string name="description">Description</string>
     <string name="update_profile_information">Update Profile Information</string>
+    <string name="Username">Username</string>
 </resources>

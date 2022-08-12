@@ -12,7 +12,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_heading"
+                android:id="@+id/update_information"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
@@ -27,7 +27,7 @@
 
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layout_image"
+                android:id="@+id/update_profile_picture"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="0dp"
@@ -44,7 +44,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layout_first_name"
+                android:id="@+id/update_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -52,13 +52,13 @@
                 android:padding="5dp">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_first_name"
+                    android:id="@+id/et_update_username"
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:background="#00000000"
                     android:gravity="center"
                     android:layout_marginTop="45dp"
-                    android:hint="@string/name"
+                    android:hint="@string/Username"
                     android:textColor="#000000"
                     android:textColorHint="#808080"
                     android:textSize="15sp" />
@@ -66,7 +66,7 @@
 
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layout_email"
+                android:id="@+id/update_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/password"
@@ -75,7 +75,7 @@
                 android:textColorHint="@color/icicle">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_password"
+                    android:id="@+id/et_update_password"
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:background="#00000000"
@@ -87,7 +87,7 @@
 
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layout_contact_no"
+                android:id="@+id/update_contact_no"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -95,7 +95,7 @@
                 android:textColorHint="@color/icicle">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_contact_no"
+                    android:id="@+id/et_update_contact_no"
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:background="#00000000"
@@ -108,7 +108,7 @@
 
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layout_des"
+                android:id="@+id/update_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColorHint="@color/icicle"
@@ -116,7 +116,7 @@
                 android:gravity="center">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_des"
+                    android:id="@+id/et_update_description"
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:background="#00000000"
@@ -129,7 +129,7 @@
 
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/bt_edit"
+                android:id="@+id/bt_update_profile"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="200dp"
                 android:layout_height="50dp"

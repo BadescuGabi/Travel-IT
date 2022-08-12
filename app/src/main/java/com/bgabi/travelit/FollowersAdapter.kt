@@ -39,7 +39,7 @@ class FollowersAdapter(private val mList: List<UserCardVIewModel>) : RecyclerVie
 
     // Holds the views for adding it to image and text
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
-        val imageView: ImageView = itemView.findViewById(R.id.imageview_followers)
+        val imageView: ImageView = itemView.findViewById(R.id.image_followers)
         val textView: TextView = itemView.findViewById(R.id.textView_followers)
     }
 }
