@@ -9,18 +9,18 @@
     <!--recycler view for displaying
         our Facebook posts-->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/feed"
+        android:id="@+id/feed_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/feed_rv_item"/>
+        tools:listitem="@layout/feed_rv_item" />
 
     <!--progressbar for displaying
         our loading indicator-->
-<!--    <ProgressBar-->
-<!--        android:id="@+id/idLoadingPB"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_centerInParent="true"-->
-<!--        android:visibility="visible" />-->
+    <ProgressBar
+        android:id="@+id/idLoadingPB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="visible" />
 
 </RelativeLayout>
