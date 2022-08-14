@@ -1,12 +1,13 @@
 package com.bgabi.travelit
 
-import android.R
+import android.app.SearchManager
+import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,7 +19,6 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.bgabi.travelit.databinding.FragmentHomeBinding
 import org.json.JSONException
-
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -36,7 +36,10 @@ class HomeFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var binding: FragmentHomeBinding
+    private lateinit var searchView: SearchView
+    private lateinit var queryTextListener: SearchView.OnQueryTextListener
     private lateinit var mRequestQueue: RequestQueue
+    private lateinit var searchManager: SearchManager
     private lateinit var instaModalArrayList: ArrayList<PostViewModel>
     private lateinit var facebookFeedModalArrayList: ArrayList<PostViewModel>
     private lateinit var progressBar: ProgressBar
@@ -47,6 +50,7 @@ class HomeFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -77,7 +81,36 @@ class HomeFragment : Fragment() {
         // Setting the Adapter with the recyclerview
         recyclerview.adapter = adapter
         getPostsFeed()
+
         return binding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.search_menu, menu)
+//        val recyclerview = binding.feedRecyclerview
+//        recyclerview.layoutManager = LinearLayoutManager(context)
+        val data = ArrayList<PostViewModel>()
+        val adapter = PostAdapter(data)
+        val searchItem = menu.findItem(R.id.search)
+        val searchManager = requireActivity().getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        if (searchItem != null) {
+            searchView = searchItem.actionView as SearchView
+        }
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(requireActivity().componentName))
+        queryTextListener = object : SearchView.OnQueryTextListener {
+            override fun onQueryTextChange(newText: String): Boolean {
+                Log.i("onQueryTextChange", newText)
+                adapter.filter.filter(newText)
+                return false
+            }
+
+            override fun onQueryTextSubmit(query: String): Boolean {
+                Log.i("onQueryTextSubmit", query)
+                return false
+            }
+        }
+        searchView.setOnQueryTextListener(queryTextListener)
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     private fun getPostsFeed() {

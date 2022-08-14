@@ -4,20 +4,21 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class PostAdapter(
     postList: ArrayList<PostViewModel>,
 ) :
-    RecyclerView.Adapter<PostAdapter.ViewHolder>() {
+    RecyclerView.Adapter<PostAdapter.ViewHolder>(), Filterable {
     // arraylist for our facebook feeds.
     private lateinit var postList: ArrayList<PostViewModel>
+    var postFilterList = ArrayList<PostViewModel>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         // inflating our layout for item of recycler view item.
         val view: View = LayoutInflater.from(parent.context)
@@ -41,7 +42,7 @@ class PostAdapter(
 
     override fun getItemCount(): Int {
         // returning the size of our array list.
-        return postList.size
+        return postFilterList.size
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -72,5 +73,38 @@ class PostAdapter(
     // creating a constructor for our adapter class.
     init {
         this.postList = postList
+        postFilterList = postList
+    }
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val charSearch = constraint.toString()
+                if (charSearch.isEmpty()) {
+                    postFilterList = postList
+                } else {
+                    val resultList = ArrayList<PostViewModel>()
+                    for (post in postList) {
+                        if (post.postDescription.lowercase(Locale.ROOT)
+                            .contains(charSearch.lowercase(Locale.ROOT))
+                        ) {
+                            resultList.add(post)
+                        }
+                    }
+                    postFilterList = resultList
+                }
+                val filterResults = FilterResults()
+                filterResults.values = postFilterList
+                return filterResults
+            }
+
+            @Suppress("UNCHECKED_CAST")
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                postFilterList = results?.values as ArrayList<PostViewModel>
+                notifyDataSetChanged()
+            }
+        }
     }
 }
+
+

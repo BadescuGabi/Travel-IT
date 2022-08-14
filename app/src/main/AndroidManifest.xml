@@ -17,6 +17,8 @@
             android:exported="false"
             android:theme="@style/Theme.TravelIT"/>
 
+        <meta-data android:name="android.app.searchable"
+            android:resource="@menu/search_bar_feed" />
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />

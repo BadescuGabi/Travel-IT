@@ -22,8 +22,8 @@
             <!--circle image for displaying the user image-->
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/idCVAuthor"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_margin="5dp" />
 
             <LinearLayout
@@ -41,6 +41,7 @@
                     android:padding="3dp"
                     android:text="geeks_for_geeks"
                     android:textColor="@color/black"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
 
                 <!--textview for displaying post publish time-->
@@ -51,7 +52,7 @@
                     android:padding="3dp"
                     android:text="time"
                     android:textColor="@color/black"
-                    android:textSize="11sp" />
+                    android:textSize="15sp" />
 
             </LinearLayout>
 
@@ -68,13 +69,13 @@
             android:padding="5dp"
             android:text="Description"
             android:textColor="@color/black"
-            android:textSize="11sp" />
+            android:textSize="16sp" />
 
         <!--image view to display the post image-->
         <ImageView
             android:id="@+id/idIVPost"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="250dp"
             android:layout_below="@id/idTVDescription"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter" />
