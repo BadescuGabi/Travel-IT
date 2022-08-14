@@ -13,7 +13,7 @@
         android:theme="@style/SplashTheme">
 
         <activity
-            android:name=".HomeActivity"
+            android:name=".activities.HomeActivity"
             android:exported="true"
             android:theme="@style/Theme.TravelIT">
         <intent-filter>

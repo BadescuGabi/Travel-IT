@@ -1,4 +1,4 @@
-package com.bgabi.travelit
+package com.bgabi.travelit.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +10,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import com.bgabi.travelit.databinding.FragmentEditProfileBinding
+import com.bgabi.travelit.R
+import com.bgabi.travelit.activities.HomeActivity
 import com.bgabi.travelit.databinding.FragmentProfileBinding
 
 // TODO: Rename parameter arguments, choose names that match

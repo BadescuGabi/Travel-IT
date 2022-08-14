@@ -1,4 +1,4 @@
-package com.bgabi.travelit
+package com.bgabi.travelit.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,15 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
+import com.bgabi.travelit.R
+import com.bgabi.travelit.models.Post
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.*
 import kotlin.collections.ArrayList
 
 
-class PostAdapter(private var postList: ArrayList<PostViewModel>): RecyclerView.Adapter<PostAdapter.ViewHolder>(), Filterable {
+class PostAdapter(private var postList: ArrayList<Post>): RecyclerView.Adapter<PostAdapter.ViewHolder>(), Filterable {
     // arraylist for our facebook feeds.
-    var postFilterList = ArrayList<PostViewModel>()
+    var postFilterList = ArrayList<Post>()
     private lateinit var mContext: Context
 
     init {
@@ -31,7 +33,7 @@ class PostAdapter(private var postList: ArrayList<PostViewModel>): RecyclerView.
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         // getting data from array list and setting it to our modal class.
-        val modal: PostViewModel = postFilterList[position]
+        val modal: Post = postFilterList[position]
 
         // setting data to each view of recyclerview item.
         Picasso.get().load(modal.authorImage).placeholder(R.drawable.me).into(holder.authorIV)
@@ -86,9 +88,9 @@ class PostAdapter(private var postList: ArrayList<PostViewModel>): RecyclerView.
                 if (charSearch.isEmpty()) {
                     postFilterList = postList
                 } else {
-                    val resultList = ArrayList<PostViewModel>()
+                    val resultList = ArrayList<Post>()
                     for (post in postList) {
-                        if (post.postDescription.lowercase(Locale.ROOT)
+                        if (post.postDescription!!.lowercase(Locale.ROOT)
                             .contains(charSearch.lowercase(Locale.ROOT))
                         ) {
                             resultList.add(post)
@@ -103,7 +105,7 @@ class PostAdapter(private var postList: ArrayList<PostViewModel>): RecyclerView.
 
             @Suppress("UNCHECKED_CAST")
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                postFilterList = results?.values as ArrayList<PostViewModel>
+                postFilterList = results?.values as ArrayList<Post>
                 notifyDataSetChanged()
             }
         }

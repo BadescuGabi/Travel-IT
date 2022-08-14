@@ -1,4 +1,4 @@
-package com.bgabi.travelit
+package com.bgabi.travelit.fragments
 
 import android.app.SearchManager
 import android.content.Context
@@ -17,7 +17,10 @@ import com.android.volley.Response
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.bgabi.travelit.R
+import com.bgabi.travelit.adapter.PostAdapter
 import com.bgabi.travelit.databinding.FragmentHomeBinding
+import com.bgabi.travelit.models.Post
 import org.json.JSONException
 
 
@@ -40,8 +43,8 @@ class HomeFragment : Fragment() {
     private lateinit var queryTextListener: SearchView.OnQueryTextListener
     private lateinit var mRequestQueue: RequestQueue
     private lateinit var searchManager: SearchManager
-    private lateinit var instaModalArrayList: ArrayList<PostViewModel>
-    private lateinit var facebookFeedModalArrayList: ArrayList<PostViewModel>
+    private lateinit var instaModalArrayList: ArrayList<Post>
+    private lateinit var facebookFeedModalArrayList: ArrayList<Post>
     private lateinit var progressBar: ProgressBar
     private lateinit var adapter: PostAdapter
     private lateinit var recyclerview: RecyclerView
@@ -151,7 +154,7 @@ class HomeFragment : Fragment() {
                             val postComments = feedsObj.getString("postComments")
 
                             // adding data to our modal class.
-                            val feedModal = PostViewModel(
+                            val feedModal = Post(
                                 authorImage,
                                 authorName,
                                 postDate,

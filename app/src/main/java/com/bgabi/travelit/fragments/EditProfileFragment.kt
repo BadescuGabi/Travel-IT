@@ -1,4 +1,4 @@
-package com.bgabi.travelit
+package com.bgabi.travelit.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.databinding.DataBindingUtil
+import com.bgabi.travelit.R
 import com.bgabi.travelit.auth.SignUpActivity
 import com.bgabi.travelit.databinding.ActivityHomeBinding
 import com.bgabi.travelit.databinding.FragmentEditProfileBinding

@@ -1,4 +1,4 @@
-package com.bgabi.travelit
+package com.bgabi.travelit.activities
 
 import android.app.AlertDialog
 import android.content.DialogInterface
@@ -9,8 +9,12 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import com.bgabi.travelit.MainActivity
+import com.bgabi.travelit.R
 import com.bgabi.travelit.auth.SignInActivity
 import com.bgabi.travelit.databinding.ActivityHomeBinding
+import com.bgabi.travelit.fragments.HomeFragment
+import com.bgabi.travelit.fragments.ProfileFragment
 import com.facebook.login.LoginManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth

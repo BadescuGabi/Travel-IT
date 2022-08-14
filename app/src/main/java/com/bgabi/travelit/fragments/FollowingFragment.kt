@@ -1,14 +1,15 @@
-package com.bgabi.travelit
+package com.bgabi.travelit.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.bgabi.travelit.databinding.FragmentProfileBinding
+import com.bgabi.travelit.R
+import com.bgabi.travelit.UserCardVIewModel
+import com.bgabi.travelit.activities.HomeActivity
+import com.bgabi.travelit.adapter.FollowingAdapter
 import com.bgabi.travelit.databinding.FragmentFollowingBinding
 
 // TODO: Rename parameter arguments, choose names that match

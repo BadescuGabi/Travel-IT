@@ -9,10 +9,10 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.bgabi.travelit.activities.HomeActivity
 import com.bgabi.travelit.auth.SavedPreference
 import com.bgabi.travelit.auth.SignInActivity
 import com.bgabi.travelit.auth.SignUpActivity
