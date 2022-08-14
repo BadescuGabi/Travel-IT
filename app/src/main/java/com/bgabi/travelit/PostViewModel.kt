@@ -1,12 +1,13 @@
 package com.bgabi.travelit
 
+import java.io.Serializable
+
 
 data class PostViewModel     // creating a constructor class.
-    (
-    val authorImage: String, val authorName: String, val postDate: String,
-    val postDescription: String, val postIV: String, val postLikes: String,
-    val postComments: String
-)
-{
-
-    }
+    (val authorImage: String,
+    val authorName: String,
+    val postDate: String,
+    val postDescription: String,
+    val postIV: String,
+    val postLikes: String,
+    val postComments: String): Serializable

@@ -43,6 +43,8 @@ class HomeFragment : Fragment() {
     private lateinit var instaModalArrayList: ArrayList<PostViewModel>
     private lateinit var facebookFeedModalArrayList: ArrayList<PostViewModel>
     private lateinit var progressBar: ProgressBar
+    private lateinit var adapter: PostAdapter
+    private lateinit var recyclerview: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,21 +55,20 @@ class HomeFragment : Fragment() {
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?): View? {
 
         binding = FragmentHomeBinding.inflate(layoutInflater)
         progressBar = binding.idLoadingPB
+
         // getting the recyclerview by its id
-        val recyclerview = binding.feedRecyclerview
+        recyclerview = binding.feedRecyclerview
 
         // this creates a vertical layout Manager
         recyclerview.layoutManager = LinearLayoutManager(context)
 
         // ArrayList of class ItemsViewModel
-        val data = ArrayList<PostViewModel>()
+        //val data = ArrayList<PostViewModel>()
 
         // This loop will create 20 Views containing
         // the image with the count of view
@@ -76,10 +77,10 @@ class HomeFragment : Fragment() {
 //        }
 
         // This will pass the ArrayList to our Adapter
-        val adapter = PostAdapter(data)
+        //adapter = PostAdapter(data)
 
         // Setting the Adapter with the recyclerview
-        recyclerview.adapter = adapter
+        //recyclerview.adapter = adapter
         getPostsFeed()
 
         return binding.root
@@ -87,15 +88,13 @@ class HomeFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.search_menu, menu)
-//        val recyclerview = binding.feedRecyclerview
-//        recyclerview.layoutManager = LinearLayoutManager(context)
-        val data = ArrayList<PostViewModel>()
-        val adapter = PostAdapter(data)
+
         val searchItem = menu.findItem(R.id.search)
         val searchManager = requireActivity().getSystemService(Context.SEARCH_SERVICE) as SearchManager
         if (searchItem != null) {
             searchView = searchItem.actionView as SearchView
         }
+
         searchView.setSearchableInfo(searchManager.getSearchableInfo(requireActivity().componentName))
         queryTextListener = object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(newText: String): Boolean {
@@ -164,9 +163,8 @@ class HomeFragment : Fragment() {
                             facebookFeedModalArrayList.add(feedModal)
 
                             // below line we are creating an adapter class and adding our array list in it.
-                            val adapter =
-                                PostAdapter(facebookFeedModalArrayList)
-                            val instRV: RecyclerView = binding.feedRecyclerview
+                            adapter = PostAdapter(facebookFeedModalArrayList)
+                            recyclerview = binding.feedRecyclerview
 
                             // below line is for setting linear layout manager to our recycler view.
                             val linearLayoutManager =
@@ -174,11 +172,11 @@ class HomeFragment : Fragment() {
 
                             // below line is to set layout
                             // manager to our recycler view.
-                            instRV.layoutManager = linearLayoutManager
+                            recyclerview.layoutManager = linearLayoutManager
 
                             // below line is to set adapter
                             // to our recycler view.
-                            instRV.adapter = adapter
+                            recyclerview.adapter = adapter
                         }
                     } catch (e: JSONException) {
                         e.printStackTrace()

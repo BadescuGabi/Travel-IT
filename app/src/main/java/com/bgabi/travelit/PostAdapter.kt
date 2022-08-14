@@ -12,23 +12,26 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class PostAdapter(
-    postList: ArrayList<PostViewModel>,
-) :
-    RecyclerView.Adapter<PostAdapter.ViewHolder>(), Filterable {
+class PostAdapter(private var postList: ArrayList<PostViewModel>): RecyclerView.Adapter<PostAdapter.ViewHolder>(), Filterable {
     // arraylist for our facebook feeds.
-    private lateinit var postList: ArrayList<PostViewModel>
     var postFilterList = ArrayList<PostViewModel>()
+    private lateinit var mContext: Context
+
+    init {
+        postFilterList = postList
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         // inflating our layout for item of recycler view item.
-        val view: View = LayoutInflater.from(parent.context)
-            .inflate(R.layout.feed_rv_item, parent, false)
+        val view: View = LayoutInflater.from(parent.context).inflate(R.layout.feed_rv_item, parent, false)
+        mContext = parent.context
+
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         // getting data from array list and setting it to our modal class.
-        val modal: PostViewModel = postList[position]
+        val modal: PostViewModel = postFilterList[position]
 
         // setting data to each view of recyclerview item.
         Picasso.get().load(modal.authorImage).placeholder(R.drawable.me).into(holder.authorIV)
@@ -71,10 +74,10 @@ class PostAdapter(
     }
 
     // creating a constructor for our adapter class.
-    init {
-        this.postList = postList
-        postFilterList = postList
-    }
+//    init {
+//        this.postList = postList
+//        postFilterList = postList
+//    }
 
     override fun getFilter(): Filter {
         return object : Filter() {
