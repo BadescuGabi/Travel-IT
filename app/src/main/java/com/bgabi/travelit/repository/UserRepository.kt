@@ -10,7 +10,7 @@ import kotlinx.coroutines.tasks.await
 class UserRepository(private val rootRef: DatabaseReference = FirebaseDatabase.getInstance("https://travel-it-d162e-default-rtdb.europe-west1.firebasedatabase.app//").getReference("data"),
                              private val userRef: DatabaseReference = rootRef.child("Users")) {
 
-    fun getResponseFromRealtimeDatabaseUsingLiveData() : MutableLiveData<DbResponse> {
+    fun getResponseLiveData() : MutableLiveData<DbResponse> {
         val mutableLiveData = MutableLiveData<DbResponse>()
         userRef.get().addOnCompleteListener { task ->
             val response = DbResponse()

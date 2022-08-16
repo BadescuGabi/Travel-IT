@@ -1,7 +1,8 @@
 package com.bgabi.travelit.models
 
 data class Comment (
-    val Author: User? = null,
+    val post: Post? = null,
+    val author: User? = null,
     val comm: String? = null){
 
 }
