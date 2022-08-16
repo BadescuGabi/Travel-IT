@@ -5,10 +5,14 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
@@ -20,6 +24,7 @@ import com.android.volley.toolbox.Volley
 import com.bgabi.travelit.R
 import com.bgabi.travelit.adapter.PostAdapter
 import com.bgabi.travelit.databinding.FragmentHomeBinding
+import com.bgabi.travelit.databinding.FeedRvItemBinding
 import com.bgabi.travelit.models.Post
 import org.json.JSONException
 
@@ -39,6 +44,7 @@ class HomeFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var binding: FragmentHomeBinding
+    private lateinit var binding2: FeedRvItemBinding
     private lateinit var searchView: SearchView
     private lateinit var queryTextListener: SearchView.OnQueryTextListener
     private lateinit var mRequestQueue: RequestQueue
@@ -60,13 +66,14 @@ class HomeFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
+        //val v = inflater.inflate(R.layout.feed_rv_item, container, false)
 
         binding = FragmentHomeBinding.inflate(layoutInflater)
+        binding2 = FeedRvItemBinding.inflate(layoutInflater)
         progressBar = binding.idLoadingPB
 
         // getting the recyclerview by its id
         recyclerview = binding.feedRecyclerview
-
         // this creates a vertical layout Manager
         recyclerview.layoutManager = LinearLayoutManager(context)
 
@@ -85,7 +92,6 @@ class HomeFragment : Fragment() {
         // Setting the Adapter with the recyclerview
         //recyclerview.adapter = adapter
         getPostsFeed()
-
         return binding.root
     }
 

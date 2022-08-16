@@ -50,6 +50,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.facebook.android:facebook-android-sdk:latest.release'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.google.firebase:firebase-database-ktx:20.0.5'
     testImplementation 'junit:junit:4.+'
     implementation 'androidx.core:core-splashscreen:1.0.0-beta02'
     implementation "com.google.android.material:material:1.2.0"
@@ -84,6 +85,11 @@ dependencies {
     implementation "com.squareup.picasso:picasso:2.71828"
 
 // dependency for creating a circle image.
-
+    // Declare the dependency for the Realtime Database library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.1'
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.0"
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 
 }

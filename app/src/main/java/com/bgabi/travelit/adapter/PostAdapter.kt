@@ -5,8 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import com.bgabi.travelit.R
+import com.bgabi.travelit.fragments.CommentFragment
 import com.bgabi.travelit.models.Post
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
@@ -43,6 +48,17 @@ class PostAdapter(private var postList: ArrayList<Post>): RecyclerView.Adapter<P
         Picasso.get().load(modal.postIV).placeholder(R.drawable.me).into(holder.postIV)
         holder.likesTV.setText(modal.postLikes)
         holder.commentsTV.setText(modal.postComments)
+
+        val commentButton: LinearLayout = holder.button
+        commentButton.setOnClickListener {
+            val fragment: Fragment = CommentFragment()
+            val activity=it.context as AppCompatActivity
+            activity.supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.flFragment,fragment)
+                .addToBackStack(null)
+                .commit()
+        }
     }
 
     override fun getItemCount(): Int {
@@ -61,6 +77,7 @@ class PostAdapter(private var postList: ArrayList<Post>): RecyclerView.Adapter<P
         val likesTV: TextView
         val commentsTV: TextView
         val shareLL: LinearLayout
+        val button: LinearLayout
 
         init {
             // initializing our variables
@@ -72,6 +89,7 @@ class PostAdapter(private var postList: ArrayList<Post>): RecyclerView.Adapter<P
             postIV = itemView.findViewById(R.id.idIVPost)
             likesTV = itemView.findViewById(R.id.idTVLikes)
             commentsTV = itemView.findViewById(R.id.idTVComments)
+            button = itemView.findViewById(R.id.commentButton)
         }
     }
 
