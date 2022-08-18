@@ -30,7 +30,7 @@ class CommentRepository(private val rootRef: DatabaseReference = FirebaseDatabas
         return mutableLiveData
     }
 
-    suspend fun getResponse(): DbResponse {
+    suspend fun getResponseFromDbCoroutine(): DbResponse {
         val response = DbResponse()
         try {
             response.comments = commentRef.get().await().children.map { snapShot ->

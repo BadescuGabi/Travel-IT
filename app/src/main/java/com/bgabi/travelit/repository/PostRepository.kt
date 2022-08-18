@@ -11,26 +11,7 @@ import kotlinx.coroutines.tasks.await
 class PostRepository(private val rootRef: DatabaseReference = FirebaseDatabase.getInstance("https://travel-it-d162e-default-rtdb.europe-west1.firebasedatabase.app//").getReference("data"),
                      private val postRef: DatabaseReference = rootRef.child("Posts")) {
 
-    fun getResponseLiveData() : MutableLiveData<DbResponse> {
-        val mutableLiveData = MutableLiveData<DbResponse>()
-        postRef.get().addOnCompleteListener { task ->
-            val response = DbResponse()
-            if (task.isSuccessful) {
-                val result = task.result
-                result?.let {
-                    response.posts = result.children.map { snapShot ->
-                        snapShot.getValue(Post::class.java)!!
-                    }
-                }
-            } else {
-                response.exception = task.exception
-            }
-            mutableLiveData.value = response
-        }
-        return mutableLiveData
-    }
-
-    suspend fun getResponse(): DbResponse {
+    suspend fun getResponseFromDbCoroutine(): DbResponse {
         val response = DbResponse()
         try {
             response.posts = postRef.get().await().children.map { snapShot ->
