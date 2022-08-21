@@ -17,6 +17,7 @@ import com.bgabi.travelit.auth.SavedPreference
 import com.bgabi.travelit.auth.SignInActivity
 import com.bgabi.travelit.auth.SignUpActivity
 import com.bgabi.travelit.databinding.ActivityMainBinding
+import com.bumptech.glide.Glide
 import com.facebook.*
 import com.facebook.appevents.AppEventsLogger
 import com.facebook.login.LoginManager
@@ -37,6 +38,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import org.json.JSONObject
 
 
 class MainActivity : AppCompatActivity() {
@@ -186,12 +188,12 @@ class MainActivity : AppCompatActivity() {
 //        Glide.with(this)
 //            .load(profilePic)
 //            .into(binding.profilePic)
-
+//
 //        val name = jsonObject?.getString("name")
 //        val birthday = jsonObject?.getString("birthday")
 //        val gender = jsonObject?.getString("gender")
 //        val email = jsonObject?.getString("email")
-
+//
 //        binding.userName.text = "Name: ${name}"
 //        binding.userEmail.text = "Email: ${email}"
 //        binding.userBDay.text = "Birthday: ${birthday}"
@@ -282,9 +284,5 @@ object SavedPreference {
 
 }
 
-//    override fun onStart() {
-//        super.onStart()
-//        firebaseAuth!!.addAuthStateListener(this.firebaseAuthListener!!)
-//    }
 
 

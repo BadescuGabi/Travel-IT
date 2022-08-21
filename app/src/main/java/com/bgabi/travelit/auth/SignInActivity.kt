@@ -6,41 +6,50 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.text.TextUtils
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.bgabi.travelit.activities.HomeActivity
 import com.bgabi.travelit.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.*
-
+import com.bgabi.travelit.databinding.ActivitySignInBinding
+import com.bgabi.travelit.databinding.ActivitySignUpBinding
+import com.facebook.CallbackManager
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 
 class SignInActivity : AppCompatActivity() {
     private lateinit var firebaseAuth: FirebaseAuth
     private var firebaseUser: FirebaseUser? = null
+    private lateinit var callbackManager: CallbackManager
+    private lateinit var layout: ConstraintLayout
+    private lateinit var binding: ActivitySignInBinding
+    val Req_Code: Int = 123
     var condition = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sign_in)
+        binding = ActivitySignInBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         firebaseAuth = FirebaseAuth.getInstance()
         firebaseUser = firebaseAuth.currentUser
 
-        val btn_to_sign_up = findViewById<Button>(R.id.btn_login)
-        btn_to_sign_up.setOnClickListener {
-            val intent: Intent = Intent(this@SignInActivity, HomeActivity::class.java)
-            startActivity(intent)
-        }
+//        val btn_to_sign_up = findViewById<Button>(R.id.btn_login)
+//        btn_to_sign_up.setOnClickListener {
+//            val intent: Intent = Intent(this@SignInActivity, HomeActivity::class.java)
+//            startActivity(intent)
+//        }
 
-        val btn_sign_in = findViewById<Button>(R.id.btn_login)
-        val et_login_email = findViewById<TextView>(R.id.et_login_email)
-        val et_login_password = findViewById<TextView>(R.id.et_login_password)
-        val email = et_login_email.text.toString()
-        val password = et_login_password.text.toString()
+        val btn_sign_in = binding.btnLogin
+
         btn_sign_in.setOnClickListener {
+            val et_login_email = binding.etLoginEmail
+            val et_login_password = binding.etLoginPassword
+            val email = et_login_email.text.toString()
+            val password = et_login_password.text.toString()
+
             when {
                 TextUtils.isEmpty(et_login_email.text.toString().trim { it <= ' ' }) -> {
                     Toast.makeText(
@@ -57,8 +66,6 @@ class SignInActivity : AppCompatActivity() {
                     ).show()
                 }
                 else -> {
-                    val email = et_login_email.text.toString()
-                    val password = et_login_password.text.toString()
                     signIn(email, password)
                 }
             }

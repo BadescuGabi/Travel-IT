@@ -10,9 +10,9 @@ import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.tasks.await
 
 class UserRepository(
-    private val rootRef: DatabaseReference = FirebaseDatabase.getInstance("https://travel-it-d162e-default-rtdb.europe-west1.firebasedatabase.app//")
+    private val rootRef: DatabaseReference = FirebaseDatabase.getInstance("https://travel-it-d162e-default-rtdb.europe-west1.firebasedatabase.app/")
         .getReference("data"),
-    private val userRef: DatabaseReference = rootRef.child("Users")
+    private val userRef: DatabaseReference = rootRef.child("users")
 ) {
 
     suspend fun getResponseFromDbCoroutine(): DbResponse {
@@ -28,7 +28,7 @@ class UserRepository(
     }
 
     suspend fun getCurrentUser(uid: String): User {
-        var user: User = User("default", "", "", "", null, null, null)
+        var user: User = User("default", "", "", "", null, null, null, null, null, null, null, "")
         try {
             val data = userRef.get().await().child(uid)
             user = data.getValue(User::class.java)!!

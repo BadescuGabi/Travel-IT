@@ -8,7 +8,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.tasks.await
 
-class PostRepository(private val rootRef: DatabaseReference = FirebaseDatabase.getInstance("https://travel-it-d162e-default-rtdb.europe-west1.firebasedatabase.app//").getReference("data"),
+class PostRepository(private val rootRef: DatabaseReference = FirebaseDatabase.getInstance("https://travel-it-d162e-default-rtdb.europe-west1.firebasedatabase.app/").getReference("data"),
                      private val postRef: DatabaseReference = rootRef.child("Posts")) {
 
     suspend fun getResponseFromDbCoroutine(): DbResponse {

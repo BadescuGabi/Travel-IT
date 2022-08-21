@@ -1,8 +1,5 @@
 package com.bgabi.travelit.auth
 
-import com.bgabi.travelit.MainActivity
-import com.bgabi.travelit.R
-
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
@@ -10,54 +7,64 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.facebook.CallbackManager
+import com.bgabi.travelit.MainActivity
+import com.bgabi.travelit.activities.HomeActivity
+import com.bgabi.travelit.databinding.ActivitySignUpBinding
+import com.bgabi.travelit.models.User
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 
-
 class SignUpActivity : AppCompatActivity() {
+    private lateinit var binding: ActivitySignUpBinding
+    private lateinit var redirect_sign_in: TextView
+    private lateinit var btn_register: Button
+    private lateinit var register_email: TextView
+    private lateinit var user_name: TextView
+    private lateinit var register_password: TextView
+    private lateinit var confirm_password: TextView
     private lateinit var auth: FirebaseAuth
+    private lateinit var database: DatabaseReference
+    private final var dbUrl: String =
+        "https://travel-it-d162e-default-rtdb.europe-west1.firebasedatabase.app/"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sign_up)
+        binding = ActivitySignUpBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        initialize()
 
-        auth = Firebase.auth
-
-        val btn_to_sign_in = findViewById<Button>(R.id.btn_register)
-        btn_to_sign_in.setOnClickListener {
-            val intent : Intent = Intent(this@SignUpActivity, SignInActivity::class.java)
+        redirect_sign_in = binding.redirectSignIn
+        redirect_sign_in.setOnClickListener {
+            val intent: Intent = Intent(this@SignUpActivity, SignInActivity::class.java)
             startActivity(intent)
         }
 
-        val et_register_email = findViewById<TextView>(R.id.et_register_email)
-        val et_register_password = findViewById<TextView>(R.id.et_register_password)
-        val et_confirm_password = findViewById<TextView>(R.id.et_confirm_password)
-        //val et_register_name = findViewById<TextView>(R.id.et_register_name)
-        //val et_register_phone = findViewById<TextView>(R.id.et_register_phone)
-
-        val btn_register = findViewById<Button>(R.id.btn_register)
+        btn_register = binding.btnRegister
         btn_register.setOnClickListener {
             when {
-                TextUtils.isEmpty(et_register_email.text.toString().trim { it <= ' ' }) -> {
+                TextUtils.isEmpty(register_email.text.toString().trim { it <= ' ' }) -> {
                     Toast.makeText(
                         this@SignUpActivity,
                         "Please enter your email.",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
-//                TextUtils.isEmpty(et_register_name.text.toString().trim { it <= ' ' }) -> {
-//                    Toast.makeText(
-//                        this@SignUpActivity,
-//                        "Please enter your name.",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                }
-                TextUtils.isEmpty(et_register_password.text.toString().trim { it <= ' ' }) -> {
+
+                TextUtils.isEmpty(user_name.text.toString().trim { it <= ' ' }) -> {
+                    Toast.makeText(
+                        this@SignUpActivity,
+                        "Please enter username.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                TextUtils.isEmpty(register_password.text.toString().trim { it <= ' ' }) -> {
                     Toast.makeText(
                         this@SignUpActivity,
                         "Please enter password.",
@@ -65,12 +72,11 @@ class SignUpActivity : AppCompatActivity() {
                     ).show()
                 }
                 else -> {
-                    val email: String = et_register_email.text.toString().trim { it <= ' ' }
-                    //val name: String = et_register_name.text.toString().trim { it <= ' ' }
-                    //val phone: String = et_register_phone.text.toString().trim { it <= ' ' }
-                    val password: String = et_register_password.text.toString().trim { it <= ' ' }
+                    val email: String = register_email.text.toString().trim { it <= ' ' }
+                    val userName: String = user_name.text.toString().trim { it <= ' ' }
+                    val password: String = register_password.text.toString().trim { it <= ' ' }
                     val confirmPassword: String =
-                        et_confirm_password.text.toString().trim { it <= ' ' }
+                        confirm_password.text.toString().trim { it <= ' ' }
 
                     if (password == confirmPassword) {
                         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
@@ -78,9 +84,7 @@ class SignUpActivity : AppCompatActivity() {
                                 OnCompleteListener<AuthResult> { task ->
                                     if (task.isSuccessful) {
                                         val firebaseUser: FirebaseUser = task.result!!.user!!
-
-                                        //addDataToFirebase(email, name, phone, firebaseUser.uid)
-
+                                        addUserToFirebase(firebaseUser.uid, email, userName)
                                         Toast.makeText(
                                             this@SignUpActivity,
                                             "Your account was successfully created!",
@@ -88,7 +92,7 @@ class SignUpActivity : AppCompatActivity() {
                                         ).show()
 
                                         val intent =
-                                            Intent(this@SignUpActivity, MainActivity::class.java)
+                                            Intent(this@SignUpActivity, HomeActivity::class.java)
                                         intent.flags =
                                             Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                                         intent.putExtra("user_id", firebaseUser.uid)
@@ -121,6 +125,23 @@ class SignUpActivity : AppCompatActivity() {
     public override fun onStart() {
         super.onStart()
         val currentUser = auth.currentUser
+    }
+
+    private fun addUserToFirebase(uid: String, email: String, userName: String) {
+        val user =
+            User(uid, email, userName, "", "", null, null, null, null, null, null, "false")
+        database.child(uid).setValue(user)
+    }
+
+    private fun initialize() {
+        auth = Firebase.auth
+        database = FirebaseDatabase.getInstance(dbUrl).getReference("data/users")
+        redirect_sign_in = binding.redirectSignIn
+        btn_register = binding.btnRegister
+        register_email = binding.etRegisterEmail
+        user_name = binding.etUsername
+        register_password = binding.etRegisterPassword
+        confirm_password = binding.etConfirmPassword
     }
 
 }

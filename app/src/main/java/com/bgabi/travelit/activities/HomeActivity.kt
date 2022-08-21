@@ -50,7 +50,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun setCurrentFragment(fragment: Fragment) {
         if (supportFragmentManager.backStackEntryCount >= 1) {
-            for(i :Int in 1 until supportFragmentManager.backStackEntryCount) {
+            for (i: Int in 1 until supportFragmentManager.backStackEntryCount) {
                 supportFragmentManager.popBackStack()
             }
             supportFragmentManager.beginTransaction().apply {
@@ -67,55 +67,50 @@ class HomeActivity : AppCompatActivity() {
     }
 
 
-override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-    menuInflater.inflate(R.menu.profile_menu, menu)
-    if (menu != null) {
-        checkCurrentUser(menu)
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.profile_menu, menu)
+        if (menu != null) {
+            checkCurrentUser(menu)
+        }
+        return super.onCreateOptionsMenu(menu)
     }
-    return super.onCreateOptionsMenu(menu)
-}
 
-override fun onOptionsItemSelected(item: MenuItem): Boolean {
-    val id: Int = item.itemId
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id: Int = item.itemId
 
-    if (id == R.id.redirect_sign_in) {
-        val intent: Intent = Intent(this, SignInActivity::class.java)
-        startActivity(intent)
-    } else if (id == R.id.log_out_button) {
-        Firebase.auth.signOut()
-        LoginManager.getInstance().logOut();
-        val refresh = Intent(this, MainActivity::class.java)
-        startActivity(refresh)
-        //finish()
+        if (id == R.id.log_out_button) {
+            Firebase.auth.signOut()
+            LoginManager.getInstance().logOut();
+            val refresh = Intent(this, MainActivity::class.java)
+            startActivity(refresh)
+            //finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
-    return super.onOptionsItemSelected(item)
-}
 
-public fun checkCurrentUser(menu: Menu) {
-    FirebaseAuth.getInstance().currentUser?.reload()
-    val user = Firebase.auth.currentUser
+    public fun checkCurrentUser(menu: Menu) {
+        FirebaseAuth.getInstance().currentUser?.reload()
+        val user = Firebase.auth.currentUser
 
-    if (user != null) {
-        menu.getItem(0).setVisible(false)
-        menu.getItem(1).setVisible(true)
-    } else {
-        menu.getItem(0).setVisible(true)
-        menu.getItem(1).setVisible(false)
+        if (user != null) {
+            menu.getItem(0).setVisible(true)
+        } else {
+            menu.getItem(0).setVisible(false)
+        }
     }
-}
 
-override fun onBackPressed() {
-    if (supportFragmentManager.backStackEntryCount == 1) {
-        AlertDialog.Builder(this)
-            .setIcon(android.R.drawable.ic_dialog_alert)
-            .setTitle("Log Out")
-            .setMessage("Are you sure you want to log out?")
-            .setPositiveButton("Yes",
-                DialogInterface.OnClickListener { dialog, which -> exitProcess(2) })
-            .setNegativeButton("No", null)
-            .show()
-    } else {
-        supportFragmentManager.popBackStack()
+    override fun onBackPressed() {
+        if (supportFragmentManager.backStackEntryCount == 1) {
+            AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("Log Out")
+                .setMessage("Are you sure you want to log out?")
+                .setPositiveButton("Yes",
+                    DialogInterface.OnClickListener { dialog, which -> exitProcess(2) })
+                .setNegativeButton("No", null)
+                .show()
+        } else {
+            supportFragmentManager.popBackStack()
+        }
     }
-}
 }
