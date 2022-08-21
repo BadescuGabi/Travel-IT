@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -71,7 +72,16 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(layoutInflater)
         binding2 = FeedRvItemBinding.inflate(layoutInflater)
         progressBar = binding.idLoadingPB
-
+        val newPostButton = binding.newPostButton
+        newPostButton.setOnClickListener {
+            val fragment: Fragment = NewPostFragment()
+            val activity=it.context as AppCompatActivity
+            activity.supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.flFragment,fragment)
+                .addToBackStack(null)
+                .commit()
+        }
         // getting the recyclerview by its id
         recyclerview = binding.feedRecyclerview
         // this creates a vertical layout Manager

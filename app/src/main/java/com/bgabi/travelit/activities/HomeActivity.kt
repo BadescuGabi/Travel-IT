@@ -17,6 +17,7 @@ import com.bgabi.travelit.auth.SignInActivity
 import com.bgabi.travelit.databinding.ActivityHomeBinding
 import com.bgabi.travelit.fragments.CommentFragment
 import com.bgabi.travelit.fragments.HomeFragment
+import com.bgabi.travelit.fragments.NewPostFragment
 import com.bgabi.travelit.fragments.ProfileFragment
 import com.facebook.login.LoginManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -29,6 +30,7 @@ import kotlin.system.exitProcess
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
     private lateinit var commentFragment: CommentFragment
+    private lateinit var newPostFragment: NewPostFragment
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home)

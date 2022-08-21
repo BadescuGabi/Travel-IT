@@ -1,26 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     tools:context=".activities.HomeActivity">
 
-    <!--recycler view for displaying
-        our Facebook posts-->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/feed_recyclerview"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:listitem="@layout/feed_rv_item" />
+        android:layout_height="wrap_content">
 
-    <!--progressbar for displaying
-        our loading indicator-->
-    <ProgressBar
-        android:id="@+id/idLoadingPB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="visible" />
+        <LinearLayout
+            android:id="@+id/new_post_button"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@color/icicle"
+            android:orientation="horizontal">
 
-</RelativeLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="5dp"
+                android:text="Tell us about your story..."
+                android:textSize="20sp"
+                app:drawableRightCompat="@drawable/add" />
+
+        </LinearLayout>
+        <!--recycler view for displaying
+            our Facebook posts-->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/feed_recyclerview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            tools:listitem="@layout/feed_rv_item" />
+
+        <!--progressbar for displaying
+            our loading indicator-->
+        <ProgressBar
+            android:id="@+id/idLoadingPB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="300dp"
+            android:visibility="visible" />
+    </RelativeLayout>
+</ScrollView>

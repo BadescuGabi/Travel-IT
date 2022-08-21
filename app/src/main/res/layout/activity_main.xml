@@ -9,15 +9,6 @@
         android:background="@drawable/main_bg"
         tools:context=".MainActivity">
 
-        <!--    <ImageView-->
-        <!--        android:id="@+id/rootRL"-->
-        <!--        android:layout_width="fill_parent"-->
-        <!--        android:layout_height="fill_parent"-->
-        <!--        -->
-        <!--        android:orientation="vertical"-->
-        <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--        app:layout_constraintStart_toStartOf="parent" />-->
-
         <TextView
             android:id="@+id/app_name"
             android:layout_width="wrap_content"
@@ -33,7 +24,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_sign_up"
             style="@style/Widget.AppCompat.Button"
             android:layout_width="wrap_content"
@@ -48,7 +39,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/app_name" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_sign_in"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
