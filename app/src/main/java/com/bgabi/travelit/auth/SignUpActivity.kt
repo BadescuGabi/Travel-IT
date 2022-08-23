@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bgabi.travelit.MainActivity
 import com.bgabi.travelit.activities.HomeActivity
 import com.bgabi.travelit.databinding.ActivitySignUpBinding
+import com.bgabi.travelit.helpers.FirebaseHelper
 import com.bgabi.travelit.models.User
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult
@@ -84,7 +85,7 @@ class SignUpActivity : AppCompatActivity() {
                                 OnCompleteListener<AuthResult> { task ->
                                     if (task.isSuccessful) {
                                         val firebaseUser: FirebaseUser = task.result!!.user!!
-                                        addUserToFirebase(firebaseUser.uid, email, userName)
+                                        FirebaseHelper.addUserToFirebase(firebaseUser.uid, email, userName)
                                         Toast.makeText(
                                             this@SignUpActivity,
                                             "Your account was successfully created!",
@@ -127,11 +128,7 @@ class SignUpActivity : AppCompatActivity() {
         val currentUser = auth.currentUser
     }
 
-    private fun addUserToFirebase(uid: String, email: String, userName: String) {
-        val user =
-            User(uid, email, userName, "", "", null, null, null, null, null, null, "false")
-        database.child(uid).setValue(user)
-    }
+
 
     private fun initialize() {
         auth = Firebase.auth

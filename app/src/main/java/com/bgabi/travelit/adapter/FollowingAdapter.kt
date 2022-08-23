@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bgabi.travelit.R
-import com.bgabi.travelit.UserCardVIewModel
+import com.bgabi.travelit.viewmodels.UserCardVIewModel
 
 class FollowingAdapter(private val mList: List<UserCardVIewModel>) : RecyclerView.Adapter<FollowingAdapter.ViewHolder>() {
 

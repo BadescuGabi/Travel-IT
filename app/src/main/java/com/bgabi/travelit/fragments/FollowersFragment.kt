@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bgabi.travelit.R
-import com.bgabi.travelit.UserCardVIewModel
+import com.bgabi.travelit.viewmodels.UserCardVIewModel
 import com.bgabi.travelit.adapter.FollowersAdapter
 import com.bgabi.travelit.databinding.FragmentFollowersBinding
 

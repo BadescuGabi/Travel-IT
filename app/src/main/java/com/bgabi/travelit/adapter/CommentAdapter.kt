@@ -1,25 +1,18 @@
 package com.bgabi.travelit.adapter
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bgabi.travelit.R
-import com.bgabi.travelit.UserCardVIewModel
 import com.bgabi.travelit.models.Comment
 import com.bumptech.glide.Glide
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
-import java.io.ByteArrayOutputStream
 
 class CommentAdapter(private val mList: List<Comment>) : RecyclerView.Adapter<CommentAdapter.ViewHolder>() {
     private lateinit var mContext: Context

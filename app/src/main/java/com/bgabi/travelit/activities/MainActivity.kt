@@ -17,6 +17,11 @@ import com.bgabi.travelit.auth.SavedPreference
 import com.bgabi.travelit.auth.SignInActivity
 import com.bgabi.travelit.auth.SignUpActivity
 import com.bgabi.travelit.databinding.ActivityMainBinding
+import com.bgabi.travelit.databinding.ActivityHomeBinding
+import com.bgabi.travelit.databinding.ActivitySignInBinding
+import com.bgabi.travelit.helpers.FirebaseHelper
+import com.bgabi.travelit.models.User
+import com.bgabi.travelit.viewmodels.UsersViewModel
 import com.bumptech.glide.Glide
 import com.facebook.*
 import com.facebook.appevents.AppEventsLogger
@@ -52,6 +57,8 @@ class MainActivity : AppCompatActivity() {
     var condition = false
     val Req_Code: Int = 123
     private lateinit var binding: ActivityMainBinding
+    private lateinit var  binding1: ActivityHomeBinding
+
 
 //    private val firebaseAuthListener = FirebaseAuth.AuthStateListener {
 //        val user = firebaseAuth.currentUser?.uid
@@ -67,7 +74,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setTheme(R.style.Theme_TravelIT2)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-
         firebaseAuth = Firebase.auth
         firebaseUser = firebaseAuth.currentUser
 
@@ -166,7 +172,7 @@ class MainActivity : AppCompatActivity() {
         val credential = GoogleAuthProvider.getCredential(account.idToken, null)
         firebaseAuth.signInWithCredential(credential).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                SavedPreference.setEmail(this, account.email.toString())
+                SavedPreference.setEmail(this, account.toString())
                 SavedPreference.setUsername(this, account.displayName.toString())
                 val intent = Intent(this, HomeActivity::class.java)
                 startActivity(intent)
@@ -182,13 +188,13 @@ class MainActivity : AppCompatActivity() {
         return waitForCondition(maxDelay - checkPeriod, checkPeriod)
     }
 
-//    private fun getFacebookData(jsonObject: JSONObject?) {
-//        val profilePic = "https://graph.facebook.com/${jsonObject
-//            ?.getString("id")}/picture?width=500&height=500"
-//        Glide.with(this)
-//            .load(profilePic)
-//            .into(binding.profilePic)
-//
+    private fun getFacebookData(jsonObject: JSONObject?) {
+        val profilePic = "https://graph.facebook.com/${jsonObject
+            ?.getString("id")}/picture?width=500&height=500"
+        Glide.with(this)
+            .load(profilePic)
+            .into(findViewById(R.id.profile_pic))
+
 //        val name = jsonObject?.getString("name")
 //        val birthday = jsonObject?.getString("birthday")
 //        val gender = jsonObject?.getString("gender")
@@ -198,7 +204,7 @@ class MainActivity : AppCompatActivity() {
 //        binding.userEmail.text = "Email: ${email}"
 //        binding.userBDay.text = "Birthday: ${birthday}"
 //        binding.userGender.text = "Gender: ${gender}"
-//    }
+    }
 
     private fun signIn(email: String, password: String) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
@@ -220,6 +226,7 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
+
     private fun goToHomeActivity() {
         val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
@@ -227,15 +234,29 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleFacebookAccessToken(token: AccessToken) {
         Log.d(tag, "handleFacebookAccessToken:$token")
-
         val credential = FacebookAuthProvider.getCredential(token.token)
+//        var request : GraphRequest? = null
+//        request = GraphRequest.newMeRequest(
+//            token,
+//            object : GraphRequest.GraphJSONObjectCallback {
+//                override fun onCompleted(
+//                    obj: JSONObject?,
+//                    response: GraphResponse?
+//                ) {
+//                    getFacebookData(obj)
+//                }
+//            })
         firebaseAuth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     val user = firebaseAuth.currentUser
+                    if (user != null) {
+                        user.email?.let { FirebaseHelper.addUserToFirebase(user.uid, it,it) }
+                    }
                 } else {
+                    val user = firebaseAuth.currentUser
                     Toast.makeText(
-                        baseContext, "Authentication failed---------.",
+                            baseContext, "Authentication failed---------.",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
