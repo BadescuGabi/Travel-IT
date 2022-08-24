@@ -3,6 +3,7 @@ package com.bgabi.travelit.activities
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -10,6 +11,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -40,6 +42,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var usersViewModel: UsersViewModel
     lateinit var mainHandler: Handler
     private val profileFragment = ProfileFragment()
+    private var killed: Boolean = false
 
     private val updateTask = object : Runnable {
         override fun run() {
@@ -133,17 +136,23 @@ class HomeActivity : AppCompatActivity() {
 
 
     fun kill() {
+        killed = true
         mainHandler.removeCallbacks(updateTask)
     }
 
     override fun onPause() {
         super.onPause()
-        mainHandler.removeCallbacks(updateTask)
+        if (!killed) {
+            mainHandler.removeCallbacks(updateTask)
+        }
+
     }
 
     override fun onResume() {
         super.onResume()
-        mainHandler.post(updateTask)
+        if (!killed) {
+            mainHandler.post(updateTask)
+        }
     }
 
     private fun checkDataLoaded(): Boolean {
@@ -209,7 +218,6 @@ class HomeActivity : AppCompatActivity() {
                     it.uid,
                     it.email,
                     it.userName,
-                    it.phone,
                     it.description,
                     it.followers,
                     it.following,
@@ -217,6 +225,7 @@ class HomeActivity : AppCompatActivity() {
                     it.favorites,
                     it.futureTravel,
                     it.userPosts,
+                    it.notifications,
                     it.isAdmin
                 )
             }

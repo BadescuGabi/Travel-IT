@@ -16,8 +16,7 @@ object FirebaseHelper {
 
     fun addUserToFirebase(uid: String, email: String = "", userName: String = "") {
         database = FirebaseDatabase.getInstance(dbUrl).getReference("data/users")
-        val user =
-            User(uid, email, userName, "", "", ArrayList(), ArrayList(), null, null, null, ArrayList(), "false")
+        val user = User(uid, email, userName, "", ArrayList(), ArrayList(), null, null, "", ArrayList(),ArrayList(),"false")
         database.child(uid).setValue(user)
     }
 

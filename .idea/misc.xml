@@ -12,8 +12,10 @@
         <entry key="..\:/Users/Gabri/Desktop/facultate/an3_s2/android/TravelIT/app/src/main/res/drawable/gradient_background_profile.xml" value="0.129" />
         <entry key="..\:/Users/Gabri/Desktop/facultate/an3_s2/android/TravelIT/app/src/main/res/drawable/ic_add.xml" value="0.233" />
         <entry key="..\:/Users/Gabri/Desktop/facultate/an3_s2/android/TravelIT/app/src/main/res/drawable/ic_comment.xml" value="0.129" />
+        <entry key="..\:/Users/Gabri/Desktop/facultate/an3_s2/android/TravelIT/app/src/main/res/drawable/ic_description.xml" value="0.1325" />
         <entry key="..\:/Users/Gabri/Desktop/facultate/an3_s2/android/TravelIT/app/src/main/res/drawable/ic_edit.xml" value="0.124" />
         <entry key="..\:/Users/Gabri/Desktop/facultate/an3_s2/android/TravelIT/app/src/main/res/drawable/ic_email.xml" value="0.1435" />
+        <entry key="..\:/Users/Gabri/Desktop/facultate/an3_s2/android/TravelIT/app/src/main/res/drawable/ic_email_grey.xml" value="0.1325" />
         <entry key="..\:/Users/Gabri/Desktop/facultate/an3_s2/android/TravelIT/app/src/main/res/drawable/ic_favorite.xml" value="0.129" />
         <entry key="..\:/Users/Gabri/Desktop/facultate/an3_s2/android/TravelIT/app/src/main/res/drawable/ic_history.xml" value="0.129" />
         <entry key="..\:/Users/Gabri/Desktop/facultate/an3_s2/android/TravelIT/app/src/main/res/drawable/ic_travel.xml" value="0.129" />
@@ -28,7 +30,7 @@
         <entry key="..\:/Users/Gabri/Desktop/facultate/an3_s2/android/TravelIT/app/src/main/res/layout/comment_view.xml" value="0.176" />
         <entry key="..\:/Users/Gabri/Desktop/facultate/an3_s2/android/TravelIT/app/src/main/res/layout/feed_rv_item.xml" value="0.2716049382716049" />
         <entry key="..\:/Users/Gabri/Desktop/facultate/an3_s2/android/TravelIT/app/src/main/res/layout/fragment_comment.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/Gabri/Desktop/facultate/an3_s2/android/TravelIT/app/src/main/res/layout/fragment_edit_profile.xml" value="0.23157894736842105" />
+        <entry key="..\:/Users/Gabri/Desktop/facultate/an3_s2/android/TravelIT/app/src/main/res/layout/fragment_edit_profile.xml" value="0.2" />
         <entry key="..\:/Users/Gabri/Desktop/facultate/an3_s2/android/TravelIT/app/src/main/res/layout/fragment_followers.xml" value="0.1" />
         <entry key="..\:/Users/Gabri/Desktop/facultate/an3_s2/android/TravelIT/app/src/main/res/layout/fragment_following.xml" value="0.1" />
         <entry key="..\:/Users/Gabri/Desktop/facultate/an3_s2/android/TravelIT/app/src/main/res/layout/fragment_home.xml" value="0.1" />

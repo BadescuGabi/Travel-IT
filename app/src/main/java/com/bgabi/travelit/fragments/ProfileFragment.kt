@@ -39,6 +39,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private lateinit var binding: FragmentProfileBinding
     private lateinit var followersFragment: LinearLayout
     private lateinit var followingFragment: LinearLayout
+    private lateinit var edit_profile: Button
     lateinit var homeActivity: HomeActivity
     private var currentUser: User = UtilsObj.defaultUser
     private var firebaseUser: FirebaseUser? = null
@@ -50,6 +51,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private var imageUri: Uri? = null
     private lateinit var emailText: TextView
     private lateinit var nameText: TextView
+    private lateinit var descriptionText: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,19 +62,11 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate<FragmentProfileBinding>(
+        binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_profile, container, false
         )
-        val edit_profile: Button = binding.editProfile
-        edit_profile.setOnClickListener {
-            val fragment: Fragment = EditProfileFragment()
-            val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
-            val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-            fragmentTransaction.replace(R.id.flFragment, fragment)
-                .addToBackStack(null)
-            fragmentTransaction.commit()
-        }
+
         followersFragment = binding.followers
         followersFragment.setOnClickListener {
             val fragment: Fragment = FollowersFragment()
@@ -95,6 +89,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         profile_pic = binding.profilePic
         emailText = binding.emailProfile
         nameText = binding.userNameProfile
+        descriptionText = binding.descriptionProfile
         database = FirebaseDatabase.getInstance(FirebaseHelper.dbUrl).getReference("data/users")
         firebaseAuth = FirebaseAuth.getInstance()
         storage = Firebase.storage
@@ -106,7 +101,18 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         currentUser.uid?.let { loadPhotoFromFirebase(it) }
         //}
 
-
+        edit_profile =binding.editProfile
+        edit_profile.setOnClickListener {
+            val fragment: Fragment = EditProfileFragment()
+            val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
+            val mBundle = Bundle()
+            mBundle.putSerializable("mUser", currentUser)
+            fragment.arguments = mBundle
+            val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.flFragment, fragment)
+                .addToBackStack(null)
+            fragmentTransaction.commit()
+        }
         return binding.root
     }
 
@@ -116,6 +122,9 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
         if (user.userName != "") {
             nameText.setText(user.userName)
+        }
+        if (user.description != "") {
+            descriptionText.setText(user.description)
         }
     }
 

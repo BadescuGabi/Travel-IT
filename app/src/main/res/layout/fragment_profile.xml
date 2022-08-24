@@ -157,7 +157,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:paddingLeft="20dp"
+                        android:paddingLeft="10dp"
+                        android:textSize="18sp"
                         android:text="Wiliam@gmail.com"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -166,6 +167,29 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="25dp"
+                    android:orientation="horizontal"
+                    android:paddingStart="25dp">
+
+                    <ImageView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/ic_description" />
+
+                    <TextView
+                        android:id="@+id/description_profile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:textSize="18sp"
+                        android:text="Wiliam@gmail.com"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal"
                     android:paddingLeft="8dp">
 
@@ -182,7 +206,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal"
                     android:paddingLeft="8dp">
 
@@ -199,7 +223,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal"
                     android:paddingLeft="8dp">
 
@@ -214,15 +238,17 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/edit_profile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="35dp"
                 android:layout_marginBottom="25dp"
+                android:padding="10dp"
                 android:background="@drawable/button"
-                android:drawableLeft="@drawable/ic_edit"
+                android:backgroundTint="@color/cerulean"
+                android:drawableStart="@drawable/ic_edit"
                 android:text="Edit Profile"
                 android:textColor="#fff" />
         </LinearLayout>
