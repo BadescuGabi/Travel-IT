@@ -5,15 +5,12 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
@@ -24,26 +21,18 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.bgabi.travelit.R
 import com.bgabi.travelit.adapter.PostAdapter
-import com.bgabi.travelit.databinding.FragmentHomeBinding
+import com.bgabi.travelit.adapter.UserSearchAdapter
 import com.bgabi.travelit.databinding.FeedRvItemBinding
+import com.bgabi.travelit.databinding.FragmentHomeBinding
 import com.bgabi.travelit.models.Post
+import com.bgabi.travelit.models.User
+import com.bgabi.travelit.viewmodels.UsersViewModel
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import org.json.JSONException
 
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class HomeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
     private lateinit var binding: FragmentHomeBinding
     private lateinit var binding2: FeedRvItemBinding
     private lateinit var searchView: SearchView
@@ -53,55 +42,61 @@ class HomeFragment : Fragment() {
     private lateinit var instaModalArrayList: ArrayList<Post>
     private lateinit var facebookFeedModalArrayList: ArrayList<Post>
     private lateinit var progressBar: ProgressBar
-    private lateinit var adapter: PostAdapter
+    private lateinit var postAdapter: PostAdapter
+    private lateinit var usersSearchAdapter: UserSearchAdapter
     private lateinit var recyclerview: RecyclerView
+    private lateinit var recyclerView2: RecyclerView
+    private val rootRef: DatabaseReference =
+        FirebaseDatabase.getInstance("https://travel-it-d162e-default-rtdb.europe-west1.firebasedatabase.app/")
+            .getReference("data")
+    private val userRef: DatabaseReference = rootRef.child("users")
+    private var usersList: ArrayList<User> = ArrayList<User>()
+    private lateinit var usersViewModel: UsersViewModel
+    private lateinit var newPostButton: LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
         setHasOptionsMenu(true)
+
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         //val v = inflater.inflate(R.layout.feed_rv_item, container, false)
+
+        val bundle = arguments
+        usersList = bundle!!.getSerializable("usersList") as ArrayList<User>
 
         binding = FragmentHomeBinding.inflate(layoutInflater)
         binding2 = FeedRvItemBinding.inflate(layoutInflater)
         progressBar = binding.idLoadingPB
-        val newPostButton = binding.newPostButton
+        newPostButton = binding.newPostButton
         newPostButton.setOnClickListener {
             val fragment: Fragment = NewPostFragment()
-            val activity=it.context as AppCompatActivity
+            val activity = it.context as AppCompatActivity
             activity.supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.flFragment,fragment)
+                .replace(R.id.flFragment, fragment)
                 .addToBackStack(null)
                 .commit()
         }
         // getting the recyclerview by its id
         recyclerview = binding.feedRecyclerview
+
+        recyclerView2 = binding.peopleRecyclerview
+        recyclerView2.visibility = View.GONE
         // this creates a vertical layout Manager
         recyclerview.layoutManager = LinearLayoutManager(context)
-
-        // ArrayList of class ItemsViewModel
-        //val data = ArrayList<PostViewModel>()
-
-        // This loop will create 20 Views containing
-        // the image with the count of view
-//        for (i in 1..2) {
-//            data.add(PostViewModel("a", "b ","c","d","e","f","g"))
-//        }
-
-        // This will pass the ArrayList to our Adapter
-        //adapter = PostAdapter(data)
-
+        recyclerView2.layoutManager = LinearLayoutManager(context)
+        usersSearchAdapter = UserSearchAdapter(usersList)
         // Setting the Adapter with the recyclerview
-        //recyclerview.adapter = adapter
+        recyclerView2.adapter = usersSearchAdapter
+
+        //usersAdapter = UserAdapter(getUsers())
         getPostsFeed()
+
         return binding.root
     }
 
@@ -109,16 +104,35 @@ class HomeFragment : Fragment() {
         inflater.inflate(R.menu.search_menu, menu)
 
         val searchItem = menu.findItem(R.id.search)
-        val searchManager = requireActivity().getSystemService(Context.SEARCH_SERVICE) as SearchManager
+
+        val searchManager =
+            requireActivity().getSystemService(Context.SEARCH_SERVICE) as SearchManager
         if (searchItem != null) {
             searchView = searchItem.actionView as SearchView
         }
 
         searchView.setSearchableInfo(searchManager.getSearchableInfo(requireActivity().componentName))
+        searchItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
+            override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
+                recyclerView2.visibility = View.VISIBLE
+                newPostButton.visibility = View.GONE
+                recyclerview.visibility = View.GONE
+                return true
+            }
+
+            override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
+                recyclerview.visibility = View.VISIBLE
+                newPostButton.visibility = View.VISIBLE
+                recyclerView2.visibility = View.GONE
+                return true
+            }
+        })
+
         queryTextListener = object : SearchView.OnQueryTextListener {
+
             override fun onQueryTextChange(newText: String): Boolean {
                 Log.i("onQueryTextChange", newText)
-                adapter.filter.filter(newText)
+                usersSearchAdapter.filter.filter(newText)
                 return false
             }
 
@@ -181,8 +195,8 @@ class HomeFragment : Fragment() {
                             )
                             facebookFeedModalArrayList.add(feedModal)
 
-                            // below line we are creating an adapter class and adding our array list in it.
-                            adapter = PostAdapter(facebookFeedModalArrayList)
+                            // below line we are creating an postAdapter class and adding our array list in it.
+                            postAdapter = PostAdapter(facebookFeedModalArrayList)
                             recyclerview = binding.feedRecyclerview
 
                             // below line is for setting linear layout manager to our recycler view.
@@ -193,42 +207,35 @@ class HomeFragment : Fragment() {
                             // manager to our recycler view.
                             recyclerview.layoutManager = linearLayoutManager
 
-                            // below line is to set adapter
+                            // below line is to set postAdapter
                             // to our recycler view.
-                            recyclerview.adapter = adapter
+                            recyclerview.adapter = postAdapter
                         }
                     } catch (e: JSONException) {
                         e.printStackTrace()
                     }
                 }, object : Response.ErrorListener {
-                override fun onErrorResponse(error: VolleyError) {
-                    Toast.makeText(
-                        context,
-                        "Fail to get data with error $error",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            })
+                    override fun onErrorResponse(error: VolleyError) {
+                        Toast.makeText(
+                            context,
+                            "Fail to get data with error $error",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                })
         mRequestQueue.add(jsonObjectRequest)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
+//
+//    suspend fun getUsers(): DbResponse {
+//        val response = DbResponse()
+//        try {
+//            response.users = userRef.get().await().children.map { snapShot ->
+//                snapShot.getValue(User::class.java)!!
+//            }
+//        } catch (exception: Exception) {
+//            response.exception = exception
+//        }
+//        return response
+//    }
 }

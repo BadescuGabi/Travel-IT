@@ -38,4 +38,16 @@ class UserRepository(
         }
         return user
     }
+
+    suspend fun getUsers(): DbResponse {
+        val response = DbResponse()
+        try {
+            response.users = userRef.get().await().children.map { snapShot ->
+                snapShot.getValue(User::class.java)!!
+            }
+        } catch (exception: Exception) {
+            response.exception = exception
+        }
+        return response
+    }
 }

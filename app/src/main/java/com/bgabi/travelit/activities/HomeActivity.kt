@@ -42,6 +42,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var usersViewModel: UsersViewModel
     lateinit var mainHandler: Handler
     private val profileFragment = ProfileFragment()
+    private var usersList: ArrayList<User> = ArrayList()
     private var killed: Boolean = false
 
     private val updateTask = object : Runnable {
@@ -59,6 +60,7 @@ class HomeActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
         usersViewModel = ViewModelProvider(this).get(UsersViewModel::class.java)
         getCurrentUserDetails()
+        getUsers()
         mainHandler = Handler(Looper.getMainLooper())
         val profileFragment = ProfileFragment()
         val homeFragment = HomeFragment()
@@ -85,6 +87,7 @@ class HomeActivity : AppCompatActivity() {
             newFragment = HomeFragment()
             val mBundle = Bundle()
             mBundle.putSerializable("mUser", currentUser)
+            mBundle.putSerializable("usersList", usersList)
             newFragment.arguments = mBundle
         }
         if (fragment.javaClass == FollowersFragment::class.java) {
@@ -156,7 +159,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun checkDataLoaded(): Boolean {
-        if (currentUser != defaultUser) {
+        if (currentUser != defaultUser && usersList.size != 0) {
             setCurrentFragment(profileFragment)
             return true
         }
@@ -228,6 +231,28 @@ class HomeActivity : AppCompatActivity() {
                     it.notifications,
                     it.isAdmin
                 )
+            }
+        }
+    }
+
+    private fun getUsers() {
+        usersViewModel.responseLiveData.observe(this) { res ->
+            res.users?.let { users ->
+                users.forEach{ it ->
+                    val user = User(it.uid,
+                        it.email,
+                        it.userName,
+                        it.description,
+                        it.followers,
+                        it.following,
+                        it.travelHistory,
+                        it.favorites,
+                        it.futureTravel,
+                        it.userPosts,
+                        it.notifications,
+                        it.isAdmin)
+                    usersList.add(user)
+                }
             }
         }
     }

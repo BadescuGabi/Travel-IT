@@ -139,7 +139,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }.addOnFailureListener { it ->
             context?.let { con ->
                 Glide.with(con)
-                    .load("https://firebasestorage.googleapis.com/v0/b/travel-it-d162e.appspot.com/o/profiile_images%2Fuser.png?alt=media&token=7f916443-a0b2-467d-b740-cd2f0835bfb1")
+                    .load("https://firebasestorage.googleapis.com/v0/b/travel-it-d162e.appspot.com/o/profile_images%2Fuser.png?alt=media&token=1569df88-2e93-41d1-baa8-73d747c77c83")
                     .into(profile_pic)
             }
         }

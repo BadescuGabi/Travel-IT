@@ -31,13 +31,19 @@
         </LinearLayout>
         <!--recycler view for displaying
             our Facebook posts-->
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/feed_recyclerview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             tools:listitem="@layout/feed_rv_item" />
-
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/people_recyclerview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            tools:listitem="@layout/card_view_user_search_design" />
         <!--progressbar for displaying
             our loading indicator-->
         <ProgressBar
