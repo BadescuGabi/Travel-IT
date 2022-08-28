@@ -20,7 +20,7 @@
         android:theme="@style/SplashTheme">
 
         <activity
-            android:name=".activities.HomeActivity"
+            android:name="com.bgabi.travelit.view.activities.HomeActivity"
             android:exported="true"
             android:theme="@style/Theme.TravelIT">
 
@@ -36,11 +36,11 @@
             android:value="@string/facebook_client_token" />
 
         <activity
-            android:name=".auth.SignUpActivity"
+            android:name=".view.activities.SignUpActivity"
             android:exported="false"
             android:theme="@style/Theme.TravelIT"/>
         <activity
-            android:name=".auth.SignInActivity"
+            android:name=".view.activities.SignInActivity"
             android:exported="true"
             android:theme="@style/Theme.TravelIT"/>
 

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@android:color/transparent"
-    tools:context=".fragments.CommentFragment">
+    tools:context=".view.fragments.CommentFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_coments"

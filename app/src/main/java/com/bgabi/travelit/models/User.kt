@@ -14,5 +14,5 @@ data class User(
     val futureTravel: String? = null,
     val userPosts:  ArrayList<Post> = ArrayList(),
     val notifications: ArrayList<String> = ArrayList(),
-    val isAdmin: String? = null
+    val admin: String? = null
 ) : Serializable

@@ -5,21 +5,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@android:color/transparent"
-    tools:context=".view.fragments.FollowersFragment">
+    tools:context=".view.fragments.NotificationFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview_followers"
+        android:id="@+id/recyclerview_notifications"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/transparent"
         tools:itemCount="5"
-        tools:listitem="@layout/card_view_followers_design" />
-
-    <TextView
-        android:layout_width="1000dp"
-        android:layout_height="1000dp"
-        android:text="naaaaaaaaaaa"
-        android:textSize="20sp"
-        android:textColor="@color/black" />
+        tools:listitem="@layout/card_view_notification_design" />
 
 </LinearLayout>

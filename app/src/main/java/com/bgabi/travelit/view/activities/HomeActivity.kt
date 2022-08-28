@@ -1,27 +1,23 @@
-package com.bgabi.travelit.activities
+package com.bgabi.travelit.view.activities
 
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
-import android.os.Build
+import android.opengl.Visibility
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.ImageView
-import android.widget.LinearLayout
-import androidx.annotation.RequiresApi
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bgabi.travelit.MainActivity
 import com.bgabi.travelit.R
-import com.bgabi.travelit.auth.SignInActivity
 import com.bgabi.travelit.databinding.ActivityHomeBinding
-import com.bgabi.travelit.fragments.*
-import com.bgabi.travelit.helpers.FirebaseHelper
+import com.bgabi.travelit.view.fragments.*
 import com.bgabi.travelit.helpers.UtilsObj
 import com.bgabi.travelit.models.User
 import com.bgabi.travelit.viewmodels.UsersViewModel
@@ -44,6 +40,7 @@ class HomeActivity : AppCompatActivity() {
     private val profileFragment = ProfileFragment()
     private var usersList: ArrayList<User> = ArrayList()
     private var killed: Boolean = false
+    private lateinit var bottomNavigationView: BottomNavigationView
 
     private val updateTask = object : Runnable {
         override fun run() {
@@ -59,17 +56,21 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
         usersViewModel = ViewModelProvider(this).get(UsersViewModel::class.java)
+        bottomNavigationView = binding.bottomNavigationView
+
         getCurrentUserDetails()
         getUsers()
         mainHandler = Handler(Looper.getMainLooper())
         val profileFragment = ProfileFragment()
         val homeFragment = HomeFragment()
+        val notificationFragment = NotificationFragment()
         commentFragment = CommentFragment()
-        val bottomNavigationView: BottomNavigationView = binding.bottomNavigationView
+        bottomNavigationView.visibility =  View.GONE
         bottomNavigationView.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.profile -> setCurrentFragment(profileFragment)
                 R.id.home -> setCurrentFragment(homeFragment)
+                R.id.notifications -> setCurrentFragment(notificationFragment)
             }
             true
         }
@@ -77,6 +78,18 @@ class HomeActivity : AppCompatActivity() {
 
     private fun setCurrentFragment(fragment: Fragment) {
         var newFragment = Fragment()
+
+        if (currentUser.admin == "true"){
+            bottomNavigationView.menu.getItem(0).setVisible(false)
+                bottomNavigationView.menu.getItem(1).setVisible(false)
+            bottomNavigationView.menu.getItem(2).setVisible(false)
+        }
+        else{
+            bottomNavigationView.menu.getItem(3).setVisible(false)
+            bottomNavigationView.menu.getItem(4).setVisible(false)
+        }
+        bottomNavigationView.visibility =  View.VISIBLE
+
         if (fragment.javaClass == ProfileFragment::class.java) {
             newFragment = ProfileFragment()
             val mBundle = Bundle()
@@ -88,6 +101,12 @@ class HomeActivity : AppCompatActivity() {
             val mBundle = Bundle()
             mBundle.putSerializable("mUser", currentUser)
             mBundle.putSerializable("usersList", usersList)
+            newFragment.arguments = mBundle
+        }
+        if (fragment.javaClass == NotificationFragment::class.java) {
+            newFragment = NotificationFragment()
+            val mBundle = Bundle()
+            mBundle.putSerializable("mUser", currentUser)
             newFragment.arguments = mBundle
         }
         if (fragment.javaClass == FollowersFragment::class.java) {
@@ -229,7 +248,7 @@ class HomeActivity : AppCompatActivity() {
                     it.futureTravel,
                     it.userPosts,
                     it.notifications,
-                    it.isAdmin
+                    it.admin
                 )
             }
         }
@@ -250,7 +269,7 @@ class HomeActivity : AppCompatActivity() {
                         it.futureTravel,
                         it.userPosts,
                         it.notifications,
-                        it.isAdmin)
+                        it.admin)
                     usersList.add(user)
                 }
             }

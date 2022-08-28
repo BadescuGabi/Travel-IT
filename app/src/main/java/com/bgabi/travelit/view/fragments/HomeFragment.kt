@@ -1,4 +1,4 @@
-package com.bgabi.travelit.fragments
+package com.bgabi.travelit.view.fragments
 
 import android.app.SearchManager
 import android.content.Context
@@ -20,8 +20,8 @@ import com.android.volley.VolleyError
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.bgabi.travelit.R
-import com.bgabi.travelit.adapter.PostAdapter
-import com.bgabi.travelit.adapter.UserSearchAdapter
+import com.bgabi.travelit.view.adapter.PostAdapter
+import com.bgabi.travelit.view.adapter.UserSearchAdapter
 import com.bgabi.travelit.databinding.FeedRvItemBinding
 import com.bgabi.travelit.databinding.FragmentHomeBinding
 import com.bgabi.travelit.models.Post
@@ -53,6 +53,7 @@ class HomeFragment : Fragment() {
     private var usersList: ArrayList<User> = ArrayList<User>()
     private lateinit var usersViewModel: UsersViewModel
     private lateinit var newPostButton: LinearLayout
+    private lateinit var currentUser: User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,7 +69,8 @@ class HomeFragment : Fragment() {
 
         val bundle = arguments
         usersList = bundle!!.getSerializable("usersList") as ArrayList<User>
-
+        currentUser = bundle!!.getSerializable("mUser") as User
+        usersList.remove(currentUser)
         binding = FragmentHomeBinding.inflate(layoutInflater)
         binding2 = FeedRvItemBinding.inflate(layoutInflater)
         progressBar = binding.idLoadingPB

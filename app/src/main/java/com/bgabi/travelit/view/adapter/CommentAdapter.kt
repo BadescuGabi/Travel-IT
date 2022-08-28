@@ -1,4 +1,4 @@
-package com.bgabi.travelit.adapter
+package com.bgabi.travelit.view.adapter
 
 import android.content.Context
 import android.view.LayoutInflater

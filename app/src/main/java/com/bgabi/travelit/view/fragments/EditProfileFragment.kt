@@ -1,4 +1,4 @@
-package com.bgabi.travelit.fragments
+package com.bgabi.travelit.view.fragments
 
 import android.content.Context
 import android.content.Intent
@@ -18,7 +18,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.bgabi.travelit.R
-import com.bgabi.travelit.activities.HomeActivity
+import com.bgabi.travelit.view.activities.HomeActivity
 import com.bgabi.travelit.databinding.FragmentEditProfileBinding
 import com.bgabi.travelit.helpers.FirebaseHelper
 import com.bgabi.travelit.helpers.UtilsObj

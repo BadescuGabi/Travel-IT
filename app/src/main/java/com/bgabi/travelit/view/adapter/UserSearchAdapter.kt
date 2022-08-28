@@ -1,4 +1,4 @@
-package com.bgabi.travelit.adapter
+package com.bgabi.travelit.view.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,8 +7,13 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.bgabi.travelit.R
+import com.bgabi.travelit.helpers.FirebaseHelper
 import com.bgabi.travelit.models.User
 import com.bumptech.glide.Glide
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
@@ -22,7 +27,9 @@ class UserSearchAdapter(private var usersList: ArrayList<User>): RecyclerView.Ad
     var usersFilterList = ArrayList<User>()
     private lateinit var mContext: Context
     private lateinit var storage: FirebaseStorage
-
+    private var firebaseUser: FirebaseUser? = null
+    private lateinit var database: DatabaseReference
+    private lateinit var firebaseAuth: FirebaseAuth
     init {
         usersFilterList = usersList
     }
@@ -32,7 +39,7 @@ class UserSearchAdapter(private var usersList: ArrayList<User>): RecyclerView.Ad
         val view: View = LayoutInflater.from(parent.context)
             .inflate(R.layout.card_view_user_search_design, parent, false)
         mContext = parent.context
-
+        database = FirebaseDatabase.getInstance(FirebaseHelper.dbUrl).getReference("data/users")
         return ViewHolder(view)
     }
 
@@ -42,8 +49,8 @@ class UserSearchAdapter(private var usersList: ArrayList<User>): RecyclerView.Ad
         val uid = modal.uid
         storage = Firebase.storage
         // setting data to each view of recyclerview item.
-        val profilePhotosRef = storage.reference.child("profile_images/${uid}")
-        profilePhotosRef.downloadUrl.addOnSuccessListener { it ->
+        val profilePhotoRef = storage.reference.child("profile_images/${uid}")
+        profilePhotoRef.downloadUrl.addOnSuccessListener { it ->
             mContext.let { con ->
                 Glide.with(con)
                     .load(it)
@@ -58,6 +65,13 @@ class UserSearchAdapter(private var usersList: ArrayList<User>): RecyclerView.Ad
             }
         }
         holder.userName.setText(modal.userName)
+
+        holder.addButton.setOnClickListener(){
+            modal.notifications.add("Salut sunt andi!")
+            if (uid != null) {
+                saveNotificationToFirebase(uid,modal.notifications)
+            }
+        }
     }
 
     override fun getItemCount(): Int {
@@ -108,5 +122,11 @@ class UserSearchAdapter(private var usersList: ArrayList<User>): RecyclerView.Ad
                 notifyDataSetChanged()
             }
         }
+    }
+    private fun saveNotificationToFirebase(
+        uid: String,
+        notification: ArrayList<String>
+    ) {
+        database.child(uid).child("notifications").setValue(notification)
     }
 }

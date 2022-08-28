@@ -1,4 +1,4 @@
-package com.bgabi.travelit.auth
+package com.bgabi.travelit.view.activities
 
 import android.content.Context
 import android.content.Intent
@@ -9,15 +9,11 @@ import android.text.TextUtils
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.bgabi.travelit.activities.HomeActivity
-import com.bgabi.travelit.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.*
 import com.bgabi.travelit.databinding.ActivitySignInBinding
-import com.bgabi.travelit.databinding.ActivitySignUpBinding
 import com.facebook.CallbackManager
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
 
 class SignInActivity : AppCompatActivity() {
     private lateinit var firebaseAuth: FirebaseAuth

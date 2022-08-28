@@ -1,4 +1,4 @@
-package com.bgabi.travelit.fragments
+package com.bgabi.travelit.view.fragments
 
 import android.net.Uri
 import android.os.Bundle
@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
@@ -14,7 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.bgabi.travelit.R
-import com.bgabi.travelit.activities.HomeActivity
+import com.bgabi.travelit.view.activities.HomeActivity
 import com.bgabi.travelit.databinding.FragmentProfileBinding
 import com.bgabi.travelit.helpers.FirebaseHelper
 import com.bgabi.travelit.helpers.UtilsObj

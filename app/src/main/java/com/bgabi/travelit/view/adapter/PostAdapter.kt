@@ -1,4 +1,4 @@
-package com.bgabi.travelit.adapter
+package com.bgabi.travelit.view.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,11 +7,9 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import com.bgabi.travelit.R
-import com.bgabi.travelit.fragments.CommentFragment
+import com.bgabi.travelit.view.fragments.CommentFragment
 import com.bgabi.travelit.models.Post
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
