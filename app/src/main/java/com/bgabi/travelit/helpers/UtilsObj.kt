@@ -15,11 +15,10 @@ import java.time.temporal.ChronoUnit
 
 object UtilsObj {
     private val rootRef: DatabaseReference = FirebaseDatabase.getInstance("https://travel-it-d162e-default-rtdb.europe-west1.firebasedatabase.app/").getReference("data")
-    private val userRef: DatabaseReference = rootRef.child("users")
+    val userRef: DatabaseReference = rootRef.child("users")
     private val postRef: DatabaseReference = rootRef.child("posts")
     private val commentRef: DatabaseReference = rootRef.child("comments")
-    public var defaultUser: User =
-        User("default", "", "", "", ArrayList(), ArrayList(), null, null, "", ArrayList(),ArrayList(),"")
+    public var defaultUser: User = User("default", "", "", "", ArrayList(), ArrayList(), ArrayList(), ArrayList(), ArrayList(),"")
     fun parseStringForJson(str: String): String {
         val builder = StringBuilder("{")
         val str1 = if (str.substring(0, 4) == "User") str.drop(5).dropLast(1) else str.drop(1).dropLast(1)

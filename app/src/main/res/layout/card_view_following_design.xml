@@ -26,22 +26,22 @@
             android:layout_marginLeft="15dp"
             android:text="Item"
             android:layout_marginTop="15dp"
-            android:textSize="20sp"
+            android:textSize="17sp"
             android:textStyle="bold" />
-
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/following_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/unfollowing_button"
+            android:layout_width="90dp"
+            android:layout_height="35dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="135dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:background="@drawable/button"
-            android:backgroundTint="@color/blue_topaz"
-            android:textSize="15sp"
-            android:text="Following"
-            android:textColor="@color/white" />
+            android:layout_marginStart="25dp"
+            android:background="@drawable/unfollow_button"
+            android:textSize="14dp"
+            android:text="Unfollow"
+            android:textColor="@color/blue_topaz" />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

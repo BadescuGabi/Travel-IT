@@ -67,8 +67,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:gravity="center"
                         android:layout_gravity="center"
+                        android:gravity="center"
                         android:orientation="horizontal"
                         android:weightSum="3">
 
@@ -90,10 +90,11 @@
                                 android:textSize="20sp" />
 
                             <TextView
+                                android:id="@+id/posts_number"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:paddingTop="0dp"
                                 android:gravity="center"
+                                android:paddingTop="0dp"
                                 android:text="2"
                                 android:textColor="@color/blue_topaz"
                                 android:textSize="25sp"
@@ -109,18 +110,20 @@
                             android:background="@color/white"
                             android:gravity="center"
                             android:orientation="vertical">
+
                             <TextView
                                 android:layout_width="100dp"
-                                android:gravity="center"
                                 android:layout_height="25dp"
+                                android:gravity="center"
                                 android:text="Followers"
                                 android:textSize="20sp" />
 
                             <TextView
+                                android:id="@+id/followers_number"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:paddingTop="0dp"
                                 android:gravity="center"
+                                android:paddingTop="0dp"
                                 android:text="2"
                                 android:textColor="@color/blue_topaz"
                                 android:textSize="25sp"
@@ -145,10 +148,11 @@
                                 android:textSize="20sp" />
 
                             <TextView
+                                android:id="@+id/following_number"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:paddingTop="0dp"
                                 android:gravity="center"
+                                android:paddingTop="0dp"
                                 android:text="2"
                                 android:textColor="@color/blue_topaz"
                                 android:textSize="25sp"
@@ -182,8 +186,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:paddingLeft="10dp"
-                        android:textSize="18sp"
                         android:text="Wiliam@gmail.com"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -205,10 +209,11 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:paddingLeft="10dp"
-                        android:textSize="18sp"
                         android:text="Wiliam@gmail.com"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

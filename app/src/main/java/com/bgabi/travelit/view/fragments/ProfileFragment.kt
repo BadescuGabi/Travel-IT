@@ -27,11 +27,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 import de.hdodenhof.circleimageview.CircleImageView
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import kotlin.properties.Delegates
 
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
@@ -41,6 +37,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private lateinit var edit_profile: Button
     lateinit var homeActivity: HomeActivity
     private var currentUser: User = UtilsObj.defaultUser
+    private lateinit var usersList: ArrayList<User>
     private var firebaseUser: FirebaseUser? = null
     private lateinit var database: DatabaseReference
     private lateinit var firebaseAuth: FirebaseAuth
@@ -51,6 +48,8 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private lateinit var emailText: TextView
     private lateinit var nameText: TextView
     private lateinit var descriptionText: TextView
+    private lateinit var followers : TextView
+    private lateinit var following : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,11 +64,17 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             inflater,
             R.layout.fragment_profile, container, false
         )
-
+        val bundle = arguments
+        currentUser = bundle!!.getSerializable("mUser") as User
+        usersList = bundle.getSerializable("usersList") as ArrayList<User>
         followersFragment = binding.followers
         followersFragment.setOnClickListener {
             val fragment: Fragment = FollowersFragment()
             val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
+            val mBundle = Bundle()
+            mBundle.putSerializable("mUser", currentUser)
+            mBundle.putSerializable("usersList", usersList)
+            fragment.arguments = mBundle
             val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
             fragmentTransaction.replace(R.id.flFragment, fragment)
                 .addToBackStack(null)
@@ -79,6 +84,10 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         followingFragment.setOnClickListener {
             val fragment: Fragment = FollowingFragment()
             val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
+            val mBundle = Bundle()
+            mBundle.putSerializable("mUser", currentUser)
+            mBundle.putSerializable("usersList", usersList)
+            fragment.arguments = mBundle
             val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
             fragmentTransaction.replace(R.id.flFragment, fragment)
                 .addToBackStack(null)
@@ -89,16 +98,17 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         emailText = binding.emailProfile
         nameText = binding.userNameProfile
         descriptionText = binding.descriptionProfile
+        followers = binding.followersNumber
+        following = binding.followingNumber
         database = FirebaseDatabase.getInstance(FirebaseHelper.dbUrl).getReference("data/users")
         firebaseAuth = FirebaseAuth.getInstance()
         storage = Firebase.storage
-        val bundle = arguments
-        currentUser = bundle!!.getSerializable("mUser") as User
         //if (user != null) {
         //    currentUser = user
         checkUserDetails(currentUser)
         currentUser.uid?.let { loadPhotoFromFirebase(it) }
         //}
+
 
         edit_profile =binding.editProfile
         edit_profile.setOnClickListener {
@@ -125,6 +135,10 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         if (user.description != "") {
             descriptionText.setText(user.description)
         }
+        val s1 = user.followers.size.toString()
+        val s2 = user.following.size.toString()
+        followers.setText(s1)
+        following.setText(s2)
     }
 
     private fun loadPhotoFromFirebase(uid: String) {

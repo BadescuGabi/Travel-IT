@@ -21,7 +21,8 @@ import de.hdodenhof.circleimageview.CircleImageView
 import java.util.*
 import kotlin.collections.ArrayList
 
-class UserSearchAdapter(private var usersList: ArrayList<User>): RecyclerView.Adapter<UserSearchAdapter.ViewHolder>(),
+class UserSearchAdapter(private var usersList: ArrayList<User>, private var currentUser: User) :
+    RecyclerView.Adapter<UserSearchAdapter.ViewHolder>(),
     Filterable {
     // arraylist for our facebook feeds.
     var usersFilterList = ArrayList<User>()
@@ -30,6 +31,7 @@ class UserSearchAdapter(private var usersList: ArrayList<User>): RecyclerView.Ad
     private var firebaseUser: FirebaseUser? = null
     private lateinit var database: DatabaseReference
     private lateinit var firebaseAuth: FirebaseAuth
+
     init {
         usersFilterList = usersList
     }
@@ -56,8 +58,7 @@ class UserSearchAdapter(private var usersList: ArrayList<User>): RecyclerView.Ad
                     .load(it)
                     .into(holder.image)
             }
-        }.
-        addOnFailureListener { it ->
+        }.addOnFailureListener { it ->
             mContext.let { con ->
                 Glide.with(con)
                     .load("https://firebasestorage.googleapis.com/v0/b/travel-it-d162e.appspot.com/o/profile_images%2Fuser.png?alt=media&token=1569df88-2e93-41d1-baa8-73d747c77c83")
@@ -65,13 +66,26 @@ class UserSearchAdapter(private var usersList: ArrayList<User>): RecyclerView.Ad
             }
         }
         holder.userName.setText(modal.userName)
-
-        holder.addButton.setOnClickListener(){
-            modal.notifications.add("Salut sunt andi!")
-            if (uid != null) {
-                saveNotificationToFirebase(uid,modal.notifications)
-            }
+        if(currentUser.following.contains(modal.uid)){
+            holder.addButton.visibility = View.GONE
         }
+        else{
+            holder.addButton.visibility = View.VISIBLE
+        }
+        holder.addButton.setOnClickListener() {
+            if (uid != null) {
+                modal.followers.add(currentUser.uid!!)
+                saveUserFollowersToFirebase(modal.uid!!,modal.followers)
+            }
+            if (currentUser.uid != null) {
+
+                modal.uid?.let { it1 -> currentUser.following.add(it1) }
+                saveUserFollowingToFirebase(currentUser.uid!!,currentUser.following)
+            }
+            holder.addButton.visibility = View.GONE
+            Toast.makeText( mContext,"User followed", Toast.LENGTH_SHORT).show()
+        }
+
     }
 
     override fun getItemCount(): Int {
@@ -123,10 +137,22 @@ class UserSearchAdapter(private var usersList: ArrayList<User>): RecyclerView.Ad
             }
         }
     }
+
     private fun saveNotificationToFirebase(
         uid: String,
         notification: ArrayList<String>
     ) {
         database.child(uid).child("notifications").setValue(notification)
     }
-}
+
+    private fun saveUserFollowersToFirebase(currentUid: String,followers: ArrayList<String>) {
+        database.child(currentUid).child("followers").setValue(followers)
+    }
+
+
+    private fun saveUserFollowingToFirebase(currentUid: String,following: ArrayList<String>)
+        {
+            database.child(currentUid).child("following").setValue(following)
+        }
+
+    }

@@ -92,7 +92,7 @@ class HomeFragment : Fragment() {
         // this creates a vertical layout Manager
         recyclerview.layoutManager = LinearLayoutManager(context)
         recyclerView2.layoutManager = LinearLayoutManager(context)
-        usersSearchAdapter = UserSearchAdapter(usersList)
+        usersSearchAdapter = UserSearchAdapter(usersList,currentUser)
         // Setting the Adapter with the recyclerview
         recyclerView2.adapter = usersSearchAdapter
 

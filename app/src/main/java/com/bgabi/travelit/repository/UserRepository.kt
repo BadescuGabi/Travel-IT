@@ -28,7 +28,7 @@ class UserRepository(
     }
 
     suspend fun getCurrentUser(uid: String): User {
-        var user: User = User("default", "", "", "", ArrayList(), ArrayList(), null, null, "", ArrayList(),ArrayList(),"")
+        var user: User = User("default", "", "", "", ArrayList(), ArrayList(), ArrayList(), ArrayList(), ArrayList(),"")
         try {
             val data = userRef.get().await().child(uid)
             user = data.getValue(User::class.java)!!

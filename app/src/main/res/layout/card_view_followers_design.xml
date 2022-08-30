@@ -13,7 +13,7 @@
         android:orientation="horizontal"
         android:padding="5dp">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/image_followers"
             android:layout_width="60dp"
             android:layout_height="60dp" />
@@ -26,34 +26,33 @@
             android:layout_marginLeft="15dp"
             android:text="Item"
             android:layout_marginTop="15dp"
-            android:textSize="20sp"
+            android:textSize="17sp"
             android:textStyle="bold" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/follow_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="60dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:background="@android:color/transparent"
-            android:backgroundTint="@android:color/transparent"
-            android:textSize="15sp"
-            android:text="Follow"
-            android:textColor="@color/blue_topaz" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/delete_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="80dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="60dp"
+            android:background="@android:color/transparent"
+            android:backgroundTint="@android:color/transparent"
+            android:textSize="14dp"
+            android:text="Delete"
+            android:textColor="@color/blue_topaz" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/follow_button"
+            android:layout_width="80dp"
+            android:layout_height="35dp"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="25dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
             android:background="@drawable/button"
             android:backgroundTint="@color/blue_topaz"
-            android:textSize="15sp"
-            android:text="Delete"
+            android:textSize="14dp"
+            android:text="Follow"
             android:textColor="@color/white" />
     </LinearLayout>
 

@@ -94,6 +94,7 @@ class HomeActivity : AppCompatActivity() {
             newFragment = ProfileFragment()
             val mBundle = Bundle()
             mBundle.putSerializable("mUser", currentUser)
+            mBundle.putSerializable("usersList", usersList)
             newFragment.arguments = mBundle
         }
         if (fragment.javaClass == HomeFragment::class.java) {
@@ -107,12 +108,15 @@ class HomeActivity : AppCompatActivity() {
             newFragment = NotificationFragment()
             val mBundle = Bundle()
             mBundle.putSerializable("mUser", currentUser)
+            mBundle.putSerializable("usersList", usersList)
+
             newFragment.arguments = mBundle
         }
         if (fragment.javaClass == FollowersFragment::class.java) {
             newFragment = FollowersFragment()
             val mBundle = Bundle()
             mBundle.putSerializable("mUser", currentUser)
+            mBundle.putSerializable("usersList", usersList)
             newFragment.arguments = mBundle
         }
         if (fragment.javaClass == FollowingFragment::class.java) {
@@ -244,8 +248,6 @@ class HomeActivity : AppCompatActivity() {
                     it.followers,
                     it.following,
                     it.travelHistory,
-                    it.favorites,
-                    it.futureTravel,
                     it.userPosts,
                     it.notifications,
                     it.admin
@@ -265,8 +267,6 @@ class HomeActivity : AppCompatActivity() {
                         it.followers,
                         it.following,
                         it.travelHistory,
-                        it.favorites,
-                        it.futureTravel,
                         it.userPosts,
                         it.notifications,
                         it.admin)
