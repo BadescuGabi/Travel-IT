@@ -46,12 +46,12 @@
             tools:listitem="@layout/card_view_user_search_design" />
         <!--progressbar for displaying
             our loading indicator-->
-        <ProgressBar
-            android:id="@+id/idLoadingPB"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="300dp"
-            android:visibility="visible" />
+<!--        <ProgressBar-->
+<!--            android:id="@+id/idLoadingPB"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_centerHorizontal="true"-->
+<!--            android:layout_marginTop="300dp"-->
+<!--            android:visibility="visible" />-->
     </RelativeLayout>
 </ScrollView>

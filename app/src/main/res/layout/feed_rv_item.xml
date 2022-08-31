@@ -81,6 +81,15 @@
             android:textColor="@color/black"
             android:textSize="16sp" />
 
+        <ProgressBar
+            android:id="@+id/idLoadingPB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="250dp"
+            android:backgroundTint="@color/blue_topaz"
+            android:visibility="visible" />
         <!--image view to display the post image-->
         <ImageView
             android:id="@+id/post_image"
@@ -155,7 +164,7 @@
                     android:src="@drawable/ic_comment" />
 
                 <TextView
-                    android:id="@+id/comment_numbe"
+                    android:id="@+id/comment_number"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -169,7 +178,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/idLLShare"
+                android:id="@+id/reportButton"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_margin="10dp"
