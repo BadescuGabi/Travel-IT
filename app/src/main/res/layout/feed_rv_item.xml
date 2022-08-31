@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -23,7 +22,7 @@
 
             <!--circle image for displaying the user image-->
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/idCVAuthor"
+                android:id="@+id/post_user_image"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_margin="5dp" />
@@ -36,7 +35,7 @@
 
                 <!--text view for displaying user name-->
                 <TextView
-                    android:id="@+id/idTVAuthorName"
+                    android:id="@+id/post_username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="3dp"
@@ -48,7 +47,16 @@
 
                 <!--textview for displaying post publish time-->
                 <TextView
-                    android:id="@+id/idTVTime"
+                    android:id="@+id/post_user_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="3dp"
+                    android:text="time"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/post_user_location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="3dp"
@@ -63,7 +71,7 @@
 
         <!--text view for displaying post description-->
         <TextView
-            android:id="@+id/idTVDescription"
+            android:id="@+id/post_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/idLLTopBar"
@@ -75,10 +83,10 @@
 
         <!--image view to display the post image-->
         <ImageView
-            android:id="@+id/idIVPost"
+            android:id="@+id/post_image"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:layout_below="@id/idTVDescription"
+            android:layout_below="@id/post_content"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter" />
 
@@ -86,20 +94,21 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/idIVPost"
+            android:layout_below="@id/post_image"
             android:layout_margin="5dp"
             android:orientation="horizontal"
             android:padding="2dp"
             android:weightSum="3">
 
             <LinearLayout
+                android:id="@+id/like_button"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
-                style="@style/Widget.AppCompat.Button"
                 android:layout_margin="10dp"
-                android:gravity="center"
                 android:layout_weight="1"
                 android:background="@drawable/feed_background"
+                android:gravity="center"
                 android:orientation="horizontal"
                 android:weightSum="2">
 
@@ -111,7 +120,7 @@
                     android:src="@drawable/ic_like" />
 
                 <TextView
-                    android:id="@+id/idTVLikes"
+                    android:id="@+id/like_number"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -131,10 +140,10 @@
                 style="@style/Widget.AppCompat.Button"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
-                android:layout_weight="1"
-                android:gravity="center"
                 android:layout_margin="10dp"
+                android:layout_weight="1"
                 android:background="@drawable/feed_background"
+                android:gravity="center"
                 android:orientation="horizontal"
                 android:weightSum="2">
 
@@ -146,7 +155,7 @@
                     android:src="@drawable/ic_comment" />
 
                 <TextView
-                    android:id="@+id/idTVComments"
+                    android:id="@+id/comment_numbe"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -164,9 +173,9 @@
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_margin="10dp"
-                android:gravity="center"
                 android:layout_weight="1"
                 android:background="@drawable/feed_background"
+                android:gravity="center"
                 android:orientation="horizontal"
                 android:weightSum="2">
 
