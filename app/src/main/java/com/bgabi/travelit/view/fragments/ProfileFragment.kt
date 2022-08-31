@@ -1,5 +1,6 @@
 package com.bgabi.travelit.view.fragments
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,6 +19,7 @@ import com.bgabi.travelit.databinding.FragmentProfileBinding
 import com.bgabi.travelit.helpers.FirebaseHelper
 import com.bgabi.travelit.helpers.UtilsObj
 import com.bgabi.travelit.models.User
+import com.bgabi.travelit.view.activities.TravelHistoryActivity
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -93,7 +95,12 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 .addToBackStack(null)
             fragmentTransaction.commit()
         }
-
+        val travelHistory = binding.travelHistory
+        travelHistory.setOnClickListener {
+            val intent = Intent(context, TravelHistoryActivity::class.java)
+            intent.putExtra("currentUser", currentUser)
+            context?.startActivity(intent)
+        }
         profile_pic = binding.profilePic
         emailText = binding.emailProfile
         nameText = binding.userNameProfile

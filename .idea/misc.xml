@@ -23,10 +23,11 @@
         <entry key="..\:/Users/Gabri/Desktop/facultate/an3_s2/android/TravelIT/app/src/main/res/drawable/ic_travel.xml" value="0.129" />
         <entry key="..\:/Users/Gabri/Desktop/facultate/an3_s2/android/TravelIT/app/src/main/res/drawable/splash_screen.xml" value="0.1" />
         <entry key="..\:/Users/Gabri/Desktop/facultate/an3_s2/android/TravelIT/app/src/main/res/drawable/unfollow_button.xml" value="0.174" />
-        <entry key="..\:/Users/Gabri/Desktop/facultate/an3_s2/android/TravelIT/app/src/main/res/layout/activity_home.xml" value="0.1" />
+        <entry key="..\:/Users/Gabri/Desktop/facultate/an3_s2/android/TravelIT/app/src/main/res/layout/activity_home.xml" value="0.128" />
         <entry key="..\:/Users/Gabri/Desktop/facultate/an3_s2/android/TravelIT/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/Gabri/Desktop/facultate/an3_s2/android/TravelIT/app/src/main/res/layout/activity_sign_in.xml" value="0.2" />
         <entry key="..\:/Users/Gabri/Desktop/facultate/an3_s2/android/TravelIT/app/src/main/res/layout/activity_sign_up.xml" value="0.2" />
+        <entry key="..\:/Users/Gabri/Desktop/facultate/an3_s2/android/TravelIT/app/src/main/res/layout/activity_travel_history.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Gabri/Desktop/facultate/an3_s2/android/TravelIT/app/src/main/res/layout/card_view_design.xml" value="0.25" />
         <entry key="..\:/Users/Gabri/Desktop/facultate/an3_s2/android/TravelIT/app/src/main/res/layout/card_view_followers_design.xml" value="0.264" />
         <entry key="..\:/Users/Gabri/Desktop/facultate/an3_s2/android/TravelIT/app/src/main/res/layout/card_view_following_design.xml" value="0.23641304347826086" />
@@ -43,6 +44,7 @@
         <entry key="..\:/Users/Gabri/Desktop/facultate/an3_s2/android/TravelIT/app/src/main/res/layout/fragment_notification.xml" value="0.11458333333333333" />
         <entry key="..\:/Users/Gabri/Desktop/facultate/an3_s2/android/TravelIT/app/src/main/res/layout/fragment_profile.xml" value="0.2" />
         <entry key="..\:/Users/Gabri/Desktop/facultate/an3_s2/android/TravelIT/app/src/main/res/layout/layout_cmment.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Gabri/Desktop/facultate/an3_s2/android/TravelIT/app/src/main/res/layout/location_marker.xml" value="0.1390625" />
         <entry key="..\:/Users/Gabri/Desktop/facultate/an3_s2/android/TravelIT/app/src/main/res/layout/new_post_fragment.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Gabri/Desktop/facultate/an3_s2/android/TravelIT/app/src/main/res/layout/snippet_comments_toolbar.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Gabri/Desktop/facultate/an3_s2/android/TravelIT/app/src/main/res/menu/bottom_nav_menu.xml" value="0.19166666666666668" />
