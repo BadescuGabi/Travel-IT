@@ -10,5 +10,5 @@ data class Post     // creating a constructor class.
      val postDate: String? = null,
      val postDescription: String? = null,
      val postLikes: String? = null,
-     val postComments: String? = null,
+     val comments: ArrayList<Comment> = ArrayList(),
      val postReports: String? = null): Serializable

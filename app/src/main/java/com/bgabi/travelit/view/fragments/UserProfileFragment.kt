@@ -72,7 +72,7 @@ class UserProfileFragment : Fragment() {
         recyclerView.layoutManager =  LinearLayoutManager(context)
         var userList = ArrayList<User>()
         userList.add(userProfile)
-        recyclerView.adapter = PostAdapter(userProfile.userPosts,userList)
+        recyclerView.adapter = PostAdapter(userProfile.userPosts,userList,currentUser)
                 // Inflate the layout for this fragment
             return binding.root
     }

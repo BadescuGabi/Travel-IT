@@ -32,18 +32,24 @@ class CommentAdapter(private val mList: List<Comment>) : RecyclerView.Adapter<Co
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         val comment = mList[position]
-
-        // sets the image to the imageview from our itemHolder class
-        val imageRef = storage.reference.child("comments-photos/${comment.commentUser?.userName}_${comment.commentPost?.postDate}")
-        imageRef.downloadUrl.addOnSuccessListener {
-            Glide.with(mContext).load(it).into(holder.profileImage)
-        }
-
-
         // sets the text to the textview from our itemHolder class
-        holder.userName.text = comment.commentUser?.userName
-        holder.userComment.text = comment.comment
-
+        holder.userName.setText(comment.commentUser?.userName ?: "")
+        holder.userComment.setText(comment.comment)
+        holder.commentDate.setText(comment.commentDate)
+        val profilePhotoRef = storage.reference.child("profile_images/${comment.commentUser?.uid}")
+        profilePhotoRef.downloadUrl.addOnSuccessListener { it ->
+            mContext.let { con ->
+                Glide.with(con)
+                    .load(it)
+                    .into(holder.profileImage)
+            }
+        }.addOnFailureListener { it ->
+            mContext.let { con ->
+                Glide.with(con)
+                    .load("https://firebasestorage.googleapis.com/v0/b/travel-it-d162e.appspot.com/o/profile_images%2Fuser.png?alt=media&token=1569df88-2e93-41d1-baa8-73d747c77c83")
+                    .into(holder.profileImage)
+            }
+        }
     }
 
     // return the number of the items in the list
@@ -56,5 +62,6 @@ class CommentAdapter(private val mList: List<Comment>) : RecyclerView.Adapter<Co
         val profileImage: ImageView = itemView.findViewById(R.id.comment_profile_image)
         val userName: TextView = itemView.findViewById(R.id.comment_username)
         val userComment: TextView = itemView.findViewById(R.id.comment)
+        val commentDate: TextView = itemView.findViewById(R.id.comment_time_posted)
     }
 }

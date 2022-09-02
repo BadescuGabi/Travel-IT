@@ -88,7 +88,7 @@ class HomeFragment : Fragment() {
         recyclerView2.layoutManager = LinearLayoutManager(context)
         usersSearchAdapter = UserSearchAdapter(usersList, currentUser)
         // Setting the Adapter with the recyclerview
-        recyclerview.adapter = PostAdapter(feedPosts,usersList)
+        recyclerview.adapter = PostAdapter(feedPosts,usersList,currentUser)
         recyclerView2.adapter = usersSearchAdapter
 
 

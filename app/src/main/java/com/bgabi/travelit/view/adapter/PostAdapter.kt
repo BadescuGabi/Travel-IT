@@ -1,6 +1,7 @@
 package com.bgabi.travelit.view.adapter
 
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,7 +27,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class PostAdapter(private var postList: ArrayList<Post>, private var usersList: ArrayList<User>): RecyclerView.Adapter<PostAdapter.ViewHolder>() {
+class PostAdapter(private var postList: ArrayList<Post>, private var usersList: ArrayList<User>, private var currentUser: User): RecyclerView.Adapter<PostAdapter.ViewHolder>() {
     // arraylist for our facebook feeds.
     private lateinit var mContext: Context
     private lateinit var storage: FirebaseStorage
@@ -82,6 +83,11 @@ class PostAdapter(private var postList: ArrayList<Post>, private var usersList: 
         val commentButton: LinearLayout = holder.commentButton
         commentButton.setOnClickListener {
             val fragment: Fragment = CommentFragment()
+            val mBundle = Bundle()
+            mBundle.putSerializable("mUser", currentUser)
+            mBundle.putSerializable("userPost", post)
+            mBundle.putSerializable("usersPost", postList)
+            fragment.arguments = mBundle
             val activity=it.context as AppCompatActivity
             activity.supportFragmentManager
                 .beginTransaction()
