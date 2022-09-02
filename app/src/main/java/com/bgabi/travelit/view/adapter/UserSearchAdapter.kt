@@ -1,14 +1,19 @@
 package com.bgabi.travelit.view.adapter
 
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.bgabi.travelit.R
 import com.bgabi.travelit.helpers.FirebaseHelper
 import com.bgabi.travelit.models.User
+import com.bgabi.travelit.view.fragments.NewPostFragment
+import com.bgabi.travelit.view.fragments.UserProfileFragment
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -84,6 +89,19 @@ class UserSearchAdapter(private var usersList: ArrayList<User>, private var curr
             }
             holder.addButton.visibility = View.GONE
             Toast.makeText( mContext,"User followed", Toast.LENGTH_SHORT).show()
+        }
+        holder.userName.setOnClickListener {
+            val fragment: Fragment = UserProfileFragment()
+            val mBundle = Bundle()
+            mBundle.putSerializable("mUser", currentUser)
+            mBundle.putSerializable("userProfile", modal)
+            fragment.arguments = mBundle
+            val activity = it.context as AppCompatActivity
+            activity.supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.flFragment, fragment)
+                .addToBackStack(null)
+                .commit()
         }
 
     }

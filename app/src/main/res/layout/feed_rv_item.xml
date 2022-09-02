@@ -45,15 +45,15 @@
                     android:textSize="17sp"
                     android:textStyle="bold" />
 
-                <!--textview for displaying post publish time-->
+                <!--textview for displaying commentPost publish time-->
                 <TextView
                     android:id="@+id/post_user_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="3dp"
+                    android:padding="0dp"
                     android:text="time"
                     android:textColor="@color/black"
-                    android:textSize="15sp" />
+                    android:textSize="11sp" />
 
                 <TextView
                     android:id="@+id/post_user_location"
@@ -62,14 +62,14 @@
                     android:padding="3dp"
                     android:text="time"
                     android:textColor="@color/black"
-                    android:textSize="15sp" />
+                    android:textSize="11sp" />
 
             </LinearLayout>
 
         </LinearLayout>
 
 
-        <!--text view for displaying post description-->
+        <!--text view for displaying commentPost description-->
         <TextView
             android:id="@+id/post_content"
             android:layout_width="match_parent"
@@ -90,14 +90,14 @@
             android:layout_marginTop="250dp"
             android:backgroundTint="@color/blue_topaz"
             android:visibility="visible" />
-        <!--image view to display the post image-->
+        <!--image view to display the commentPost image-->
         <ImageView
             android:id="@+id/post_image"
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:layout_below="@id/post_content"
             android:adjustViewBounds="true"
-            android:scaleType="fitCenter" />
+            android:scaleType="fitXY" />
 
         <!--linear layout for displaying facebook actions-->
         <LinearLayout

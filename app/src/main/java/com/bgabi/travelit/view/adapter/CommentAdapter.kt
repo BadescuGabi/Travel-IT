@@ -34,15 +34,15 @@ class CommentAdapter(private val mList: List<Comment>) : RecyclerView.Adapter<Co
         val comment = mList[position]
 
         // sets the image to the imageview from our itemHolder class
-        val imageRef = storage.reference.child("comments-photos/${comment.author?.userName}_${comment.post?.postDate}")
+        val imageRef = storage.reference.child("comments-photos/${comment.commentUser?.userName}_${comment.commentPost?.postDate}")
         imageRef.downloadUrl.addOnSuccessListener {
             Glide.with(mContext).load(it).into(holder.profileImage)
         }
 
 
         // sets the text to the textview from our itemHolder class
-        holder.userName.text = comment.author?.userName
-        holder.userComment.text = comment.comm
+        holder.userName.text = comment.commentUser?.userName
+        holder.userComment.text = comment.comment
 
     }
 
