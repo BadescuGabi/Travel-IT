@@ -89,6 +89,8 @@ class UserSearchAdapter(private var usersList: ArrayList<User>, private var curr
             }
             holder.addButton.visibility = View.GONE
             Toast.makeText( mContext,"User followed", Toast.LENGTH_SHORT).show()
+            modal.notifications.add("${currentUser.userName} started to follow you")
+            modal.uid?.let { it1 -> savaNotificationToFirebase(it1,modal.notifications) }
         }
         holder.userName.setOnClickListener {
             val fragment: Fragment = UserProfileFragment()
@@ -172,5 +174,11 @@ class UserSearchAdapter(private var usersList: ArrayList<User>, private var curr
         {
             database.child(currentUid).child("following").setValue(following)
         }
+
+
+    private fun savaNotificationToFirebase(userUid: String,notifications: ArrayList<String>)
+    {
+        database.child(userUid).child("notifications").setValue(notifications)
+    }
 
     }
