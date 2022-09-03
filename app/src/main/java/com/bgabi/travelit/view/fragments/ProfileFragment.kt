@@ -56,6 +56,8 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private lateinit var following: TextView
     private lateinit var posts: TextView
     private lateinit var descriptionLayout: LinearLayout
+    var username: String = ""
+    var description: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -144,6 +146,8 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             val mBundle = Bundle()
             mBundle.putSerializable("mUser", currentUser)
             mBundle.putSerializable("usersList", usersList)
+            mBundle.putSerializable("username",username)
+            mBundle.putSerializable("description",description)
             fragment.arguments = mBundle
             val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
             fragmentTransaction.replace(R.id.flFragment, fragment)
@@ -165,6 +169,8 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         } else {
             descriptionLayout.visibility = View.GONE
         }
+        username = user.userName.toString()
+        description = user.description.toString()
         val s1 = user.followers.size.toString()
         val s2 = user.following.size.toString()
         val s3 = user.userPosts.size.toString()

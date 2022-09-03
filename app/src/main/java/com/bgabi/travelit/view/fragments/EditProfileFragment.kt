@@ -53,7 +53,8 @@ class EditProfileFragment() : Fragment(R.layout.fragment_edit_profile) {
     private lateinit var descriptionText: TextView
     private lateinit var mContext: Context
     private lateinit var usersList: ArrayList<User>
-
+    var usernameP: String = ""
+    var descriptionP: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -77,6 +78,10 @@ class EditProfileFragment() : Fragment(R.layout.fragment_edit_profile) {
         }
         currentUser = bundle!!.getSerializable("mUser") as User
         usersList = bundle!!.getSerializable("usersList") as ArrayList<User>
+        usernameP =  bundle!!.getSerializable("username") as String
+        descriptionP =  bundle!!.getSerializable("description") as String
+        userNameText.setText(usernameP)
+        descriptionText.setText(descriptionP)
         //if (user != null) {
         //    currentUser = user
         checkUserDetails(currentUser)
@@ -136,10 +141,15 @@ class EditProfileFragment() : Fragment(R.layout.fragment_edit_profile) {
             imageUri = data?.data
             profilePic.setImageURI(imageUri)
             savePhotoToFirebase(imageUri)
+            usernameP = userNameText.text.toString()
+            descriptionP = descriptionText.text.toString()
             val fragment: Fragment = EditProfileFragment()
             val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
             val mBundle = Bundle()
             mBundle.putSerializable("mUser", currentUser)
+            mBundle.putSerializable("usersList", usersList)
+            mBundle.putSerializable("username",usernameP)
+            mBundle.putSerializable("description",descriptionP)
             fragment.arguments = mBundle
             val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
             fragmentTransaction.replace(R.id.flFragment, fragment)
@@ -152,7 +162,10 @@ class EditProfileFragment() : Fragment(R.layout.fragment_edit_profile) {
         val userUid = firebaseAuth.currentUser?.uid
         //val imagesRef = storageRef.child("profile_photos/${userUid}-${imageUri}")
         val imagesRef = storage.reference.child("profile_images/${userUid}")
-
+        userNameText = binding.etUpdateUsername
+        descriptionText = binding.etUpdateDescription
+        usernameP = userNameText.text.toString()
+        descriptionP = descriptionText.text.toString()
         profilePic.isDrawingCacheEnabled = true
         profilePic.buildDrawingCache()
         val bitmap = (profilePic.drawable as BitmapDrawable).bitmap
@@ -168,6 +181,9 @@ class EditProfileFragment() : Fragment(R.layout.fragment_edit_profile) {
             val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
             val mBundle = Bundle()
             mBundle.putSerializable("mUser", currentUser)
+            mBundle.putSerializable("usersList", usersList)
+            mBundle.putSerializable("username",usernameP)
+            mBundle.putSerializable("description",descriptionP)
             fragment.arguments = mBundle
             val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
             fragmentTransaction.replace(R.id.flFragment, fragment)
@@ -194,10 +210,10 @@ class EditProfileFragment() : Fragment(R.layout.fragment_edit_profile) {
 
     private fun checkUserDetails(user: User) {
         if (user.userName != "") {
-            userNameText.setText(user.userName)
+            userNameText.setText(usernameP)
         }
         if (user.description != "") {
-            descriptionText.setText(user.description)
+            descriptionText.setText(descriptionP)
         }
     }
 
