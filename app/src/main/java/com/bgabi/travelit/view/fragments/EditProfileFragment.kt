@@ -22,6 +22,7 @@ import com.bgabi.travelit.view.activities.HomeActivity
 import com.bgabi.travelit.databinding.FragmentEditProfileBinding
 import com.bgabi.travelit.helpers.FirebaseHelper
 import com.bgabi.travelit.helpers.UtilsObj
+import com.bgabi.travelit.models.Post
 import com.bgabi.travelit.models.User
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
@@ -51,7 +52,7 @@ class EditProfileFragment() : Fragment(R.layout.fragment_edit_profile) {
     private lateinit var userNameText: TextView
     private lateinit var descriptionText: TextView
     private lateinit var mContext: Context
-
+    private lateinit var usersList: ArrayList<User>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,6 +76,7 @@ class EditProfileFragment() : Fragment(R.layout.fragment_edit_profile) {
             mContext = container.context
         }
         currentUser = bundle!!.getSerializable("mUser") as User
+        usersList = bundle!!.getSerializable("usersList") as ArrayList<User>
         //if (user != null) {
         //    currentUser = user
         checkUserDetails(currentUser)
@@ -106,6 +108,7 @@ class EditProfileFragment() : Fragment(R.layout.fragment_edit_profile) {
                     val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
                     val mBundle = Bundle()
                     mBundle.putSerializable("mUser", currentUser)
+                    mBundle.putSerializable("usersList", usersList)
                     fragment.arguments = mBundle
                     val fragmentTransaction: FragmentTransaction =
                         fragmentManager.beginTransaction()

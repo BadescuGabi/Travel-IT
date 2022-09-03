@@ -78,6 +78,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/description_profile_other_layout"
                     android:layout_width="420dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"

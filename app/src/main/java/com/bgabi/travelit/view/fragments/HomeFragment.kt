@@ -58,6 +58,7 @@ class HomeFragment : Fragment() {
         val bundle = arguments
         usersList = bundle!!.getSerializable("usersList") as ArrayList<User>
         currentUser = bundle!!.getSerializable("mUser") as User
+        usersList=ArrayList(usersList.filter { it.admin!="true" })
         usersList.remove(currentUser)
         binding = FragmentHomeBinding.inflate(layoutInflater)
         binding2 = FeedRvItemBinding.inflate(layoutInflater)

@@ -66,6 +66,9 @@ class UserProfileFragment : Fragment() {
         binding.userNameProfileOther.setText(userProfile.userName)
         binding.emailProfileOther.setText(userProfile.email)
         binding.descriptionProfileOther.setText(userProfile.description)
+        if(userProfile.description.isNullOrEmpty()){
+            binding.descriptionProfileOtherLayout.visibility = View.GONE
+        }
         userProfilePic = binding.profilePicOther
         userProfile.uid?.let { loadPhotoFromFirebase(it) }
         recyclerView = binding.feedRecyclerviewOther
