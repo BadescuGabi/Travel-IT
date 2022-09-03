@@ -20,7 +20,7 @@
 
         <TextView
             android:id="@+id/textView_followers"
-            android:layout_width="wrap_content"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="15dp"
@@ -37,7 +37,7 @@
             android:layout_width="80dp"
             android:layout_height="35dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="60dp"
+            android:layout_marginStart="10dp"
             android:background="@android:color/transparent"
             android:backgroundTint="@android:color/transparent"
             android:textSize="14dp"
@@ -48,7 +48,6 @@
             android:layout_width="80dp"
             android:layout_height="35dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="25dp"
             android:background="@drawable/button"
             android:backgroundTint="@color/blue_topaz"
             android:textSize="14dp"

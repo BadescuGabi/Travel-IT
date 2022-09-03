@@ -14,41 +14,47 @@
         android:padding="5dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/image_search"
+            android:id="@+id/image_report"
             android:layout_width="60dp"
             android:layout_height="60dp" />
 
         <TextView
-            android:id="@+id/textView_search"
-            android:layout_width="180dp"
-            android:layout_height="35dp"
-            android:gravity="left"
+            android:id="@+id/textView_report"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            style="@style/Widget.AppCompat.Button"
-            android:textAllCaps="false"
-            android:background="@android:color/transparent"
             android:layout_marginLeft="15dp"
             android:text="Item"
             android:layout_marginTop="15dp"
-            android:textSize="19sp"
-            />
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/follow__button_search_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/accept_report"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_gravity="center"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:layout_marginEnd="15dp"
             android:background="@drawable/button"
-            android:backgroundTint="@color/blue_topaz"
-            android:textSize="15sp"
-            android:text="Following"
+            android:backgroundTint="#247543"
+            android:textSize="12sp"
+            android:src="@drawable/ic_done"
+            android:textColor="#247543" />
+        <ImageView
+            android:id="@+id/reject_report"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/button"
+            android:backgroundTint="#bd3333"
+            android:textSize="12sp"
+            android:src="@drawable/ic_reject"
             android:textColor="@color/white" />
     </LinearLayout>
 

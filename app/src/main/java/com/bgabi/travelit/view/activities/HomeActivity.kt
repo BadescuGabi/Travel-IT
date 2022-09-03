@@ -25,6 +25,7 @@ import com.facebook.login.LoginManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.core.Repo
 import com.google.firebase.ktx.Firebase
 import kotlin.system.exitProcess
 
@@ -38,6 +39,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var usersViewModel: UsersViewModel
     lateinit var mainHandler: Handler
     private val profileFragment = ProfileFragment()
+    private val reportsFragment = ReportsFragment()
     private var usersList: ArrayList<User> = ArrayList()
     private var killed: Boolean = false
     private lateinit var bottomNavigationView: BottomNavigationView
@@ -64,13 +66,16 @@ class HomeActivity : AppCompatActivity() {
         val profileFragment = ProfileFragment()
         val homeFragment = HomeFragment()
         val notificationFragment = NotificationFragment()
+        val allUserFragment = AllUsersFragment()
         commentFragment = CommentFragment()
-        bottomNavigationView.visibility =  View.GONE
+        bottomNavigationView.visibility = View.GONE
         bottomNavigationView.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.profile -> setCurrentFragment(profileFragment)
                 R.id.home -> setCurrentFragment(homeFragment)
                 R.id.notifications -> setCurrentFragment(notificationFragment)
+                R.id.reports -> setCurrentFragment(reportsFragment)
+                R.id.users ->setCurrentFragment(allUserFragment)
             }
             true
         }
@@ -79,17 +84,30 @@ class HomeActivity : AppCompatActivity() {
     private fun setCurrentFragment(fragment: Fragment) {
         var newFragment = Fragment()
 
-        if (currentUser.admin == "true"){
+        if (currentUser.admin == "true") {
             bottomNavigationView.menu.getItem(0).setVisible(false)
-                bottomNavigationView.menu.getItem(1).setVisible(false)
+            bottomNavigationView.menu.getItem(1).setVisible(false)
             bottomNavigationView.menu.getItem(2).setVisible(false)
-        }
-        else{
+        } else {
             bottomNavigationView.menu.getItem(3).setVisible(false)
             bottomNavigationView.menu.getItem(4).setVisible(false)
         }
-        bottomNavigationView.visibility =  View.VISIBLE
+        bottomNavigationView.visibility = View.VISIBLE
 
+        if (fragment.javaClass == ReportsFragment::class.java) {
+            newFragment = ReportsFragment()
+            val mBundle = Bundle()
+            mBundle.putSerializable("mUser", currentUser)
+            mBundle.putSerializable("usersList", usersList)
+            newFragment.arguments = mBundle
+        }
+        if (fragment.javaClass == AllUsersFragment::class.java) {
+            newFragment = AllUsersFragment()
+            val mBundle = Bundle()
+            mBundle.putSerializable("mUser", currentUser)
+            mBundle.putSerializable("usersList", usersList)
+            newFragment.arguments = mBundle
+        }
         if (fragment.javaClass == ProfileFragment::class.java) {
             newFragment = ProfileFragment()
             val mBundle = Bundle()
@@ -183,7 +201,11 @@ class HomeActivity : AppCompatActivity() {
 
     private fun checkDataLoaded(): Boolean {
         if (currentUser != defaultUser && usersList.size != 0) {
-            setCurrentFragment(profileFragment)
+            if (currentUser.admin == "true") {
+                setCurrentFragment(reportsFragment)
+            } else {
+                setCurrentFragment(profileFragment)
+            }
             return true
         }
         return false
@@ -259,8 +281,9 @@ class HomeActivity : AppCompatActivity() {
     private fun getUsers() {
         usersViewModel.responseLiveData.observe(this) { res ->
             res.users?.let { users ->
-                users.forEach{ it ->
-                    val user = User(it.uid,
+                users.forEach { it ->
+                    val user = User(
+                        it.uid,
                         it.email,
                         it.userName,
                         it.description,
@@ -269,7 +292,8 @@ class HomeActivity : AppCompatActivity() {
                         it.travelHistory,
                         it.userPosts,
                         it.notifications,
-                        it.admin)
+                        it.admin
+                    )
                     usersList.add(user)
                 }
             }

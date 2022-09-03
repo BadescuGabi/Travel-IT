@@ -27,7 +27,11 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class PostAdapter(private var postList: ArrayList<Post>, private var usersList: ArrayList<User>, private var currentUser: User): RecyclerView.Adapter<PostAdapter.ViewHolder>() {
+class PostAdapter(
+    private var postList: ArrayList<Post>,
+    private var usersList: ArrayList<User>,
+    private var currentUser: User
+) : RecyclerView.Adapter<PostAdapter.ViewHolder>() {
     // arraylist for our facebook feeds.
     private lateinit var mContext: Context
     private lateinit var storage: FirebaseStorage
@@ -37,7 +41,8 @@ class PostAdapter(private var postList: ArrayList<Post>, private var usersList: 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         // inflating our layout for item of recycler view item.
-        val view: View = LayoutInflater.from(parent.context).inflate(R.layout.feed_rv_item, parent, false)
+        val view: View =
+            LayoutInflater.from(parent.context).inflate(R.layout.feed_rv_item, parent, false)
         mContext = parent.context
         database = FirebaseDatabase.getInstance(FirebaseHelper.dbUrl).getReference("data/users")
         return ViewHolder(view)
@@ -88,12 +93,17 @@ class PostAdapter(private var postList: ArrayList<Post>, private var usersList: 
             mBundle.putSerializable("userPost", post)
             mBundle.putSerializable("usersPost", postList)
             fragment.arguments = mBundle
-            val activity=it.context as AppCompatActivity
+            val activity = it.context as AppCompatActivity
             activity.supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.flFragment,fragment)
+                .replace(R.id.flFragment, fragment)
                 .addToBackStack(null)
                 .commit()
+        }
+        holder.reportButton.setOnClickListener {
+            val admin = usersList.first { it.admin == "true" }
+            admin.notifications.add("${currentUser.userName} reported a post ") //${post.postId}
+            admin.uid?.let { it1 -> savaNotificationToFirebase(it1,admin.notifications) }
         }
     }
 
@@ -135,6 +145,9 @@ class PostAdapter(private var postList: ArrayList<Post>, private var usersList: 
         }
     }
 
+    private fun savaNotificationToFirebase(userUid: String, notifications: ArrayList<String>) {
+        database.child(userUid).child("notifications").setValue(notifications)
+    }
     // creating a constructor for our adapter class.
 //    init {
 //        this.postList = postList
@@ -142,12 +155,11 @@ class PostAdapter(private var postList: ArrayList<Post>, private var usersList: 
 //    }
 
 
-
 //            @Suppress("UNCHECKED_CAST")
 //            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
 //                postFilterList = results?.values as ArrayList<Post>
 //                notifyDataSetChanged()
 //            }
-        }
+}
 
 

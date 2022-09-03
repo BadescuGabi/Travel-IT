@@ -72,7 +72,8 @@ class UserProfileFragment : Fragment() {
         recyclerView.layoutManager =  LinearLayoutManager(context)
         var userList = ArrayList<User>()
         userList.add(userProfile)
-        recyclerView.adapter = PostAdapter(userProfile.userPosts,userList,currentUser)
+        val postSorted = userProfile.userPosts.sortedWith(compareByDescending { it.postDate })
+        recyclerView.adapter = PostAdapter(ArrayList(postSorted),userList,currentUser)
                 // Inflate the layout for this fragment
             return binding.root
     }

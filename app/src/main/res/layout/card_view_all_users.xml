@@ -14,24 +14,23 @@
         android:padding="5dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/image_search"
+            android:id="@+id/image_all_users"
             android:layout_width="60dp"
             android:layout_height="60dp" />
 
         <TextView
-            android:id="@+id/textView_search"
+            android:id="@+id/username_all_users"
             android:layout_width="180dp"
             android:layout_height="35dp"
             android:gravity="left"
             android:layout_marginStart="10dp"
             style="@style/Widget.AppCompat.Button"
-            android:textAllCaps="false"
             android:background="@android:color/transparent"
             android:layout_marginLeft="15dp"
             android:text="Item"
             android:layout_marginTop="15dp"
             android:textSize="19sp"
-            />
+            android:textStyle="bold" />
 
         <View
             android:layout_width="0dp"
@@ -39,16 +38,14 @@
             android:layout_weight="1" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/follow__button_search_view"
+            android:id="@+id/delete_user_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
             android:background="@drawable/button"
-            android:backgroundTint="@color/blue_topaz"
+            android:backgroundTint="#bd3333"
             android:textSize="15sp"
-            android:text="Following"
+            android:text="Delete"
             android:textColor="@color/white" />
     </LinearLayout>
 
