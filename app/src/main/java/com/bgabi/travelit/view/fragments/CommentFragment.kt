@@ -34,9 +34,10 @@ class CommentFragment : Fragment(R.layout.fragment_comment) {
     private lateinit var recyclerView: RecyclerView
     private lateinit var newComment: TextView
     private lateinit var commentButton: ImageView
-    private lateinit var commentDate: String
+    private lateinit var commentDate1: String
     private lateinit var database: DatabaseReference
     private lateinit var postsList: ArrayList<Post>
+    private lateinit var usersList: ArrayList<User>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -50,29 +51,34 @@ class CommentFragment : Fragment(R.layout.fragment_comment) {
         currentPost = bundle!!.getSerializable("userPost") as Post
         currentUser = bundle!!.getSerializable("mUser") as User
         postsList = bundle!!.getSerializable("usersPost") as ArrayList<Post>
+        usersList = bundle.getSerializable("usersList") as ArrayList<User>
+        usersList.add(currentUser)
         binding = FragmentCommentBinding.inflate(layoutInflater)
         database = FirebaseDatabase.getInstance(FirebaseHelper.dbUrl).getReference("data/users")
         storage = Firebase.storage
         recyclerView = binding.recyclerviewComents
         recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = CommentAdapter(currentPost.comments)
+        recyclerView.adapter = CommentAdapter(currentPost.comments,usersList)
         newComment = binding.comment
         commentButton = binding.addComment
         commentButton.setOnClickListener {
-            if (newComment.text != "") {
+            if (newComment.text.toString() != "") {
+                val commValue = newComment.text.toString()
                 val current = LocalDateTime.now()
                 val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")
-                commentDate = current.format(formatter)
-                val newCom = Comment(currentUser, newComment.text.toString(),commentDate)
+                commentDate1 = current.format(formatter)
+                var newCom = Comment(currentUser.uid,commValue,commentDate1)
+
                 currentPost.comments.add(newCom)
                 addComment(currentPost,currentUser,currentPost.comments,postsList)
+                newComment.setText("")
             }
         }
         // Inflate the layout for this fragment
         return binding.root
     }
 
-    private fun addComment(post: Post, user: User, comment: List<Comment>,posts: ArrayList<Post>) {
+    private fun addComment(post: Post, user: User, comment: ArrayList<Comment>,posts: ArrayList<Post>) {
             val ind=posts.indexOf(post)
             user.uid?.let { post.postUser?.let { it1 -> database.child(it1).child("userPosts").child(ind.toString()).child("comments").setValue(post.comments) } }
 

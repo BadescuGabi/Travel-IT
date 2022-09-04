@@ -6,16 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bgabi.travelit.R
-import com.bgabi.travelit.databinding.FragmentHomeBinding
-import com.bgabi.travelit.databinding.FragmentProfileBinding
 import com.bgabi.travelit.databinding.FragmentUserProfileBinding
 import com.bgabi.travelit.helpers.UtilsObj
+import com.bgabi.travelit.models.Post
 import com.bgabi.travelit.models.User
 import com.bgabi.travelit.view.activities.HomeActivity
 import com.bgabi.travelit.view.adapter.PostAdapter
@@ -48,7 +44,7 @@ class UserProfileFragment : Fragment() {
     private lateinit var following: TextView
     private lateinit var userProfilePic: CircleImageView
     private lateinit var recyclerView: RecyclerView
-
+    private lateinit var usersList : ArrayList<User>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -59,24 +55,23 @@ class UserProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val bundle = arguments
-        userProfile = bundle!!.getSerializable("userProfile") as User
         currentUser = bundle!!.getSerializable("mUser") as User
+        usersList = bundle.getSerializable("usersList") as ArrayList<User>
         binding = FragmentUserProfileBinding.inflate(layoutInflater)
         storage = Firebase.storage
-        binding.userNameProfileOther.setText(userProfile.userName)
-        binding.emailProfileOther.setText(userProfile.email)
-        binding.descriptionProfileOther.setText(userProfile.description)
-        if(userProfile.description.isNullOrEmpty()){
+        binding.userNameProfileOther.setText(currentUser.userName)
+        binding.emailProfileOther.setText(currentUser.email)
+        binding.descriptionProfileOther.setText(currentUser.description)
+        if(currentUser.description.isNullOrEmpty()){
             binding.descriptionProfileOtherLayout.visibility = View.GONE
         }
         userProfilePic = binding.profilePicOther
-        userProfile.uid?.let { loadPhotoFromFirebase(it) }
+        currentUser.uid?.let { loadPhotoFromFirebase(it) }
         recyclerView = binding.feedRecyclerviewOther
         recyclerView.layoutManager =  LinearLayoutManager(context)
-        var userList = ArrayList<User>()
-        userList.add(userProfile)
-        val postSorted = userProfile.userPosts.sortedWith(compareByDescending { it.postDate })
-        recyclerView.adapter = PostAdapter(ArrayList(postSorted),userList,currentUser)
+        val feedPosts = getPostsForAdapter(currentUser.uid)
+//        val postSorted = currentUser.userPosts.sortedWith(compareByDescending { it.postDate })
+        recyclerView.adapter = PostAdapter(feedPosts,usersList,currentUser)
                 // Inflate the layout for this fragment
             return binding.root
     }
@@ -96,5 +91,16 @@ class UserProfileFragment : Fragment() {
             }
         }
     }
+    fun getPostsForAdapter(followingUids: String?): ArrayList<Post> {
+        var posts = ArrayList<Post>()
 
+            currentUser.userPosts.forEach() { post ->
+                        posts.add(post)
+                    }
+        if (posts.isNotEmpty()) {
+            val postSorted = posts.sortedWith(compareByDescending { it.postDate })
+            return ArrayList(postSorted)
+        }
+        return posts
+    }
 }

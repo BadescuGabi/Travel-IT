@@ -92,6 +92,7 @@ class PostAdapter(
             mBundle.putSerializable("mUser", currentUser)
             mBundle.putSerializable("userPost", post)
             mBundle.putSerializable("usersPost", postList)
+            mBundle.putSerializable("usersList", usersList)
             fragment.arguments = mBundle
             val activity = it.context as AppCompatActivity
             activity.supportFragmentManager

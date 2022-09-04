@@ -80,6 +80,7 @@ class HomeFragment : Fragment() {
         }
         // getting the recyclerview by its id
         val feedPosts = getPostsForAdapter(currentUser.following)
+        val postSorted = ArrayList(feedPosts.sortedWith(compareByDescending { it.postDate }))
         recyclerview = binding.feedRecyclerview
 
         recyclerView2 = binding.peopleRecyclerview
