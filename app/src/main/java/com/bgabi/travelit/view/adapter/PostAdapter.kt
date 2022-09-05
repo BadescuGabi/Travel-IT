@@ -1,14 +1,22 @@
 package com.bgabi.travelit.view.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.ColorFilter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import com.bgabi.travelit.R
 import com.bgabi.travelit.helpers.FirebaseHelper
@@ -17,7 +25,10 @@ import com.bgabi.travelit.models.Post
 import com.bgabi.travelit.models.User
 import com.bgabi.travelit.view.activities.HomeActivity
 import com.bgabi.travelit.view.activities.TravelHistoryActivity
+import com.bgabi.travelit.view.fragments.FollowingFragment
+import com.bgabi.travelit.view.fragments.LikeUsersFragment
 import com.bumptech.glide.Glide
+import com.facebook.FacebookSdk.getApplicationContext
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -51,6 +62,7 @@ class PostAdapter(
         return ViewHolder(view)
     }
 
+    @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         // getting data from array list and setting it to our modal class.
         val post: Post = postList[position]
@@ -83,13 +95,69 @@ class PostAdapter(
         }
 
         val user = usersList.first { it.uid == post.postUser }
-        if(currentUser.uid != user.uid){
+        if (currentUser.uid != user.uid) {
             holder.deleteButon.visibility = View.GONE
         }
+        if (post.postLikes.contains(currentUser.uid)) {
+            DrawableCompat.setTint(
+                holder.likeIcon.getDrawable(),
+                ContextCompat.getColor(getApplicationContext(), R.color.blue_topaz)
+            )
+        }
+
         holder.postUserName.setText(user.userName)
         holder.postDate.setText(post.postDate)
         holder.postLocation.setText(post.postLocation)
         holder.postDescirption.setText(post.postDescription)
+        holder.commentNumber.setText(post.comments.size.toString())
+        holder.likeNumber.setText(post.postLikes.size.toString())
+        if (post.postUser != currentUser.uid) {
+            holder.likeButton.setOnClickListener {
+                var ok = 0
+                user.userPosts.forEach {
+                    if (it.postUser == post.postUser) {
+                        if (!it.postLikes.contains(currentUser.uid.toString())) {
+                            it.postLikes.add(currentUser.uid.toString())
+                            DrawableCompat.setTint(
+                                holder.likeIcon.getDrawable(),
+                                ContextCompat.getColor(getApplicationContext(), R.color.blue_topaz)
+                            )
+                            holder.likeNumber.setText((post.postLikes.size + 1).toString())
+                            ok = 1
+                        } else {
+                            it.postLikes.remove(currentUser.uid.toString())
+                            DrawableCompat.setTint(
+                                holder.likeIcon.getDrawable(),
+                                ContextCompat.getColor(getApplicationContext(), R.color.grey)
+                            )
+                            holder.likeNumber.setText((post.postLikes.size - 1).toString())
+                        }
+                    }
+                    if (ok == 1) {
+                        holder.likeNumber.setText((post.postLikes.size).toString())
+                    } else {
+                        holder.likeNumber.setText((post.postLikes.size).toString())
+                    }
+                    updateLikeToFirebase(post, user)
+
+                }
+            }
+        }
+        else {
+            holder.likeButton.setOnClickListener {
+                val fragment: Fragment = LikeUsersFragment()
+                val mBundle = Bundle()
+                mBundle.putSerializable("mUser", currentUser)
+                mBundle.putSerializable("usersList", usersList)
+                fragment.arguments = mBundle
+                val activity = it.context as AppCompatActivity
+                activity.supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.flFragment, fragment)
+                    .addToBackStack(null)
+                    .commit()
+            }
+        }
         val commentButton: LinearLayout = holder.commentButton
         commentButton.setOnClickListener {
             val fragment: Fragment = CommentFragment()
@@ -109,22 +177,46 @@ class PostAdapter(
         holder.reportButton.setOnClickListener {
             val admin = usersList.first { it.admin == "true" }
             admin.notifications.add("${currentUser.userName} reported a post ") //${post.postId}
-            admin.uid?.let { it1 -> savaNotificationToFirebase(it1,admin.notifications) }
+            admin.uid?.let { it1 -> savaNotificationToFirebase(it1, admin.notifications) }
         }
         holder.deleteButon.setOnClickListener {
             currentUser.userPosts.remove(post)
             postList.remove(post)
-            updatePostsFirebase(post.postUser,postList,position)
+            updatePostsFirebase(post.postUser, postList, position)
             Toast.makeText(mContext, "Post deleted", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun updatePostsFirebase(postUser: String?, posts: ArrayList<Post>,pos:Int) {
+    private fun updatePostsFirebase(postUser: String?, posts: ArrayList<Post>, pos: Int) {
         if (postUser != null) {
-            currentUser.uid?.let { database.child(it).child("userPosts").setValue(currentUser.userPosts) }
+            currentUser.uid?.let {
+                database.child(it).child("userPosts").setValue(currentUser.userPosts)
+            }
             notifyItemRemoved(pos)
             notifyItemRangeChanged(pos, postList.size)
 
+        }
+    }
+
+    private fun updateLikeToFirebase(posts: Post, author: User) {
+        val ind = author.userPosts.indexOf(posts)
+        if (posts != null) {
+            posts.postUser.let {
+                if (it != null) {
+                    database.child(it).child("userPosts").child(ind.toString()).setValue(posts)
+                }
+            }
+//            notifyItemRemoved(pos)
+//            notifyItemRangeChanged(pos, postList.size)
+//  val ind = pUser.userPosts.indexOfFirst {
+//            it.postId == currentPost.postId
+//        }
+//        currentPost.comments.remove(com)
+//        postUser?.let {
+//            postUser.let { it1 ->
+//                database.child(it1).child("userPosts").child(ind.toString()).child("comments")
+//                    .setValue(currentPost.comments)
+//            }
         }
     }
 
@@ -145,10 +237,12 @@ class PostAdapter(
         val likeButton: LinearLayout
         val commentButton: LinearLayout
         val reportButton: LinearLayout
+        val likeIcon: ImageView
         val likeNumber: TextView
         val commentNumber: TextView
         val loading: ProgressBar
-        val deleteButon : ImageView
+        val deleteButon: ImageView
+
         init {
             // initializing our variables
             postUserProfileImage = itemView.findViewById(R.id.post_user_image)
@@ -160,6 +254,7 @@ class PostAdapter(
             likeButton = itemView.findViewById(R.id.like_button)
             commentButton = itemView.findViewById(R.id.commentButton)
             reportButton = itemView.findViewById(R.id.reportButton)
+            likeIcon = itemView.findViewById(R.id.like_ic)
             likeNumber = itemView.findViewById(R.id.like_number)
             commentNumber = itemView.findViewById(R.id.comment_number)
             loading = itemView.findViewById(R.id.idLoadingPB)

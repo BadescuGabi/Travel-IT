@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/transparent"
+    tools:context=".view.fragments.LikeUsersFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_like"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        tools:itemCount="5"
+        tools:listitem="@layout/card_view_user_liked_design" />
+
+</LinearLayout>

@@ -134,6 +134,7 @@
                 android:weightSum="2">
 
                 <ImageView
+                    android:id="@+id/like_ic"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
