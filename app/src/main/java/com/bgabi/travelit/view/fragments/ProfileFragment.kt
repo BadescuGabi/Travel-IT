@@ -72,6 +72,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             inflater,
             R.layout.fragment_profile, container, false
         )
+
         val bundle = arguments
         currentUser = bundle!!.getSerializable("mUser") as User
         usersList = bundle.getSerializable("usersList") as ArrayList<User>
@@ -79,16 +80,15 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         postsFragment = binding.posts
         postsFragment.setOnClickListener {
             val fragment: Fragment = UserProfileFragment()
+            val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
             val mBundle = Bundle()
             mBundle.putSerializable("mUser", currentUser)
             mBundle.putSerializable("usersList", usersList)
             fragment.arguments = mBundle
-            val activity = it.context as AppCompatActivity
-            activity.supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.flFragment, fragment)
+            val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.flFragment, fragment)
                 .addToBackStack(null)
-                .commit()
+            fragmentTransaction.commit()
         }
         followersFragment.setOnClickListener {
             val fragment: Fragment = FollowersFragment()
@@ -195,4 +195,5 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             }
         }
     }
+
 }

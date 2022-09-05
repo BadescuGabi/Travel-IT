@@ -58,7 +58,7 @@ class CommentFragment : Fragment(R.layout.fragment_comment) {
         storage = Firebase.storage
         recyclerView = binding.recyclerviewComents
         recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = CommentAdapter(currentPost.comments,usersList)
+        recyclerView.adapter = CommentAdapter(currentPost.comments,usersList,currentUser,currentPost)
         newComment = binding.comment
         commentButton = binding.addComment
         commentButton.setOnClickListener {
@@ -70,6 +70,8 @@ class CommentFragment : Fragment(R.layout.fragment_comment) {
                 var newCom = Comment(currentUser.uid,commValue,commentDate1)
 
                 currentPost.comments.add(newCom)
+                val postSorted = postsList.sortedWith(compareByDescending { it.postDate })
+                postsList- ArrayList(postSorted)
                 addComment(currentPost,currentUser,currentPost.comments,postsList)
                 newComment.setText("")
             }
@@ -79,7 +81,7 @@ class CommentFragment : Fragment(R.layout.fragment_comment) {
     }
 
     private fun addComment(post: Post, user: User, comment: ArrayList<Comment>,posts: ArrayList<Post>) {
-            val ind=posts.indexOf(post)
+            val ind=posts.size-1- posts.indexOf(post)
             user.uid?.let { post.postUser?.let { it1 -> database.child(it1).child("userPosts").child(ind.toString()).child("comments").setValue(post.comments) } }
 
     }

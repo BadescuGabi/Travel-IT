@@ -1,6 +1,7 @@
 package com.bgabi.travelit.view.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,8 @@ import com.bgabi.travelit.helpers.FirebaseHelper
 import com.bgabi.travelit.view.fragments.CommentFragment
 import com.bgabi.travelit.models.Post
 import com.bgabi.travelit.models.User
+import com.bgabi.travelit.view.activities.HomeActivity
+import com.bgabi.travelit.view.activities.TravelHistoryActivity
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
@@ -80,11 +83,13 @@ class PostAdapter(
         }
 
         val user = usersList.first { it.uid == post.postUser }
+        if(currentUser.uid != user.uid){
+            holder.deleteButon.visibility = View.GONE
+        }
         holder.postUserName.setText(user.userName)
         holder.postDate.setText(post.postDate)
         holder.postLocation.setText(post.postLocation)
         holder.postDescirption.setText(post.postDescription)
-
         val commentButton: LinearLayout = holder.commentButton
         commentButton.setOnClickListener {
             val fragment: Fragment = CommentFragment()
@@ -105,6 +110,21 @@ class PostAdapter(
             val admin = usersList.first { it.admin == "true" }
             admin.notifications.add("${currentUser.userName} reported a post ") //${post.postId}
             admin.uid?.let { it1 -> savaNotificationToFirebase(it1,admin.notifications) }
+        }
+        holder.deleteButon.setOnClickListener {
+            currentUser.userPosts.remove(post)
+            postList.remove(post)
+            updatePostsFirebase(post.postUser,postList,position)
+            Toast.makeText(mContext, "Post deleted", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun updatePostsFirebase(postUser: String?, posts: ArrayList<Post>,pos:Int) {
+        if (postUser != null) {
+            currentUser.uid?.let { database.child(it).child("userPosts").setValue(currentUser.userPosts) }
+            notifyItemRemoved(pos)
+            notifyItemRangeChanged(pos, postList.size)
+
         }
     }
 
@@ -128,7 +148,7 @@ class PostAdapter(
         val likeNumber: TextView
         val commentNumber: TextView
         val loading: ProgressBar
-
+        val deleteButon : ImageView
         init {
             // initializing our variables
             postUserProfileImage = itemView.findViewById(R.id.post_user_image)
@@ -143,6 +163,7 @@ class PostAdapter(
             likeNumber = itemView.findViewById(R.id.like_number)
             commentNumber = itemView.findViewById(R.id.comment_number)
             loading = itemView.findViewById(R.id.idLoadingPB)
+            deleteButon = itemView.findViewById(R.id.delete_post)
         }
     }
 

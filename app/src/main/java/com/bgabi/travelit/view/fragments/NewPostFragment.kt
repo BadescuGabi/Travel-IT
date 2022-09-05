@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
@@ -66,7 +67,7 @@ class NewPostFragment : Fragment() {
         currentUser = bundle!!.getSerializable("mUser") as User
         val photoId = bundle!!.getSerializable("photoId") as String
         usersList = bundle.getSerializable("usersList") as ArrayList<User>
-
+        usersList.add(currentUser)
         binding = FragmentNewPostBinding.inflate(layoutInflater)
         postDescrition = binding.postDescription
         postLocation = binding.postLocation
@@ -95,18 +96,21 @@ class NewPostFragment : Fragment() {
                 postDate,
                 postDescrition.text.toString()
             )
-            val fragment: Fragment = ProfileFragment()
-            val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
-            val mBundle = Bundle()
-            mBundle.putSerializable("mUser", currentUser)
-            mBundle.putSerializable("usersList",usersList)
-            fragment.arguments = mBundle
-            val fragmentTransaction: FragmentTransaction =
-                fragmentManager.beginTransaction()
-            fragmentTransaction.replace(R.id.flFragment, fragment)
-            fragmentTransaction.commit()
+//            val fragment: Fragment = ProfileFragment()
+//            val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
+//            val mBundle = Bundle()
+//            mBundle.putSerializable("mUser", currentUser)
+//            mBundle.putSerializable("usersList",usersList)
+//            fragment.arguments = mBundle
+//            val fragmentTransaction: FragmentTransaction =
+//                fragmentManager.beginTransaction()
+//            fragmentTransaction.replace(R.id.flFragment, fragment)
+//            fragmentTransaction.commit()
+//        }
+            val intent = Intent(context, HomeActivity::class.java)
+            Toast.makeText(context, "Post added", Toast.LENGTH_SHORT).show()
+            context?.startActivity(intent)
         }
-
         return binding.root
     }
 

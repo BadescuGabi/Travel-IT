@@ -69,6 +69,7 @@ class HomeActivity : AppCompatActivity() {
         val allUserFragment = AllUsersFragment()
         commentFragment = CommentFragment()
         bottomNavigationView.visibility = View.GONE
+//        bottomNavigationView.selectedItemId(0)= R.id.new_post_button
         bottomNavigationView.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.profile -> setCurrentFragment(profileFragment)
@@ -109,7 +110,9 @@ class HomeActivity : AppCompatActivity() {
             newFragment.arguments = mBundle
         }
         if (fragment.javaClass == ProfileFragment::class.java) {
+            getCurrentUserDetails()
             newFragment = ProfileFragment()
+            refreshFragment(newFragment)
             val mBundle = Bundle()
             mBundle.putSerializable("mUser", currentUser)
             mBundle.putSerializable("usersList", usersList)
@@ -298,5 +301,11 @@ class HomeActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+    private fun refreshFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction().
+        detach(fragment).commit()
+        supportFragmentManager.beginTransaction().
+        attach(fragment).commit()
     }
 }
