@@ -10,6 +10,7 @@ import com.bgabi.travelit.R
 import com.bgabi.travelit.databinding.FragmentFollowingBinding
 import com.bgabi.travelit.databinding.FragmentLikeUsersBinding
 import com.bgabi.travelit.helpers.UtilsObj
+import com.bgabi.travelit.models.Post
 import com.bgabi.travelit.models.User
 import com.bgabi.travelit.view.activities.HomeActivity
 import com.bgabi.travelit.view.adapter.FollowingAdapter
@@ -23,7 +24,7 @@ class LikeUsersFragment : Fragment() {
     lateinit var homeActivity: HomeActivity
     private var currentUser: User = UtilsObj.defaultUser
     private lateinit var usersList: ArrayList<User>
-
+    private lateinit var currentPost: Post
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -35,6 +36,7 @@ class LikeUsersFragment : Fragment() {
         val bundle = arguments
         currentUser = bundle!!.getSerializable("mUser") as User
         usersList = bundle!!.getSerializable("usersList") as ArrayList<User>
+        currentPost = bundle!!.getSerializable("userPost") as Post
         binding = FragmentLikeUsersBinding.inflate(layoutInflater)
 
         // getting the recyclerview by its id
@@ -47,7 +49,7 @@ class LikeUsersFragment : Fragment() {
 //        val adapter = FollowingAdapter(data)
 
         // Setting the Adapter with the recyclerview
-        recyclerview.adapter = LikedUsersAdapter(currentUser.following,usersList,currentUser)
+        recyclerview.adapter = LikedUsersAdapter(currentPost.postLikes,usersList,currentUser)
 
         return binding.root
     }

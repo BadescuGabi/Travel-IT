@@ -76,7 +76,7 @@ class LikedUsersAdapter(
 
     // Holds the views for adding it to image and text
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
-        val imageView: ImageView = itemView.findViewById(R.id.image_following)
-        val textView: TextView = itemView.findViewById(R.id.textView_following)
+        val imageView: ImageView = itemView.findViewById(R.id.image_user_liked)
+        val textView: TextView = itemView.findViewById(R.id.textView_like)
     }
 }

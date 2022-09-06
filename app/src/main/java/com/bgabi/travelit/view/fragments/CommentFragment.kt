@@ -58,32 +58,55 @@ class CommentFragment : Fragment(R.layout.fragment_comment) {
         storage = Firebase.storage
         recyclerView = binding.recyclerviewComents
         recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = CommentAdapter(currentPost.comments,usersList,currentUser,currentPost)
+        recyclerView.adapter =
+            CommentAdapter(currentPost.comments, usersList, currentUser, currentPost)
         newComment = binding.comment
         commentButton = binding.addComment
+        var postUser = usersList.firstOrNull { it.uid == currentPost.postUser }
         commentButton.setOnClickListener {
             if (newComment.text.toString() != "") {
                 val commValue = newComment.text.toString()
                 val current = LocalDateTime.now()
                 val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")
                 commentDate1 = current.format(formatter)
-                var newCom = Comment(currentUser.uid,commValue,commentDate1)
+                var newCom = Comment(currentUser.uid, commValue, commentDate1)
 
                 currentPost.comments.add(newCom)
                 val postSorted = postsList.sortedWith(compareByDescending { it.postDate })
-                postsList- ArrayList(postSorted)
-                addComment(currentPost,currentUser,currentPost.comments,postsList)
+                postsList - ArrayList(postSorted)
+                addComment(currentPost, currentUser, currentPost.comments, postsList)
                 newComment.setText("")
+                if (postUser != null) {
+                    postUser.notifications.add("${currentUser.userName} comment at your post ${currentPost.postId}")
+                }
+                if (postUser != null) {
+                    postUser.uid?.let { it1 ->
+                        savaNotificationToFirebase(it1, postUser.notifications)
+                    }
+                }
             }
         }
         // Inflate the layout for this fragment
         return binding.root
     }
 
-    private fun addComment(post: Post, user: User, comment: ArrayList<Comment>,posts: ArrayList<Post>) {
-            val ind=posts.size-1- posts.indexOf(post)
-            user.uid?.let { post.postUser?.let { it1 -> database.child(it1).child("userPosts").child(ind.toString()).child("comments").setValue(post.comments) } }
+    private fun addComment(
+        post: Post,
+        user: User,
+        comment: ArrayList<Comment>,
+        posts: ArrayList<Post>
+    ) {
+        val ind = posts.size - 1 - posts.indexOf(post)
+        user.uid?.let {
+            post.postUser?.let { it1 ->
+                database.child(it1).child("userPosts").child(ind.toString()).child("comments")
+                    .setValue(post.comments)
+            }
+        }
 
     }
 
+    private fun savaNotificationToFirebase(userUid: String, notifications: ArrayList<String>) {
+        database.child(userUid).child("notifications").setValue(notifications)
+    }
 }

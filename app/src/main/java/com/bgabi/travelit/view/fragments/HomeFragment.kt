@@ -58,7 +58,7 @@ class HomeFragment : Fragment() {
         val bundle = arguments
         usersList = bundle!!.getSerializable("usersList") as ArrayList<User>
         currentUser = bundle!!.getSerializable("mUser") as User
-        usersList=ArrayList(usersList.filter { it.admin!="true" })
+//        usersList=ArrayList(usersList.filter { it.admin!="true" })
         usersList.remove(currentUser)
         binding = FragmentHomeBinding.inflate(layoutInflater)
         binding2 = FeedRvItemBinding.inflate(layoutInflater)
@@ -88,7 +88,7 @@ class HomeFragment : Fragment() {
         // this creates a vertical layout Manager
         recyclerview.layoutManager = LinearLayoutManager(context)
         recyclerView2.layoutManager = LinearLayoutManager(context)
-        usersSearchAdapter = UserSearchAdapter(usersList, currentUser)
+        usersSearchAdapter = UserSearchAdapter(ArrayList(usersList.filter { it.admin!="true" }), currentUser)
         // Setting the Adapter with the recyclerview
         recyclerview.adapter = PostAdapter(feedPosts,usersList,currentUser)
         recyclerView2.adapter = usersSearchAdapter

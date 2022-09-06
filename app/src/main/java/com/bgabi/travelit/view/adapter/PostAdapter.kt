@@ -114,7 +114,9 @@ class PostAdapter(
         if (post.postUser != currentUser.uid) {
             holder.likeButton.setOnClickListener {
                 var ok = 0
-                user.userPosts.forEach {
+                user.notifications.add("${currentUser.userName} liked your post ${post.postId}")
+                user.uid?.let { it1 -> savaNotificationToFirebase(it1, user.notifications)}
+                    user.userPosts.forEach {
                     if (it.postUser == post.postUser) {
                         if (!it.postLikes.contains(currentUser.uid.toString())) {
                             it.postLikes.add(currentUser.uid.toString())
@@ -149,6 +151,7 @@ class PostAdapter(
                 val mBundle = Bundle()
                 mBundle.putSerializable("mUser", currentUser)
                 mBundle.putSerializable("usersList", usersList)
+                mBundle.putSerializable("userPost", post)
                 fragment.arguments = mBundle
                 val activity = it.context as AppCompatActivity
                 activity.supportFragmentManager
@@ -178,6 +181,7 @@ class PostAdapter(
             val admin = usersList.first { it.admin == "true" }
             admin.notifications.add("${currentUser.userName} reported a post ") //${post.postId}
             admin.uid?.let { it1 -> savaNotificationToFirebase(it1, admin.notifications) }
+            Toast.makeText(mContext, "Post reported", Toast.LENGTH_SHORT).show()
         }
         holder.deleteButon.setOnClickListener {
             currentUser.userPosts.remove(post)

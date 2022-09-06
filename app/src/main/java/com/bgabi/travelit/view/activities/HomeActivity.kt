@@ -64,6 +64,7 @@ class HomeActivity : AppCompatActivity() {
         getUsers()
         mainHandler = Handler(Looper.getMainLooper())
         val profileFragment = ProfileFragment()
+        val reportsFragment = ReportsFragment()
         val homeFragment = HomeFragment()
         val notificationFragment = NotificationFragment()
         val allUserFragment = AllUsersFragment()
@@ -206,6 +207,7 @@ class HomeActivity : AppCompatActivity() {
         if (currentUser != defaultUser && usersList.size != 0) {
             if (currentUser.admin == "true") {
                 setCurrentFragment(reportsFragment)
+                bottomNavigationView.selectedItemId = R.id.reports
             } else {
                 setCurrentFragment(profileFragment)
             }
