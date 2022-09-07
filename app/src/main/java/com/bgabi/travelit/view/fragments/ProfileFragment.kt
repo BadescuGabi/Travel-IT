@@ -84,6 +84,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             val mBundle = Bundle()
             mBundle.putSerializable("mUser", currentUser)
             mBundle.putSerializable("usersList", usersList)
+            mBundle.putSerializable("userProfile",currentUser)
             fragment.arguments = mBundle
             val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
             fragmentTransaction.replace(R.id.flFragment, fragment)

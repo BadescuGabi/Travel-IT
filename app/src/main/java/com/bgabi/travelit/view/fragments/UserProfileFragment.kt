@@ -57,11 +57,12 @@ class UserProfileFragment : Fragment() {
         val bundle = arguments
         currentUser = bundle!!.getSerializable("mUser") as User
         usersList = bundle.getSerializable("usersList") as ArrayList<User>
+        userProfile = bundle.getSerializable("userProfile") as User
         binding = FragmentUserProfileBinding.inflate(layoutInflater)
         storage = Firebase.storage
-        binding.userNameProfileOther.setText(currentUser.userName)
-        binding.emailProfileOther.setText(currentUser.email)
-        binding.descriptionProfileOther.setText(currentUser.description)
+        binding.userNameProfileOther.setText(userProfile.userName)
+        binding.emailProfileOther.setText(userProfile.email)
+        binding.descriptionProfileOther.setText(userProfile.description)
         if(currentUser.description.isNullOrEmpty()){
             binding.descriptionProfileOtherLayout.visibility = View.GONE
         }
@@ -69,14 +70,17 @@ class UserProfileFragment : Fragment() {
         currentUser.uid?.let { loadPhotoFromFirebase(it) }
         recyclerView = binding.feedRecyclerviewOther
         recyclerView.layoutManager =  LinearLayoutManager(context)
-        val feedPosts = getPostsForAdapter(currentUser.uid)
+        val feedPosts = getPostsForAdapter(userProfile.uid)
+        if(userProfile == currentUser) {
+            usersList.add(currentUser)
+        }
 //        val postSorted = currentUser.userPosts.sortedWith(compareByDescending { it.postDate })
         recyclerView.adapter = PostAdapter(feedPosts,usersList,currentUser)
                 // Inflate the layout for this fragment
             return binding.root
     }
     private fun loadPhotoFromFirebase(uid: String) {
-        val profilePhotosRef = storage.reference.child("profile_images/${uid}")
+        val profilePhotosRef = storage.reference.child("profile_images/${userProfile.uid}")
         profilePhotosRef.downloadUrl.addOnSuccessListener { it ->
             context?.let { con ->
                 Glide.with(con)
@@ -94,7 +98,7 @@ class UserProfileFragment : Fragment() {
     fun getPostsForAdapter(followingUids: String?): ArrayList<Post> {
         var posts = ArrayList<Post>()
 
-            currentUser.userPosts.forEach() { post ->
+            userProfile.userPosts.forEach() { post ->
                         posts.add(post)
                     }
         if (posts.isNotEmpty()) {

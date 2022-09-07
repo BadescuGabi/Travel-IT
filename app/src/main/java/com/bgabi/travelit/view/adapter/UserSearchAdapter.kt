@@ -97,6 +97,7 @@ class UserSearchAdapter(private var usersList: ArrayList<User>, private var curr
             val mBundle = Bundle()
             mBundle.putSerializable("mUser", currentUser)
             mBundle.putSerializable("userProfile", modal)
+            mBundle.putSerializable("usersList",usersList)
             fragment.arguments = mBundle
             val activity = it.context as AppCompatActivity
             activity.supportFragmentManager
