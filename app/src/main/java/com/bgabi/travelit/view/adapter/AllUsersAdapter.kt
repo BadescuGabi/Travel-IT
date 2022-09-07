@@ -11,6 +11,8 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bgabi.travelit.R
 import com.bgabi.travelit.helpers.FirebaseHelper
+import com.bgabi.travelit.models.Comment
+import com.bgabi.travelit.models.Post
 import com.bgabi.travelit.models.User
 import com.bumptech.glide.Glide
 import com.google.firebase.database.DatabaseReference
@@ -69,23 +71,55 @@ class AllUsersAdapter(
 
         holder.removeButton.setOnClickListener() {
             uids.remove(userUid)
-            if (user.uid != null) {
-                user.followers.remove(currentUser.uid)
-                saveUserFollowersToFirebase(user.uid!!, user.followers)
+            deleteUserFromFirebase(user)
+            notifyItemRemoved(position)
+            notifyItemRangeChanged(position, uids.size)
+            usersList.remove(user)
+            usersList.forEach {
+                if (it.following.contains(userUid)) {
+                    it.following.remove(userUid)
+                    it.uid?.let { it3 -> saveUserFollowingToFirebase(it3, it.following) }
+                }
+                if (it.followers.contains(userUid)) {
+                    it.followers.remove(userUid)
+                    it.uid?.let { it4 -> saveUserFollowersToFirebase(it4, it.following) }
+                }
+                it.userPosts.forEach { it1 ->
+                    if (it1.postLikes.contains(userUid)) {
+                        it1.postLikes.remove(userUid)
+                        updateLikeToFirebase(it1, it)
+                    }
+                }
             }
-            if (currentUser.uid != null) {
+            usersList.forEach {
+                var notifForDelete = ArrayList<String>()
+                var newNotif = ArrayList<String>()
+                it.notifications.forEach{notif->
+                    if(user.userName?.let { it5 -> notif.contains(it5) } == true){
+                        notifForDelete.add(notif)
+                    }
+                }
+                newNotif.addAll(it.notifications)
+                newNotif.removeAll(notifForDelete)
+                it.uid?.let { it1 -> saveNotificationToFirebase(it1,newNotif) }
+                it.userPosts.forEach { it1 ->
+                    var comms = ArrayList<Comment>()
+                    comms.addAll(it1.comments.filterNotNull())
 
-                currentUser.following.remove(user.uid)
-                saveUserFollowingToFirebase(currentUser.uid!!, currentUser.following,position)
+                    it1.comments.forEach { it2 ->
+                        if (it2.commentUser == userUid) {
+//                            it1.comments.remove(it2)
+                                comms.remove(it2)
+                        }
+                    }
+                    updateCommentsFirebase(it.uid, comms, it, it1)
+                }
             }
-
-            holder.removeButton.visibility = View.GONE
-            holder.textView.visibility = View.GONE
-            holder.imageView.visibility = View.GONE
-            Toast.makeText(mContext, "User unfollowed", Toast.LENGTH_SHORT).show()
-
         }
+    }
 
+    private fun deleteUserFromFirebase(usr: User) {
+        usr.uid?.let { database.child(it).removeValue() }
     }
 
     // return the number of the items in the list
@@ -121,9 +155,35 @@ class AllUsersAdapter(
     }
 
 
-    private fun saveUserFollowingToFirebase(currentUid: String, following: ArrayList<String>, position: Int) {
-        database.child(currentUid).child("following").setValue(uids)
-        notifyItemRemoved(position)
-        notifyItemRangeChanged(position, uids.size)
+    private fun saveUserFollowingToFirebase(currentUid: String, following: ArrayList<String>) {
+        database.child(currentUid).child("following").setValue(following)
+    }
+
+    private fun updateLikeToFirebase(posts: Post, author: User) {
+        val ind = author.userPosts.indexOf(posts)
+        if (posts != null) {
+            posts.postUser.let {
+                if (it != null) {
+                    database.child(it).child("userPosts").child(ind.toString()).setValue(posts)
+                }
+            }
+        }
+    }
+
+    private fun updateCommentsFirebase(
+        postUser: String?,
+        com: ArrayList<Comment>,
+        pUser: User,
+        currentPost: Post
+
+    ) {
+        val ind = pUser.userPosts.indexOfFirst {
+            it.postId == currentPost.postId
+        }
+        if (postUser != null) {
+            database.child(postUser).child("userPosts").child(ind.toString()).child("comments")
+                .setValue(com)
+        }
     }
 }
+
