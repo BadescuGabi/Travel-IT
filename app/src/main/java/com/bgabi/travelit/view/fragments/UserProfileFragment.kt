@@ -69,6 +69,7 @@ class UserProfileFragment : Fragment() {
         userProfilePic = binding.profilePicOther
         currentUser.uid?.let { loadPhotoFromFirebase(it) }
         recyclerView = binding.feedRecyclerviewOther
+
         recyclerView.layoutManager =  LinearLayoutManager(context)
         val feedPosts = getPostsForAdapter(userProfile.uid)
         if(userProfile == currentUser) {
