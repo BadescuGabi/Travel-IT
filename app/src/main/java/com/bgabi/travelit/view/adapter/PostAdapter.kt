@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.ColorFilter
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -115,13 +116,15 @@ class PostAdapter(
             holder.likeButton.setOnClickListener {
                 var ok = 0
                 user.notifications.add("${currentUser.userName} liked your post ${post.postId}")
-                user.uid?.let { it1 -> savaNotificationToFirebase(it1, user.notifications)}
-                    user.userPosts.forEach {
+                user.uid?.let { it1 -> savaNotificationToFirebase(it1, user.notifications) }
+                user.userPosts.forEach {
                     if (it.postUser == post.postUser) {
                         if (!it.postLikes.contains(currentUser.uid.toString())) {
                             it.postLikes.add(currentUser.uid.toString())
+                            DrawableCompat.wrap(holder.likeIcon.getDrawable())
+                            var mutableDrawable: Drawable = holder.likeIcon.getDrawable().mutate()
                             DrawableCompat.setTint(
-                                holder.likeIcon.getDrawable(),
+                                mutableDrawable,
                                 ContextCompat.getColor(getApplicationContext(), R.color.blue_topaz)
                             )
                             holder.likeNumber.setText((post.postLikes.size + 1).toString())
@@ -144,8 +147,7 @@ class PostAdapter(
 
                 }
             }
-        }
-        else {
+        } else {
             holder.likeButton.setOnClickListener {
                 val fragment: Fragment = LikeUsersFragment()
                 val mBundle = Bundle()
