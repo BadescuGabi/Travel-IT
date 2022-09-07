@@ -179,7 +179,7 @@ class PostAdapter(
         }
         holder.reportButton.setOnClickListener {
             val admin = usersList.first { it.admin == "true" }
-            admin.notifications.add("${currentUser.userName} reported a post ") //${post.postId}
+            admin.notifications.add("${currentUser.userName} reported a post ${post.postId}")
             admin.uid?.let { it1 -> savaNotificationToFirebase(it1, admin.notifications) }
             Toast.makeText(mContext, "Post reported", Toast.LENGTH_SHORT).show()
         }
