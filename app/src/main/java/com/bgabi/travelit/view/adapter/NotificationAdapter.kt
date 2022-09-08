@@ -86,6 +86,7 @@ class NotificationAdapter(
             holder.notificationRedirect.setOnClickListener {
                 val fragment: Fragment = PostForNotificationFragment()
                 val mBundle = Bundle()
+                usersList.add(currentUser)
                 mBundle.putSerializable("mUser", currentUser)
                 mBundle.putSerializable("usersList", usersList)
                 mBundle.putSerializable("userPost", redirectPost)
