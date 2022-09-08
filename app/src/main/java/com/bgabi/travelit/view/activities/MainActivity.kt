@@ -29,6 +29,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
@@ -36,6 +37,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -105,6 +107,9 @@ class MainActivity : AppCompatActivity() {
             LoginManager.getInstance()
                 .logInWithReadPermissions(this, listOf("public_profile", "email"))
         }
+
+        firebaseMessagingToken()
+
         LoginManager.getInstance().registerCallback(callbackManager, object :
             FacebookCallback<LoginResult> {
             override fun onSuccess(result: LoginResult) {
@@ -163,6 +168,23 @@ class MainActivity : AppCompatActivity() {
         } catch (e: ApiException) {
             Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun firebaseMessagingToken() {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w("Firebase Messaging", "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+
+            // Log and toast
+            val msg = getString(R.string.msg_token_fmt, token)
+            Log.d("Firebase Messaging", msg)
+            //Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+        })
     }
 
     private fun UpdateUI(account: GoogleSignInAccount) {
