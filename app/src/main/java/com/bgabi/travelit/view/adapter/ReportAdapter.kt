@@ -54,7 +54,14 @@ class ReportAdapter(
 
 
         val report = mList[position]
-        holder.reportText.setText(report)
+        var copyRap = ""
+        if (report.contains("post")) {
+            copyRap = report
+            copyRap=copyRap.replaceAfter("post","")
+            holder.reportText.text = copyRap
+        } else {
+            holder.reportText.text = report
+        }
         usersList.forEach() {
             if (it.userName?.let { it1 -> report.contains(it1) } == true) {
                 val imageRef = storage.reference.child("profile_images/${it.uid}")
@@ -91,18 +98,23 @@ class ReportAdapter(
 
         }
             holder.postRedirect.setOnClickListener {
-                val fragment: Fragment = PostForNotificationFragment()
-                val mBundle = Bundle()
-                mBundle.putSerializable("mUser", currentUser)
-                mBundle.putSerializable("usersList", usersList)
-                mBundle.putSerializable("userPost", redirectPost)
-                fragment.arguments = mBundle
-                val activity = it.context as AppCompatActivity
-                activity.supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.flFragment, fragment)
-                    .addToBackStack(null)
-                    .commit()
+                if(redirectPost.size ==0){
+                    Toast.makeText(mContext, "This post was deleted", Toast.LENGTH_SHORT).show()
+                }
+                else {
+                    val fragment: Fragment = PostForNotificationFragment()
+                    val mBundle = Bundle()
+                    mBundle.putSerializable("mUser", currentUser)
+                    mBundle.putSerializable("usersList", usersList)
+                    mBundle.putSerializable("userPost", redirectPost)
+                    fragment.arguments = mBundle
+                    val activity = it.context as AppCompatActivity
+                    activity.supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.flFragment, fragment)
+                        .addToBackStack(null)
+                        .commit()
+                }
             }
             holder.reject.setOnClickListener {
                 currentUser.notifications.remove(report)

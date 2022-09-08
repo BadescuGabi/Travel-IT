@@ -91,19 +91,23 @@ class NotificationAdapter(
                 }
             }
             holder.notificationRedirect.setOnClickListener {
-                val fragment: Fragment = PostForNotificationFragment()
-                val mBundle = Bundle()
-                usersList.add(currentUser)
-                mBundle.putSerializable("mUser", currentUser)
-                mBundle.putSerializable("usersList", usersList)
-                mBundle.putSerializable("userPost", redirectPost)
-                fragment.arguments = mBundle
-                val activity = it.context as AppCompatActivity
-                activity.supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.flFragment, fragment)
-                    .addToBackStack(null)
-                    .commit()
+                if (redirectPost.size==0) {
+                    Toast.makeText(mContext, "This post was deleted", Toast.LENGTH_SHORT).show()
+                } else {
+                    val fragment: Fragment = PostForNotificationFragment()
+                    val mBundle = Bundle()
+                    usersList.add(currentUser)
+                    mBundle.putSerializable("mUser", currentUser)
+                    mBundle.putSerializable("usersList", usersList)
+                    mBundle.putSerializable("userPost", redirectPost)
+                    fragment.arguments = mBundle
+                    val activity = it.context as AppCompatActivity
+                    activity.supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.flFragment, fragment)
+                        .addToBackStack(null)
+                        .commit()
+                }
             }
         }
         holder.deleteButton.setOnClickListener {
