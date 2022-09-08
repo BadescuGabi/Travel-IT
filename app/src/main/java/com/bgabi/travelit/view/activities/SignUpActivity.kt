@@ -75,43 +75,58 @@ class SignUpActivity : AppCompatActivity() {
                     val password: String = register_password.text.toString().trim { it <= ' ' }
                     val confirmPassword: String =
                         confirm_password.text.toString().trim { it <= ' ' }
+                    if (checkString(password)) {
+                        if (password == confirmPassword) {
+                            FirebaseAuth.getInstance()
+                                .createUserWithEmailAndPassword(email, password)
+                                .addOnCompleteListener(
+                                    OnCompleteListener<AuthResult> { task ->
+                                        if (task.isSuccessful) {
+                                            val firebaseUser: FirebaseUser = task.result!!.user!!
+                                            FirebaseHelper.addUserToFirebase(
+                                                firebaseUser.uid,
+                                                email,
+                                                userName
+                                            )
+                                            Toast.makeText(
+                                                this@SignUpActivity,
+                                                "Your account was successfully created!",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
 
-                    if (password == confirmPassword) {
-                        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
-                            .addOnCompleteListener(
-                                OnCompleteListener<AuthResult> { task ->
-                                    if (task.isSuccessful) {
-                                        val firebaseUser: FirebaseUser = task.result!!.user!!
-                                        FirebaseHelper.addUserToFirebase(firebaseUser.uid, email, userName)
-                                        Toast.makeText(
-                                            this@SignUpActivity,
-                                            "Your account was successfully created!",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-
-                                        val intent =
-                                            Intent(this@SignUpActivity, HomeActivity::class.java)
-                                        intent.flags =
-                                            Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                        intent.putExtra("user_id", firebaseUser.uid)
-                                        intent.putExtra("user_email", email)
-                                        //intent.putExtra("user_name", name)
-                                        //intent.putExtra("user_phone", phone)
-                                        startActivity(intent)
-                                        finish()
-                                    } else {
-                                        Toast.makeText(
-                                            this@SignUpActivity,
-                                            task.exception!!.message.toString(),
-                                            Toast.LENGTH_SHORT
-                                        ).show()
+                                            val intent =
+                                                Intent(
+                                                    this@SignUpActivity,
+                                                    HomeActivity::class.java
+                                                )
+                                            intent.flags =
+                                                Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                            intent.putExtra("user_id", firebaseUser.uid)
+                                            intent.putExtra("user_email", email)
+                                            //intent.putExtra("user_name", name)
+                                            //intent.putExtra("user_phone", phone)
+                                            startActivity(intent)
+                                            finish()
+                                        } else {
+                                            Toast.makeText(
+                                                this@SignUpActivity,
+                                                task.exception!!.message.toString(),
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
                                     }
-                                }
-                            )
+                                )
+                        } else {
+                            Toast.makeText(
+                                this@SignUpActivity,
+                                "Password is not matching",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     } else {
                         Toast.makeText(
                             this@SignUpActivity,
-                            "Password is not matching",
+                            "Password must include uppercase, lowercase characters and numbers",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
@@ -119,23 +134,41 @@ class SignUpActivity : AppCompatActivity() {
             }
         }
     }
+        public override fun onStart() {
+            super.onStart()
+            val currentUser = auth.currentUser
+        }
 
-    public override fun onStart() {
-        super.onStart()
-        val currentUser = auth.currentUser
+
+        private fun initialize() {
+            auth = Firebase.auth
+            database = FirebaseDatabase.getInstance(dbUrl).getReference("data/users")
+            redirect_sign_in = binding.redirectSignIn
+            btn_register = binding.btnRegister
+            register_email = binding.etRegisterEmail
+            user_name = binding.etUsername
+            register_password = binding.etRegisterPassword
+            confirm_password = binding.etConfirmPassword
+        }
+    }
+
+    private fun checkString(str: String): Boolean {
+        var ch: Char
+        var capitalFlag = false
+        var lowerCaseFlag = false
+        var numberFlag = false
+        for (i in 0 until str.length) {
+            ch = str[i]
+            if (Character.isDigit(ch)) {
+                numberFlag = true
+            } else if (Character.isUpperCase(ch)) {
+                capitalFlag = true
+            } else if (Character.isLowerCase(ch)) {
+                lowerCaseFlag = true
+            }
+            if (numberFlag && capitalFlag && lowerCaseFlag) return true
+        }
+        return false
     }
 
 
-
-    private fun initialize() {
-        auth = Firebase.auth
-        database = FirebaseDatabase.getInstance(dbUrl).getReference("data/users")
-        redirect_sign_in = binding.redirectSignIn
-        btn_register = binding.btnRegister
-        register_email = binding.etRegisterEmail
-        user_name = binding.etUsername
-        register_password = binding.etRegisterPassword
-        confirm_password = binding.etConfirmPassword
-    }
-
-}
