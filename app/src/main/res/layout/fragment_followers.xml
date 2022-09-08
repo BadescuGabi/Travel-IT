@@ -15,11 +15,5 @@
         tools:itemCount="5"
         tools:listitem="@layout/card_view_followers_design" />
 
-    <TextView
-        android:layout_width="1000dp"
-        android:layout_height="1000dp"
-        android:text="naaaaaaaaaaa"
-        android:textSize="20sp"
-        android:textColor="@color/black" />
 
 </LinearLayout>

@@ -33,7 +33,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"/>
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/delete_button"
+            android:id="@+id/delete_button_followers"
             android:layout_width="80dp"
             android:layout_height="35dp"
             android:layout_gravity="center_vertical"
@@ -44,7 +44,7 @@
             android:text="Delete"
             android:textColor="@color/blue_topaz" />
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/follow_button"
+            android:id="@+id/follow_button_followers"
             android:layout_width="80dp"
             android:layout_height="35dp"
             android:layout_gravity="center_vertical"

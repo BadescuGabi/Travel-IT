@@ -43,7 +43,7 @@ class FollowersFragment : Fragment(R.layout.fragment_followers) {
 
 
         // This will pass the ArrayList to our Adapter
-        val adapter = FollowersAdapter(currentUser.followers,usersList,)
+        val adapter = FollowersAdapter(currentUser.followers,usersList,currentUser)
         recyclerview.adapter = adapter
         // Setting the Adapter with the recyclerview
 //
