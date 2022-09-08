@@ -70,6 +70,8 @@ class HomeFragment : Fragment() {
             mBundle.putSerializable("mUser", currentUser)
             mBundle.putSerializable("photoId", "")
             mBundle.putSerializable("usersList", usersList)
+            mBundle.putSerializable("postDescription","")
+            mBundle.putSerializable("postLocation","")
             fragment.arguments = mBundle
             val activity = it.context as AppCompatActivity
             activity.supportFragmentManager

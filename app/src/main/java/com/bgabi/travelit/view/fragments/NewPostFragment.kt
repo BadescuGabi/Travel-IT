@@ -51,6 +51,8 @@ class NewPostFragment : Fragment() {
     private lateinit var postId: String
     private lateinit var postDate: String
     private lateinit var usersList: ArrayList<User>
+    private var pstLocation = ""
+    private var pstDescription = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,10 +69,14 @@ class NewPostFragment : Fragment() {
         currentUser = bundle!!.getSerializable("mUser") as User
         val photoId = bundle!!.getSerializable("photoId") as String
         usersList = bundle.getSerializable("usersList") as ArrayList<User>
+        pstDescription = bundle!!.getSerializable("postDescription") as String
+        pstLocation = bundle!!.getSerializable("postLocation") as String
         usersList.add(currentUser)
         binding = FragmentNewPostBinding.inflate(layoutInflater)
         postDescrition = binding.postDescription
         postLocation = binding.postLocation
+        postDescrition.setText(pstDescription)
+        postLocation.setText(pstLocation)
         postImage = binding.postPhoto
         database = FirebaseDatabase.getInstance(FirebaseHelper.dbUrl).getReference("data/users")
         storage = Firebase.storage
@@ -135,6 +141,8 @@ class NewPostFragment : Fragment() {
         if (resultCode == AppCompatActivity.RESULT_OK && requestCode == REQUEST_CODE) {
             imageUri = data?.data
             postImage.setImageURI(imageUri)
+            pstDescription = postDescrition.text.toString()
+            pstLocation = postLocation.text.toString()
             savePhotoToFirebase(imageUri, postId)
             val fragment: Fragment = NewPostFragment()
             val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
@@ -142,6 +150,8 @@ class NewPostFragment : Fragment() {
             mBundle.putSerializable("mUser", currentUser)
             mBundle.putSerializable("photoId", postId)
             mBundle.putSerializable("usersList",usersList)
+            mBundle.putSerializable("postDescription",pstDescription)
+            mBundle.putSerializable("postLocation",pstLocation)
             fragment.arguments = mBundle
             val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
             fragmentTransaction.replace(R.id.flFragment, fragment)
@@ -177,6 +187,8 @@ class NewPostFragment : Fragment() {
 
         postImage.isDrawingCacheEnabled = true
         postImage.buildDrawingCache()
+        pstDescription = postDescrition.text.toString()
+        pstLocation = postLocation.text.toString()
         val bitmap = (postImage.drawable as BitmapDrawable).bitmap
         val baos = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
@@ -191,6 +203,8 @@ class NewPostFragment : Fragment() {
             mBundle.putSerializable("mUser", currentUser)
             mBundle.putSerializable("photoId", photoUid)
             mBundle.putSerializable("usersList",usersList)
+            mBundle.putSerializable("postDescription",pstDescription)
+            mBundle.putSerializable("postLocation",pstLocation)
             fragment.arguments = mBundle
             val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
             fragmentTransaction.replace(R.id.flFragment, fragment)

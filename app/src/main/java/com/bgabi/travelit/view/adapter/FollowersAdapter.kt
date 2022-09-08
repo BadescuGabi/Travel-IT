@@ -49,6 +49,9 @@ class FollowersAdapter(
         val userUid = uids[position]
 
         val user = usersList.first { it.uid == userUid }
+        if(user.followers.contains(currentUser.uid)){
+            holder.follow.visibility = View.GONE
+        }
         holder.textView.setText(currentUser.userName)
         storage = Firebase.storage
         // setting data to each view of recyclerview item.
@@ -80,7 +83,23 @@ class FollowersAdapter(
 
             Toast.makeText(mContext, "User unfollowed", Toast.LENGTH_SHORT).show()
         }
+        holder.follow.setOnClickListener {
+            if (userUid != null) {
+                user.followers.add(currentUser.uid!!)
+                saveUserFollowersToFirebase(user.uid!!, user.followers, position)
+            }
+            if (currentUser.uid != null) {
+
+                user.uid?.let { it1 -> currentUser.following.add(it1) }
+                saveUserFollowingToFirebase(currentUser.uid!!, currentUser.following)
+            }
+            holder.follow.visibility = View.GONE
+            Toast.makeText(mContext, "User followed", Toast.LENGTH_SHORT).show()
+            user.notifications.add("${currentUser.userName} started to follow you")
+            user.uid?.let { it1 -> savaNotificationToFirebase(it1, user.notifications) }
+        }
     }
+
 
     // return the number of the items in the list
     override fun getItemCount(): Int {
@@ -118,8 +137,6 @@ class FollowersAdapter(
         position: Int
     ) {
         database.child(currentUid).child("followers").setValue(followers)
-        notifyItemRemoved(position)
-        notifyItemRangeChanged(position, uids.size)
     }
 
 
@@ -131,4 +148,5 @@ class FollowersAdapter(
     private fun savaNotificationToFirebase(userUid: String, notifications: ArrayList<String>) {
         database.child(userUid).child("notifications").setValue(notifications)
     }
+
 }
