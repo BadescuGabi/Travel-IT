@@ -52,7 +52,14 @@ class NotificationAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         val notification = mList[position]
-        holder.notificationText.text = notification
+        var copyNotif = ""
+        if (notification.contains("post")) {
+            copyNotif = notification
+            copyNotif=copyNotif.replaceAfter("post","")
+            holder.notificationText.text = copyNotif
+        } else {
+            holder.notificationText.text = notification
+        }
         usersList.forEach() {
             if (it.userName?.let { it1 -> notification.contains(it1) } == true) {
                 val imageRef = storage.reference.child("profile_images/${it.uid}")
@@ -118,7 +125,7 @@ class NotificationAdapter(
         var deleteButton: ImageView = itemView.findViewById(R.id.delete_notification)
     }
 
-    private fun updateNotificationsFirebase(pos:Int) {
+    private fun updateNotificationsFirebase(pos: Int) {
         currentUser.uid?.let {
             database.child(it).child("notifications").setValue(currentUser.notifications)
         }
