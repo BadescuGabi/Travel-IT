@@ -76,7 +76,7 @@ class CommentFragment : Fragment(R.layout.fragment_comment) {
                 postsList - ArrayList(postSorted)
                 addComment(currentPost, currentUser, currentPost.comments, postsList)
                 newComment.setText("")
-                if (postUser != null) {
+                if (postUser != null && currentUser.uid!=postUser.uid) {
                     postUser.notifications.add("${currentUser.userName} comment at your post ${currentPost.postId}")
                 }
                 if (postUser != null) {

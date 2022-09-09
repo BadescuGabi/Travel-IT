@@ -52,7 +52,7 @@ class FollowersAdapter(
         if(user.followers.contains(currentUser.uid)){
             holder.follow.visibility = View.GONE
         }
-        holder.textView.setText(currentUser.userName)
+        holder.textView.setText(user.userName)
         storage = Firebase.storage
         // setting data to each view of recyclerview item.
         val profilePhotoRef = storage.reference.child("profile_images/${userUid}")
@@ -81,7 +81,7 @@ class FollowersAdapter(
                 saveUserFollowersToFirebase(currentUser.uid!!, currentUser.followers, position)
             }
 
-            Toast.makeText(mContext, "User unfollowed", Toast.LENGTH_SHORT).show()
+            Toast.makeText(mContext, "User deleted", Toast.LENGTH_SHORT).show()
         }
         holder.follow.setOnClickListener {
             if (userUid != null) {
@@ -137,6 +137,8 @@ class FollowersAdapter(
         position: Int
     ) {
         database.child(currentUid).child("followers").setValue(followers)
+        notifyItemRemoved(position)
+        notifyItemRangeChanged(position, uids.size)
     }
 
 

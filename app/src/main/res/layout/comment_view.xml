@@ -10,7 +10,7 @@
         android:layout_height="45dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="15dp"
-        android:src="@drawable/me" />
+         />
 
     <RelativeLayout
         android:id="@+id/relLayout1"

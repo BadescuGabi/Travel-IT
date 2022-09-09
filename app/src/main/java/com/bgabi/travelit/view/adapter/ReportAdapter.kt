@@ -37,8 +37,8 @@ class ReportAdapter(
     private var firebaseUser: FirebaseUser? = null
     private lateinit var database: DatabaseReference
     private lateinit var firebaseAuth: FirebaseAuth
-    var redirectPost: ArrayList<Post> = ArrayList()
-    private lateinit var reportedUser: User
+    var redirectPost  = ArrayList<Post>()
+    var reportedUser = ArrayList<User>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -57,13 +57,14 @@ class ReportAdapter(
         var copyRap = ""
         if (report.contains("post")) {
             copyRap = report
-            copyRap=copyRap.replaceAfter("post","")
+            copyRap = copyRap.replaceAfter("post", "")
             holder.reportText.text = copyRap
         } else {
+            copyRap = report
             holder.reportText.text = report
         }
         usersList.forEach() {
-            if (it.userName?.let { it1 -> report.contains(it1) } == true) {
+            if (it.userName?.let { it1 -> copyRap.contains(it1) } == true) {
                 val imageRef = storage.reference.child("profile_images/${it.uid}")
                 imageRef.downloadUrl.addOnSuccessListener { it2 ->
                     mContext.let { con ->
@@ -84,74 +85,99 @@ class ReportAdapter(
         holder.itemView.setOnClickListener {
             Toast.makeText(mContext, "Notification clicked", Toast.LENGTH_SHORT).show()
         }
-        var id = ""
-        if (report.contains("post")) {
-            id = report.substringAfter("post ")
-        }
-
-        usersList.forEach {
-        it.userPosts.forEach {it1->
-            if (it1.postId == id) {
-                redirectPost.add(it1)
-                reportedUser = it
+        var x= ArrayList<User>()
+        x=usersList
+        holder.postRedirect.setOnClickListener {
+            var id = ""
+            if (report.contains("post")) {
+                id = report.substringAfter("post ")
             }
-
-        }
-            holder.postRedirect.setOnClickListener {
-                if(redirectPost.size ==0){
-                    Toast.makeText(mContext, "This post was deleted", Toast.LENGTH_SHORT).show()
-                }
-                else {
-                    val fragment: Fragment = PostForNotificationFragment()
-                    val mBundle = Bundle()
-                    mBundle.putSerializable("mUser", currentUser)
-                    mBundle.putSerializable("usersList", usersList)
-                    mBundle.putSerializable("userPost", redirectPost)
-                    fragment.arguments = mBundle
-                    val activity = it.context as AppCompatActivity
-                    activity.supportFragmentManager
-                        .beginTransaction()
-                        .replace(R.id.flFragment, fragment)
-                        .addToBackStack(null)
-                        .commit()
+            var ok = 1
+           var y = x.filter { it.userPosts.size != 0 }
+                   x= ArrayList(y)
+                x.forEach { it2->
+                it2.userPosts.forEach { it1 ->
+                    if (it1.postId == id) {
+                        redirectPost.add(it1)
+                        reportedUser.add(it2)
+                        ok=0
+                    }
                 }
             }
-            holder.reject.setOnClickListener {
-                currentUser.notifications.remove(report)
+
+
+            if (ok == 1) {
+                Toast.makeText(mContext, "This post was deleted", Toast.LENGTH_SHORT).show()
+            } else {
+                val fragment: Fragment = PostForNotificationFragment()
+                val mBundle = Bundle()
+                mBundle.putSerializable("mUser", currentUser)
+                mBundle.putSerializable("usersList", usersList)
+                mBundle.putSerializable("userPost", redirectPost)
+                fragment.arguments = mBundle
+                val activity = it.context as AppCompatActivity
+                activity.supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.flFragment, fragment)
+                    .addToBackStack(null)
+                    .commit()
+            }
+        }
+        holder.reject.setOnClickListener {
+            Toast.makeText(mContext, "Report rejected", Toast.LENGTH_SHORT).show()
+            currentUser.notifications.remove(report)
 //            mList.remove(notification)
-                updateReportsFirebase(position)
+            updateReportsFirebase(position)
+        }
+        holder.accept.setOnClickListener {
+            Toast.makeText(mContext, "Report accepted, post was deleted", Toast.LENGTH_SHORT)
+                .show()
+            currentUser.notifications.remove(report)
+            var id = ""
+            if (report.contains("post")) {
+                id = report.substringAfter("post ")
             }
-            holder.accept.setOnClickListener {
-                currentUser.notifications.remove(report)
-                updateReportsFirebase(position)
-                reportedUser.userPosts.remove(redirectPost[0])
-                updatePostsFirebase(reportedUser.uid)
+
+            usersList.forEach {
+                it.userPosts.forEach { it1 ->
+                    if (it1.postId == id) {
+                        redirectPost.add(it1)
+                        reportedUser.add(it)
+                    }
+                }
             }
+            reportedUser[0].userPosts.remove(redirectPost[0])
+            updatePostsFirebase(reportedUser[0])
+            updateReportsFirebase(position)
         }
     }
+
+
     override fun getItemCount(): Int {
         return mList.size
     }
 
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
         var reportText: TextView = itemView.findViewById(R.id.textView_report)
-        var userImage : ImageView = itemView.findViewById(R.id.image_report)
+        var userImage: ImageView = itemView.findViewById(R.id.image_report)
         var accept: ImageView = itemView.findViewById(R.id.accept_report)
         var reject: ImageView = itemView.findViewById(R.id.reject_report)
         var postRedirect: LinearLayout = itemView.findViewById(R.id.report_post_redirect)
     }
-    private fun updateReportsFirebase(pos:Int) {
+
+    private fun updateReportsFirebase(pos: Int) {
         currentUser.uid?.let {
             database.child(it).child("notifications").setValue(currentUser.notifications)
         }
         notifyItemRemoved(pos)
         notifyItemRangeChanged(pos, mList.size)
     }
-    private fun updatePostsFirebase(postUser: String?) {
+
+    private fun updatePostsFirebase(postUser: User) {
         if (postUser != null) {
-            reportedUser.uid?.let {
-                database.child(it).child("userPosts").setValue(reportedUser.userPosts)
-            }
+
+            postUser.uid?.let { database.child(it).child("userPosts").setValue(postUser.userPosts) }
+
         }
     }
 }

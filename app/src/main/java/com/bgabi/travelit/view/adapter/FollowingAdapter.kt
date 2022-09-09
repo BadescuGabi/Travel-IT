@@ -79,9 +79,9 @@ class FollowingAdapter(
                 saveUserFollowingToFirebase(currentUser.uid!!, currentUser.following,position)
             }
 
-//            holder.unfollowButton.visibility = View.GONE
-//            holder.textView.visibility = View.GONE
-//            holder.imageView.visibility = View.GONE
+            holder.unfollowButton.visibility = View.GONE
+            holder.textView.visibility = View.GONE
+            holder.imageView.visibility = View.GONE
             Toast.makeText(mContext, "User unfollowed", Toast.LENGTH_SHORT).show()
 
         }

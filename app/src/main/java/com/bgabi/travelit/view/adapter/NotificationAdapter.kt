@@ -58,6 +58,7 @@ class NotificationAdapter(
             copyNotif=copyNotif.replaceAfter("post","")
             holder.notificationText.text = copyNotif
         } else {
+            copyNotif = notification
             holder.notificationText.text = notification
         }
         usersList.forEach() {
